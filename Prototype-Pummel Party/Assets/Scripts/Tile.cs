@@ -7,7 +7,9 @@ public class Tile : MonoBehaviour
     
     void Start()
     {
+
         Debug.Log("Eunsu");
+        Debug.Log("WooSeok");
     }
 
     
