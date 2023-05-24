@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Trophy : MonoBehaviour
 {
-    private int count;
+    public int count;
     private bool start;
 
     private void Start()
