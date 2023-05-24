@@ -6,8 +6,8 @@ public class Dice
 {
     public int Roll()
     {
-        int num = Random.Range(10, 11);
-        Debug.Log($"ÁÖ»çÀ§ °á°ú: {num}");
+        int num = Random.Range(-1, 4);
+        Debug.Log($"ÃÃ–Â»Ã§Ã€Â§ Â°Ã¡Â°Ãº: {num}");
         return num;
     }
 }
