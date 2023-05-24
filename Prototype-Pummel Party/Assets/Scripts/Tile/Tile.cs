@@ -10,9 +10,7 @@ public abstract class Tile : MonoBehaviour
     public int tileIndex; // 타일 번호를 확인하기위해 만든 테스트용 코드
     private bool isPlayerOnTile = false;
 
-    [SerializeField] private List<Tile> nextTiles = new List<Tile>(); // 다음 타일의 개수는 2개 이상일수도 있기에, 리스트로 담아준다
-
-    protected Transform collidedPlayerTransform;
+    protected Transform collidedPlayerTransform; // 현재 타일과 부딪힌 플레이어의 참조를 받아오기 위한 변수
     
     [SerializeField] private Tile nextTile; // 플레이어가 이동할 다음타일은 1개이다
     [SerializeField] private Vector3 nextTilePosition;
@@ -20,26 +18,8 @@ public abstract class Tile : MonoBehaviour
     [SerializeField] private Tile backTile; // 이전 타일은 1개이다
     [SerializeField] private Vector3 backTilePosition;
 
-    private void Start()
-    {
-        
-        
-    }
 
-    protected void SetNextTilePosition(Vector3 _nextTilePosition)
-    {
-        if (_nextTilePosition != null)
-        {
-            nextTilePosition = _nextTilePosition;
-        }
-    }
-    protected void SetBackTilePosition(Vector3 _backTilePosition)
-    {
-        if (_backTilePosition != null)
-        {
-            backTilePosition = _backTilePosition;
-        }
-    }
+    
 
     #region Check Functions
 
@@ -51,75 +31,86 @@ public abstract class Tile : MonoBehaviour
     {
         return isPlayerOnTile;
     }
-
-
     #endregion
 
     #region Get Functions
     /// <summary>
-    /// 플레이어가 이동할 타음타일을 반환한다
+    /// 플레이어가 이동할 다음 타일을 반환한다
     /// </summary>
     /// <returns></returns>
     public Tile GetNextTile()
     {
         if (nextTile == null)
         {
+            Debug.Log("이동할 다음 타일은 null 이다");
             return null;
         }
         return nextTile;
     }
 
     /// <summary>
-    /// 플레이어가 이동할 다음타일의 위치를 반환한다
+    /// 플레이어가 이동할 다음 타일의 위치를 반환한다
     /// </summary>
     /// <returns></returns>
     public Vector3 GetNextTilePosition()
     {
+        if (nextTilePosition == null)
+        {
+            Debug.Log("이동할 다음 타일의 위치는 null이다");
+        }
         return nextTilePosition;
     }
 
+
     /// <summary>
-    /// 플레이어가 이동할 이전 타일을 반환한다
+    /// 플레이어가 이동할 빽도 타일을 반환한다
     /// </summary>
     /// <returns></returns>
     public Tile GetBackTile()
     {
+        if (backTile == null)
+        {
+            Debug.Log("이동할 빽도 타일은 null이다");
+        }
         return backTile;
     }
+    
 
     /// <summary>
-    /// 플레이어가 이동할 이전 타일의 위치를 반환한다
+    /// 플레이어가 이동할 빽도 타일의 위치를 반환한다
     /// </summary>
     /// <returns></returns>
     public Vector3 GetBackTilePosition()
     {
+        if (backTilePosition == null)
+        {
+            Debug.Log("다음에 이동할 빽도 타일의 위치는 null이다");
+        }
         return backTilePosition;
     }
-
-
 
     #endregion
 
     #region Set Functions
 
     /// <summary>
-    /// 플레이어가 향할 다음 타일을 현재타일의 nextTile로 지정해준다
+    /// (1) 플레이어가 향할 다음 타일을 현재타일의 nextTile로 할당하며, (2) 그 위치를 nextTilePosition에 할당한다
     /// </summary>
     /// <param name="_nextTile"></param>
     public void SetNextTile(Tile _nextTile)
     {
         nextTile = _nextTile;
-        SetNextTilePosition(_nextTile.gameObject.transform.position);
+        nextTilePosition = nextTile.transform.position;
     }
 
     /// <summary>
-    /// 플레이어가 향할 이전 타일을 현재타일의 backTile로 지정해준다
+    /// (1) 플레이어가 향할 빽도 타일을 현재타일의 backTile로 할당하며, (2) 그 위치를 backTilePosition에 할당한다
     /// </summary>
     /// <param name="_backTile"></param>
     public void SetBackTile(Tile _backTile)
     {
         backTile = _backTile;
-        SetBackTilePosition(_backTile.gameObject.transform.position);
+        backTilePosition = backTile.transform.position;
     }
 
     #endregion

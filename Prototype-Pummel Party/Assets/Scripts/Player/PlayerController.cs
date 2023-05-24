@@ -85,6 +85,8 @@ public class PlayerController : MonoBehaviour
             Vector3 start = _controller.transform.position;
             Vector3 end = _destTilePosition;
 
+            // start와 end가 같은 경우 아래 while문을 탈 필요가 없는데, 계속 타고 있음!
+
             while (t - 0.1f < 1f)
             {
                 t += Time.deltaTime;

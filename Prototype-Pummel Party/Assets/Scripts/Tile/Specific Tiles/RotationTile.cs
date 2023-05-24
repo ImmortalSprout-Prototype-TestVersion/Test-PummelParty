@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,117 +8,124 @@ public class RotationTile : Tile
 {
     [SerializeField] private GameObject arrowSwitch;
     [SerializeField] private ArrowButton[] arrowButtons;
-    private const int firstIndex = 0;
-    private const int secondIndex = 1;
 
     private Quaternion initialRotation = Quaternion.identity;
     private Quaternion targetRotation;
+    private float rotationDirection;
 
+    private const float minThreshold = 1.111f; // 최소감지가 1도 정도로 국한되서 1.111 넣은거임...
     private const float RightDirection = 1f;
     private const float LeftDirection = -1f;
-    private float rotationDirection;
-    [SerializeField] [Range(1f, 4f)] private float rotationSpeed = 2f;
 
-    private IEnumerator _StartActiveRotation;
-    private IEnumerator _StartResetRotation;
+    [SerializeField] [Range(1f, 4f)] private float rotationSpeed = 2f;
+    [SerializeField] private float timeUntilResetRotation = 2f;
+
+    //private IEnumerator _StartActiveRotation;
+    //private IEnumerator _StartResetRotation;
 
     void Start()
     {
-        _StartActiveRotation = StartActiveRotation();
-        _StartResetRotation = StartResetRotation();
+        //_StartActiveRotation = StartActiveRotation();
+        //_StartResetRotation = StartResetRotation();
 
-        //SetNextTilePosition(GetNextTile().transform.position);
-        SetBackTilePosition(GetBackTile().transform.position);
+        SetBackTile(GetBackTile());
 
         OnPlayerEnterDiretionTile -= TurnOnDirectionUI;
         OnPlayerEnterDiretionTile += TurnOnDirectionUI;
         OnPlayerLeaveDiretionTile -= TurnOffDirectionUI;
         OnPlayerLeaveDiretionTile += TurnOffDirectionUI;
 
+        foreach (ArrowButton button in arrowButtons)
+        {
+            button.OnClickDirectionUI -= ActivateTileRotation;
+            button.OnClickDirectionUI += ActivateTileRotation;
+        }
 
         OnPlayerLeaveDiretionTile -= ResetTileRotation;
         OnPlayerLeaveDiretionTile += ResetTileRotation;
-
-        arrowButtons[firstIndex].OnClickDirectionUI -= ActivateTileRotation;
-        arrowButtons[firstIndex].OnClickDirectionUI += ActivateTileRotation;
-        arrowButtons[secondIndex].OnClickDirectionUI -= ActivateTileRotation;
-        arrowButtons[secondIndex].OnClickDirectionUI += ActivateTileRotation;
     }
 
-    void Update()
-    {
-        //if (Input.GetKey(KeyCode.Space))
-        //{
-        //    RotateTile(_playerTransform : playerTransform);
-        //}
-        //else if (Input.GetKeyDown(KeyCode.Space))
-        //{
-
-        //}
-
-    }
-
-    public void TurnOnDirectionUI()
+    private void TurnOnDirectionUI()
     {
         arrowSwitch.SetActive(true);
     }
 
-    public void TurnOffDirectionUI()
+    private void TurnOffDirectionUI()
     {
         arrowSwitch.SetActive(false);
     }
 
 
-    private IEnumerator StartActiveRotation()
-    {
-        while(true)
-        {
-            while (1.111f < Quaternion.Angle(transform.rotation, targetRotation))
-            {
-                transform.Rotate(Vector3.up, rotationDirection * rotationSpeed);
-                collidedPlayerTransform.Rotate(Vector3.up, rotationDirection * rotationSpeed);
-                yield return null;
-            }
 
-            StopCoroutine(_StartActiveRotation);
-            yield return null;
+    //private IEnumerator StartActiveRotation()
+    //{
+    //    while(true)
+    //    {
+    //        while (1.111f < Quaternion.Angle(transform.rotation, targetRotation)) 
+    //        {
+    //            transform.Rotate(Vector3.up, rotationDirection * rotationSpeed);
+    //            collidedPlayerTransform.Rotate(Vector3.up, rotationDirection * rotationSpeed);
+    //            yield return null;
+    //        }
+
+    //        StopCoroutine(_StartActiveRotation); // 재사용을 위한 자식
+    //        yield return null;
+    //    }
+    //}
+
+    private async UniTaskVoid StartActiveRotation()
+    {
+        while (minThreshold < Quaternion.Angle(transform.rotation, targetRotation))
+        {
+            transform.Rotate(Vector3.up, rotationDirection * rotationSpeed);
+            collidedPlayerTransform.Rotate(Vector3.up, rotationDirection * rotationSpeed);
+            await UniTask.Yield();
         }
     }
-    
-
     private void ActivateTileRotation(float _rotation)
     {
         targetRotation = Quaternion.Euler(0f, _rotation, 0f);
         
-        if(_rotation < 0)
-        {
+        // Y축을 기준으로
+        if(_rotation < 0) // 양수면 오른쪽으로 돌고
             rotationDirection = LeftDirection;
-        }
-        else if (0 < _rotation)
-        {
+        else if (0 < _rotation) // 음수면 왼쪽으로 돈다
             rotationDirection = RightDirection;
-        }
-        StartCoroutine(_StartActiveRotation);
+        
+        //StartCoroutine(_StartActiveRotation);
+        StartActiveRotation().Forget();
     }
 
     private void ResetTileRotation()
     {
-        StartCoroutine(_StartResetRotation);
+        //StartCoroutine(_StartResetRotation);
+        StartResetRotation().Forget();
     }
 
-    private IEnumerator StartResetRotation()
+    private async UniTaskVoid StartResetRotation()
     {
-        yield return new WaitForSeconds(1f);
-        while (true)
-        {
-            while (1.111f < Quaternion.Angle(transform.rotation, initialRotation))
-            {
-                transform.Rotate(Vector3.up, -rotationDirection * rotationSpeed);
-                yield return null;
-            }
+        await UniTask.Delay(TimeSpan.FromSeconds(timeUntilResetRotation));
 
-            StopCoroutine(_StartResetRotation);
-            yield return null;
+        while (minThreshold < Quaternion.Angle(transform.rotation, initialRotation))
+        {
+            transform.Rotate(Vector3.up, -rotationDirection * rotationSpeed);
+            await UniTask.Yield();
         }
     }
+
+    //private IEnumerator StartResetRotation()
+    //{
+    //    yield return new WaitForSeconds(1f);
+    //    while (true)
+    //    {
+    //        while (1.111f < Quaternion.Angle(transform.rotation, initialRotation))
+    //        {
+    //            transform.Rotate(Vector3.up, -rotationDirection * rotationSpeed);
+    //            yield return null;
+    //        }
+
+    //        StopCoroutine(_StartResetRotation);
+    //        yield return null;
+    //    }
+    //}
 }

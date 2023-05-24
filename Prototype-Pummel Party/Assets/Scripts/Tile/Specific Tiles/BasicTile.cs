@@ -4,17 +4,10 @@ using UnityEngine;
 
 public class BasicTile : Tile
 {
-    // Start is called before the first frame update
     void Start()
     {
-        SetNextTilePosition(GetNextTile().transform.position);
-        SetBackTilePosition(GetBackTile().transform.position);
+        // next랑 backTilePosition 정해줄라고 한거임
+        SetNextTile(GetNextTile());
+        SetBackTile(GetBackTile());
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 }

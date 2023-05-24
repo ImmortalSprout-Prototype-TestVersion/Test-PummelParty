@@ -15,12 +15,8 @@ public class ArrowButton : MonoBehaviour
     private void OnMouseUpAsButton()
     {
         currentTile.SetNextTile(nextTile);
-        //Debug.Log($"{currentTile.GetNextTile().name}으로 이동함");
-        //Debug.Log($"{currentTile.GetNextTile().name}의 위치 = {currentTile.GetNextTilePosition()}");
 
         transform.parent.gameObject.SetActive(false);
         OnClickDirectionUI?.Invoke(rotationValue);
-        
-        
     }
 }
