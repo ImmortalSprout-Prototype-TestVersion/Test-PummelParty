@@ -7,7 +7,7 @@ public class Dice
     public int Roll()
     {
         int num = Random.Range(-1, 4);
-        Debug.Log($"ÁÖ»çÀ§ °á°ú: {num}");
+        Debug.Log($"ÃÃ–Â»Ã§Ã€Â§ Â°Ã¡Â°Ãº: {num}");
         return num;
     }
 }
