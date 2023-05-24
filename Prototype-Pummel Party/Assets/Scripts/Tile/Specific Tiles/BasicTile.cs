@@ -7,7 +7,8 @@ public class BasicTile : Tile
     // Start is called before the first frame update
     void Start()
     {
-        
+        SetNextTilePosition(GetNextTile().transform.position);
+        SetBackTilePosition(GetBackTile().transform.position);
     }
 
     // Update is called once per frame

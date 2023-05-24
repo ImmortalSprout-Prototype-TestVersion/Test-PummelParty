@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
     //    }
     //}
 
-    public TileManagerArray tileManager; // 테스트용
 
     public event Action OnPlayerTurnFinished;
     private bool isPlayerTurnFinished;
@@ -40,8 +39,8 @@ public class Player : MonoBehaviour
         {
             Debug.Log("타일과 닿았음");
             RotationTile rotationTile = collision.gameObject.GetComponent<RotationTile>();
-            rotationTile.GetPlayerTransform(this.transform);
         }
+
     }
 
     private void OnCollisionExit(Collision collision)
@@ -50,7 +49,6 @@ public class Player : MonoBehaviour
         {
             Debug.Log("타일에서 탈출");
             RotationTile rotationTile = collision.gameObject.GetComponent<RotationTile>();
-            rotationTile.RemovePlayerTransform();
         }
     }
 }

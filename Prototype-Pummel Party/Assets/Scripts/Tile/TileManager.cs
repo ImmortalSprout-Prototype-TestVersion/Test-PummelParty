@@ -13,7 +13,7 @@ public class TileManager : MonoBehaviour
     private void Awake()
     {
         //CreateTilePrefabs(numberOfTiles);
-        SetTiles();
+        //SetTiles();
     }
 
     private void Start()
@@ -39,31 +39,6 @@ public class TileManager : MonoBehaviour
     //    }
     //}
 
-    private void SetTiles()
-    {
-        tiles[0].SetForwardTile(tiles[1]);
-
-        tiles[1].AddBothTiles(tiles[2]);
-        tiles[1].SetBackwardTile(tiles[8]);
-
-        tiles[2].AddBothTiles(tiles[3]);
-
-        tiles[3].AddBothTiles(tiles[4]);
-
-        tiles[4].AddBothTiles(tiles[5]);
-
-        tiles[5].AddBothTiles(tiles[6]);
-
-        tiles[6].AddBothTiles(tiles[7]);
-
-        tiles[7].AddBothTiles(tiles[8]);
-
-        tiles[8].SetForwardTile(tiles[1]);
-
-        tiles[3].AddBothTiles(tiles[9]);
-        tiles[5].SetForwardTile(tiles[9]);
-        tiles[9].SetForwardTile(tiles[7]);
-        tiles[9].SetForwardTile(tiles[1]);
-    }
+    
 
 }

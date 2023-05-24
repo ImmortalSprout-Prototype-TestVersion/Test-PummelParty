@@ -51,10 +51,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    _currentTile = other.gameObject.GetComponent<Tile>();
+    //} 
+    // 은수, 우석이 collider의 isTrigger를 해제하였음. 그래서 아래의 OnCollisionEnter로 바꿈
+
+    private void OnCollisionEnter(Collision collision)
     {
-        _currentTile = other.gameObject.GetComponent<Tile>();
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Tile"))
+        {
+            _currentTile = collision.gameObject.GetComponent<Tile>();
+        }
     }
+
 
     private void ChangeDiceAvailable()
     {
@@ -100,7 +110,9 @@ public class PlayerController : MonoBehaviour
     {
         if (_moveCount >= 1)
         {
-            _destTilePosition = _currentTile.GetNextTilePositions()[0];
+            //_destTilePosition = _currentTile.GetNextTilePositions()[0];
+            // 위는 민영이가 작성한 코드인데, 옮기면서 아래로 바꿔주었음
+            _destTilePosition = _currentTile.GetNextTilePosition();  
         }
         else if(_moveCount == -1)
         {
