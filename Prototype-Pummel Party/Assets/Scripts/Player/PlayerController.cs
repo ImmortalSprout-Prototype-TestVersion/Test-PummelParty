@@ -12,8 +12,12 @@ public class PlayerController : MonoBehaviour
     private Tile _currentTile;
     private Vector3 _destTilePosition;
 
+    private int _diceResult;
     private int _moveCount = 0;
     private bool _canRoll = false;
+
+    private const int DICE_ONE = 1;
+    private const int DICE_MINUS = -1;
 
     private void Awake()
     {
@@ -90,6 +94,7 @@ public class PlayerController : MonoBehaviour
         _turnManager.EndPlayerTurn();
     }
 
+    // TODO: _diceResult랑 _moveCount 의미 제대로 생각해서 분리..
     // 주사위 수에 따라 도달할 수 있는 타일 받아옴
     private void CheckGetatableTiles()
     {
@@ -100,10 +105,11 @@ public class PlayerController : MonoBehaviour
         else if(_moveCount == -1)
         {
             _destTilePosition = _currentTile.GetBackTilePosition();
+            _moveCount = 1;
         }
-        else if (_moveCount == 0)
+        else
         {
-            Debug.Log("moveCount = 0");
+            Debug.Log("움직이지 않음");
         }
     }
 }
