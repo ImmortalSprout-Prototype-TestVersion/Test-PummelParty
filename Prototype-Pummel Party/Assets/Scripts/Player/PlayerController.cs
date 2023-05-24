@@ -1,6 +1,4 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -80,6 +78,8 @@ public class PlayerController : MonoBehaviour
             float t = 0f;
             start = _controller.transform.position;
             end = _destTilePosition;
+
+
             await LookNextDestTile((end - start).normalized);
 
             while (t - 0.1f < 1f)
@@ -111,10 +111,12 @@ public class PlayerController : MonoBehaviour
         if (_moveCount >= 1)
         {
             _destTilePosition = _currentTile.GetNextTilePositions()[0];
+            _destTilePosition.y = _controller.transform.position.y;
         }
         else if(_moveCount == -1)
         {
             _destTilePosition = _currentTile.GetBackTilePosition();
+            _destTilePosition.y = _controller.transform.position.y;
             _moveCount = 1;
         }
         else
@@ -138,7 +140,6 @@ public class PlayerController : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
-            Debug.Log(lerpval);
             _controller.transform.rotation = lerpval;
             await UniTask.NextFrame();
         }
@@ -156,9 +157,12 @@ public class PlayerController : MonoBehaviour
         while (elapsedTime < _rotateTime)
         {
             elapsedTime += Time.deltaTime;
-            var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
-            Debug.Log(lerpval);
-            _controller.transform.rotation = lerpval;
+
+            if(_controller.transform.position != _destTilePosition)
+            {
+                var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
+                _controller.transform.rotation = lerpval;
+            }
             await UniTask.NextFrame();
         }
 

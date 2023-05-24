@@ -54,12 +54,12 @@ public class GameManager : MonoBehaviour
 
     private void LoadMinigameScene()
     {
-        // SceneManager.LoadScene(minigameNumber, LoadSceneMode.Additive);
-        // Invoke("LoadBoardgameScene", 3f);
+        SceneManager.LoadScene(minigameNumber, LoadSceneMode.Additive);
+        Invoke("LoadBoardgameScene", 1f);
     }
 
     private void LoadBoardgameScene()
     {
-        // SceneManager.UnloadScene(minigameNumber);
+        SceneManager.UnloadScene(minigameNumber);
     }
 }
