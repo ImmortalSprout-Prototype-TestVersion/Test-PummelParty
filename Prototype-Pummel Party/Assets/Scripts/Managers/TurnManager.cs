@@ -31,12 +31,12 @@ public class TurnManager : MonoBehaviour
     private void StartMinigame()
     {
         Debug.Log("미니게임 시작");
-        Invoke("EndMinigame", 5f);
+        Invoke("EndMinigame", 1f);
     }
 
     private void EndMinigame()
     {
         Debug.Log("미니게임 끝");
-        Invoke("StartPlayerTurn", 3f);
+        Invoke("StartPlayerTurn", 1f);
     }
 }
