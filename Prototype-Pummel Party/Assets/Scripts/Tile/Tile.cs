@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,8 +10,17 @@ public abstract class Tile : MonoBehaviour
     public int tileIndex; // 타일 번호를 확인하기위해 만든 테스트용 코드
     private bool isPlayerOnTile = false;
 
-    [SerializeField] private List<Tile> nextTiles = new List<Tile>(); // 다음 타일의 개수는 2개 이상일수도 있기에, 리스트로 담아준다
-    [SerializeField] private Tile backTile; // 어차피 이전 타일은 무조건 1개이다
+    protected Transform collidedPlayerTransform; // 현재 타일과 부딪힌 플레이어의 참조를 받아오기 위한 변수
+
+    private Vector3 currentTilePosition; // 현재 타일의 위치
+
+    [SerializeField] private Tile nextTile; // 플레이어가 이동할 다음타일은 1개이다
+    [SerializeField] private Vector3 nextTilePosition;
+
+    [SerializeField] private Tile backTile; // 이전 타일은 1개이다
+    [SerializeField] private Vector3 backTilePosition;
+
+
 
 
     #region Check Functions
@@ -23,68 +33,103 @@ public abstract class Tile : MonoBehaviour
     {
         return isPlayerOnTile;
     }
-
     #endregion
 
     #region Get Functions
 
     /// <summary>
-    /// 다음 타일의 위치가 담긴 리스트를 반환한다
+    /// 현재 타일의 위치를 가져온다(부모 위치를 가져옴)
     /// </summary>
     /// <returns></returns>
-    public List<Vector3> GetNextTilePositions()
+    public Vector3 GetCurrentTilePosition()
     {
-        List<Vector3> nextTilePositions = new List<Vector3>();
-
-        foreach (Tile element in nextTiles)
-        {
-            nextTilePositions.Add(element.transform.position);
-        }
-        return nextTilePositions;
+        currentTilePosition = transform.parent.position;
+        return currentTilePosition;
     }
 
     /// <summary>
-    /// 이전 타일의 위치를 반환한다
+    /// 플레이어가 이동할 다음 타일을 반환한다
+    /// </summary>
+    /// <returns></returns>
+    public Tile GetNextTile()
+    {
+        if (nextTile == null)
+        {
+            Debug.Log("이동할 다음 타일은 null 이다");
+            return null;
+        }
+        return nextTile;
+    }
+
+    /// <summary>
+    /// 플레이어가 이동할 다음 타일의 위치를 반환한다
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetNextTilePosition()
+    {
+        if (nextTilePosition == null)
+        {
+            Debug.Log("이동할 다음 타일의 위치는 null이다");
+        }
+        return nextTilePosition;
+    }
+
+
+    /// <summary>
+    /// 플레이어가 이동할 빽도 타일을 반환한다
+    /// </summary>
+    /// <returns></returns>
+    public Tile GetBackTile()
+    {
+        if (backTile == null)
+        {
+            Debug.Log("이동할 빽도 타일은 null이다");
+        }
+        return backTile;
+    }
+
+
+    /// <summary>
+    /// 플레이어가 이동할 빽도 타일의 위치를 반환한다
     /// </summary>
     /// <returns></returns>
     public Vector3 GetBackTilePosition()
     {
-        return backTile.transform.position; 
+        if (backTilePosition == null)
+        {
+            Debug.Log("다음에 이동할 빽도 타일의 위치는 null이다");
+        }
+        return backTilePosition;
     }
 
     #endregion
 
-    #region Add Tiles
-    
+    #region Set Functions
+
     /// <summary>
-    /// 현재 타일의 다음 타일리스트와 이전타일을 _newTile로 지정한다
+    /// (1) 플레이어가 향할 다음 타일을 현재타일의 nextTile로 할당하며, (2) 그 위치를 nextTilePosition에 할당한다
     /// </summary>
-    /// <param name="_newTile"></param>
-    public void AddBothTiles(Tile _newTile)
+    /// <param name="_nextTile"></param>
+    public void SetNextTile(Tile _nextTile)
     {
-        SetForwardTile(_newTile);
-        _newTile.SetBackwardTile(this);
+        nextTile = _nextTile;
+        nextTilePosition = nextTile.transform.parent.position;
     }
 
     /// <summary>
-    /// 현재 타일의 다음 타일리스트에 _newTile을 추가한다
+    /// (1) 플레이어가 향할 빽도 타일을 현재타일의 backTile로 할당하며, (2) 그 위치를 backTilePosition에 할당한다
     /// </summary>
-    /// <param name="_newTile"></param>
-    public void SetForwardTile(Tile _newTile)
+    /// <param name="_backTile"></param>
+    public void SetBackTile(Tile _backTile)
     {
-        nextTiles.Add(_newTile);
-    }
-
-    /// <summary>
-    /// 현재 타일의 이전 타일을 _newTile로 지정한다
-    /// </summary>
-    /// <param name="_newTile"></param>
-    public void SetBackwardTile(Tile _newTile)
-    {
-        backTile = _newTile;
+        backTile = _backTile;
+        backTilePosition = backTile.transform.parent.position;
     }
 
     #endregion
+
+    protected event Action OnPlayerEnterDiretionTile;
+    protected event Action OnPlayerLeaveDiretionTile;
 
     #region Other Functions
 
@@ -93,6 +138,8 @@ public abstract class Tile : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isPlayerOnTile = true;
+            OnPlayerEnterDiretionTile?.Invoke();
+            collidedPlayerTransform = collision.transform;
         }
     }
 
@@ -101,6 +148,8 @@ public abstract class Tile : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isPlayerOnTile = false;
+            OnPlayerLeaveDiretionTile?.Invoke();
+            collidedPlayerTransform = null;
         }
     }
 
