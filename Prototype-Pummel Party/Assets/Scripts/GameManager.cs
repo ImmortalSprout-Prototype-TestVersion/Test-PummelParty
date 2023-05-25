@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     private const int minigameNumber = 1;
     public int playerCount = 4;
 
-    public Player player;
 
     private static GameManager instance = null;
     public static GameManager Instance
