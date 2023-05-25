@@ -46,15 +46,10 @@ public class GameManager : MonoBehaviour
         _turnManager.OnTurnEnd += LoadMinigameScene;
     }
 
-    void Update()
-    {
-        
-    }
-
     private void LoadMinigameScene()
     {
         SceneManager.LoadScene(minigameNumber, LoadSceneMode.Additive);
-        Invoke("LoadBoardgameScene", 3f);
+        Invoke("LoadBoardgameScene", 2f);
     }
 
     private void LoadBoardgameScene()
