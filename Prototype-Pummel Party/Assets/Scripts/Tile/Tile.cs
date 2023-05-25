@@ -135,7 +135,7 @@ public abstract class Tile : MonoBehaviour
     /// (1) 플레이어가 향할 다음 타일을 현재타일의 defaultTile로 할당하며, (2) 그 위치를 defaultTilePosition에 할당한다
     /// </summary>
     /// <param name="_defaultTile"></param>
-    public void SetDefaultTile(Tile _defaultTile)
+    protected void SetDefaultTile(Tile _defaultTile)
     {
         if (_defaultTile != null)
         {
@@ -151,6 +151,7 @@ public abstract class Tile : MonoBehaviour
     /// <param name="_nextTile"></param>
     public void SetNextTile(Tile _nextTile)
     {
+        // SetNextTile만 Public인 이유는, ArrowButton에서 호출을 해야하기 때문이다!
         if (_nextTile != null)
         {
             nextTile = _nextTile;
@@ -162,7 +163,7 @@ public abstract class Tile : MonoBehaviour
     /// (1) 플레이어가 향할 빽도 타일을 현재타일의 backTile로 할당하며, (2) 그 위치를 backTilePosition에 할당한다
     /// </summary>
     /// <param name="_backTile"></param>
-    public void SetBackTile(Tile _backTile)
+    protected void SetBackTile(Tile _backTile)
     {
         backTile = _backTile;
         backTilePosition = backTile.transform.parent.position;
