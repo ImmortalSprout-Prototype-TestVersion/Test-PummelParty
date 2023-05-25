@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Debug.Log("이동 끝");
-        await LookCamera();
+        await LookForward();
 
         Debug.Log("회전 끝");
         _turnManager.EndPlayerTurn();
