@@ -1,27 +1,31 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private TurnManager _turnManager;
-    [SerializeField] private GameObject _controller;
+    [SerializeField] private TurnManager _turnManager;  // TODO: 턴매니저 게임매니저 통해서 접근할 수 있도록 수정
+    
+    private GameObject _controller;
+    private float _rotateTime = 1f;
 
     private Dice _dice;
+    
     private Tile _currentTile;
     private Vector3 _destTilePosition;
 
-    private int _diceResult;
     private int _moveCount = 0;
     private bool _canRoll = false;
 
-    private const int DICE_ONE = 1;
-    private const int DICE_MINUS = -1;
+    public enum DICE_RESULT
+    {
+        Back = -1,
+        Move = 1,
+    }
 
     private void Awake()
     {
         _dice = new Dice();
+        _controller = transform.parent.gameObject;
     }
 
     private void OnEnable()
@@ -37,9 +41,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if(_canRoll == false)
+            if (_canRoll == false)
             {
                 return;
             }
@@ -51,10 +55,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        _currentTile = other.gameObject.GetComponent<Tile>();
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Tile"))
+        {
+            _currentTile = collision.gameObject.GetComponent<Tile>();
+        }
     }
+
 
     private void ChangeDiceAvailable()
     {
@@ -69,28 +77,37 @@ public class PlayerController : MonoBehaviour
     private async UniTaskVoid Move()
     {
         // 주사위 카운트가 남아있는 동안 한 칸 씩 이동
+        Vector3 start = Vector3.zero;
+        Vector3 end = Vector3.zero;
+
         while (_moveCount >= 1)
         {
             float t = 0f;
-            Vector3 start = _controller.transform.position;
-            Vector3 end = _destTilePosition;
+            start = _controller.transform.position;
+            end = _destTilePosition;
+
+
+            await LookNextDestTile((end - start).normalized);
 
             while (t - 0.1f < 1f)
             {
                 t += Time.deltaTime;
                 _controller.transform.position = Vector3.Lerp(start, end, t / 1f);
-                await UniTask.Yield(); // yield return null;
+                await UniTask.NextFrame(); // yield return null;
             }
 
             Debug.Log($"Left MoveCount : {_moveCount}");
             _moveCount -= 1;
-            CheckGetatableTiles();
 
+            CheckGetatableTiles();
             // await UniTask.Delay(100);  => yield return new WaitForSeconds(100);
-            await UniTask.Yield();
+            await UniTask.NextFrame();
         }
 
         Debug.Log("이동 끝");
+        await LookForward();
+
+        Debug.Log("회전 끝");
         _turnManager.EndPlayerTurn();
     }
 
@@ -100,16 +117,64 @@ public class PlayerController : MonoBehaviour
     {
         if (_moveCount >= 1)
         {
-            _destTilePosition = _currentTile.GetNextTilePositions()[0];
+            // TODO: 타일 프리팹 다시 완성 후 주석 해제 및 테스트
+            // _destTilePosition = _currentTile.GetNextTilePosition();
         }
-        else if(_moveCount == -1)
+        else if (_moveCount == -1)
         {
             _destTilePosition = _currentTile.GetBackTilePosition();
+            _destTilePosition.y = _controller.transform.position.y;
             _moveCount = 1;
         }
         else
         {
             Debug.Log("움직이지 않음");
         }
+    }
+
+    // TODO: 타일 설치 후 테스트 다시 해야 함 (방향 확인)
+    // 이동이 끝난 후 정면 바라보기
+    private async UniTask<bool> LookForward()
+    {
+        // Vector3 camDir = Camera.main.transform.position - _controller.transform.position; // 카메라 보는 방향벡터
+        Vector3 camDir = Vector3.forward; // 바라봐야하는 방향 벡터
+        camDir.y = _controller.transform.position.y;
+        camDir = camDir.normalized;
+
+        Quaternion start = _controller.transform.rotation;
+        Quaternion end = Quaternion.LookRotation(camDir, _controller.transform.up);
+
+        float elapsedTime = 0f;
+        while (elapsedTime < _rotateTime)
+        {
+            elapsedTime += Time.deltaTime;
+            var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
+            _controller.transform.rotation = lerpval;
+            await UniTask.NextFrame();
+        }
+
+        return true;
+    }
+
+    // 이동하기 위해 목적지 타일 방향으로 회전
+    private async UniTask<bool> LookNextDestTile(Vector3 dir)
+    {
+        Quaternion start = _controller.transform.rotation;
+        Quaternion end = Quaternion.LookRotation(dir);
+
+        float elapsedTime = 0f;
+        while (elapsedTime < _rotateTime)
+        {
+            elapsedTime += Time.deltaTime;
+
+            if (_controller.transform.position != _destTilePosition)
+            {
+                var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
+                _controller.transform.rotation = lerpval;
+            }
+            await UniTask.NextFrame();
+        }
+
+        return true;
     }
 }
