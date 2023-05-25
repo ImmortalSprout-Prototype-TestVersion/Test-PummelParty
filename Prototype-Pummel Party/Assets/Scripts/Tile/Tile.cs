@@ -11,7 +11,9 @@ public abstract class Tile : MonoBehaviour
     private bool isPlayerOnTile = false;
 
     protected Transform collidedPlayerTransform; // 현재 타일과 부딪힌 플레이어의 참조를 받아오기 위한 변수
-    
+
+    private Vector3 currentTilePosition; // 현재 타일의 위치
+
     [SerializeField] private Tile nextTile; // 플레이어가 이동할 다음타일은 1개이다
     [SerializeField] private Vector3 nextTilePosition;
 
@@ -34,6 +36,17 @@ public abstract class Tile : MonoBehaviour
     #endregion
 
     #region Get Functions
+
+    /// <summary>
+    /// 현재 타일의 위치를 가져온다(부모 위치를 가져옴)
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetCurrentTilePosition()
+    {
+        currentTilePosition = transform.parent.position;
+        return currentTilePosition;
+    }
+
     /// <summary>
     /// 플레이어가 이동할 다음 타일을 반환한다
     /// </summary>
@@ -100,7 +113,7 @@ public abstract class Tile : MonoBehaviour
     public void SetNextTile(Tile _nextTile)
     {
         nextTile = _nextTile;
-        nextTilePosition = nextTile.transform.position;
+        nextTilePosition = nextTile.transform.parent.position;
     }
 
     /// <summary>
@@ -110,7 +123,7 @@ public abstract class Tile : MonoBehaviour
     public void SetBackTile(Tile _backTile)
     {
         backTile = _backTile;
-        backTilePosition = backTile.transform.position;
+        backTilePosition = backTile.transform.parent.position;
     }
 
     #endregion
