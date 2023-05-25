@@ -75,9 +75,9 @@ public class RotationTile : Tile
 
     private async UniTaskVoid StartActiveRotation()
     {
-        while (minThreshold < Quaternion.Angle(transform.rotation, targetRotation))
+        while (minThreshold < Quaternion.Angle(transform.parent.rotation, targetRotation))
         {
-            transform.Rotate(Vector3.up, rotationDirection * rotationSpeed);
+            transform.parent.Rotate(Vector3.up, rotationDirection * rotationSpeed);
             collidedPlayerTransform.Rotate(Vector3.up, rotationDirection * rotationSpeed);
             await UniTask.Yield();
         }
@@ -106,9 +106,9 @@ public class RotationTile : Tile
     {
         await UniTask.Delay(TimeSpan.FromSeconds(timeUntilResetRotation));
 
-        while (minThreshold < Quaternion.Angle(transform.rotation, initialRotation))
+        while (minThreshold < Quaternion.Angle(transform.parent.rotation, initialRotation))
         {
-            transform.Rotate(Vector3.up, -rotationDirection * rotationSpeed);
+            transform.parent.Rotate(Vector3.up, -rotationDirection * rotationSpeed);
             await UniTask.Yield();
         }
     }
