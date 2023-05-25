@@ -28,7 +28,7 @@ public class RotationTile : Tile
         //_StartActiveRotation = StartActiveRotation();
         //_StartResetRotation = StartResetRotation();
 
-        SetBackTile(GetBackTile());
+        //SetBackTile(GetBackTile());
 
         OnPlayerEnterDiretionTile -= TurnOnDirectionUI;
         OnPlayerEnterDiretionTile += TurnOnDirectionUI;
