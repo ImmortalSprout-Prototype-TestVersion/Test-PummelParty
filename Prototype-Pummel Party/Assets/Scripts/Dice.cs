@@ -7,7 +7,7 @@ public class Dice
     public int Roll()
     {
         int num = Random.Range(-1, 4);
-        Debug.Log($"주사위 결과: {num}");
+        Debug.Log($"나온 주사위값 =  {num}");
         return num;
     }
 }

@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private TurnManager _turnManager;
-
     private const int boardgameNumber = 0;
     private const int minigameNumber = 1;
     public int playerCount = 4;
@@ -43,8 +41,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        _turnManager.OnTurnEnd -= LoadMinigameScene;
-        _turnManager.OnTurnEnd += LoadMinigameScene;
+        //player.OnPlayerTurnFinished -= LoadMinigameScene;
+        //player.OnPlayerTurnFinished += LoadMinigameScene;
     }
 
     void Update()
@@ -60,6 +58,6 @@ public class GameManager : MonoBehaviour
 
     private void LoadBoardgameScene()
     {
-        SceneManager.UnloadScene(minigameNumber);
+        SceneManager.LoadScene(boardgameNumber);
     }
 }

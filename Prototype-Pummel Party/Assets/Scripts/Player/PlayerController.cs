@@ -52,10 +52,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    _currentTile = other.gameObject.GetComponent<Tile>();
+    //} 
+    // ì€ìˆ˜, ìš°ì„ì´ colliderì˜ isTriggerë¥¼ í•´ì œí•˜ì˜€ìŒ. ê·¸ë˜ì„œ ì•„ë˜ì˜ OnCollisionEnterë¡œ ë°”ê¿ˆ
+
+    private void OnCollisionEnter(Collision collision)
     {
-        _currentTile = other.gameObject.GetComponent<Tile>();
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Tile"))
+        {
+            _currentTile = collision.gameObject.GetComponent<Tile>();
+        }
     }
+
 
     private void ChangeDiceAvailable()
     {
@@ -69,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
     private async UniTaskVoid Move()
     {
-        // ÁÖ»çÀ§ Ä«¿îÆ®°¡ ³²¾ÆÀÖ´Â µ¿¾È ÇÑ Ä­ ¾¿ ÀÌµ¿
+        // ì£¼ì‚¬ìœ„ ì¹´ìš´íŠ¸ê°€ ë‚¨ì•„ìˆëŠ” ë™ì•ˆ í•œ ì¹¸ ì”© ì´ë™
         Vector3 start = Vector3.zero;
         Vector3 end = Vector3.zero;
 
@@ -97,21 +107,21 @@ public class PlayerController : MonoBehaviour
             await UniTask.NextFrame();
         }
 
-        Debug.Log("ÀÌµ¿ ³¡");
+        Debug.Log("ì´ë™ ë");
         await LookCamera();
 
-        Debug.Log("È¸Àü ³¡");
+        Debug.Log("íšŒì „ ë");
         _turnManager.EndPlayerTurn();
     }
 
-    // TODO: _diceResult¶û _moveCount ÀÇ¹Ì Á¦´ë·Î »ı°¢ÇØ¼­ ºĞ¸®..
-    // ÁÖ»çÀ§ ¼ö¿¡ µû¶ó µµ´ŞÇÒ ¼ö ÀÖ´Â Å¸ÀÏ ¹Ş¾Æ¿È
+    // TODO: _diceResultë‘ _moveCount ì˜ë¯¸ ì œëŒ€ë¡œ ìƒê°í•´ì„œ ë¶„ë¦¬..
+    // ì£¼ì‚¬ìœ„ ìˆ˜ì— ë”°ë¼ ë„ë‹¬í•  ìˆ˜ ìˆëŠ” íƒ€ì¼ ë°›ì•„ì˜´
     private void CheckGetatableTiles()
     {
         if (_moveCount >= 1)
         {
-            _destTilePosition = _currentTile.GetNextTilePositions()[0];
-            _destTilePosition.y = _controller.transform.position.y;
+            // ìœ„ëŠ” ë¯¼ì˜ì´ê°€ ì‘ì„±í•œ ì½”ë“œì¸ë°, ì˜®ê¸°ë©´ì„œ ì•„ë˜ë¡œ ë°”ê¿”ì£¼ì—ˆìŒ
+            _destTilePosition = _currentTile.GetNextTilePosition();
         }
         else if(_moveCount == -1)
         {
@@ -121,14 +131,14 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Debug.Log("¿òÁ÷ÀÌÁö ¾ÊÀ½");
+            Debug.Log("ì›€ì§ì´ì§€ ì•ŠìŒ");
         }
     }
 
-    // ÀÌµ¿ÀÌ ³¡³­ ÈÄ Á¤¸é(Ä«¸Ş¶ó ¹æÇâ) ¹Ù¶óº¸±â
+    // ì´ë™ì´ ëë‚œ í›„ ì •ë©´(ì¹´ë©”ë¼ ë°©í–¥) ë°”ë¼ë³´ê¸°
     private async UniTask<bool> LookCamera()
     {
-        Vector3 camDir = Camera.main.transform.position - _controller.transform.position; // Ä«¸Ş¶ó º¸´Â ¹æÇâº¤ÅÍ
+        Vector3 camDir = Camera.main.transform.position - _controller.transform.position; // ì¹´ë©”ë¼ ë³´ëŠ” ë°©í–¥ë²¡í„°
         camDir.y = _controller.transform.position.y;
         camDir = camDir.normalized;
 
@@ -147,7 +157,7 @@ public class PlayerController : MonoBehaviour
         return true;
     }
 
-    // ÀÌµ¿ÇÏ±â À§ÇØ ¸ñÀûÁö Å¸ÀÏ ¹æÇâÀ¸·Î È¸Àü
+    // ì´ë™í•˜ê¸° ìœ„í•´ ëª©ì ì§€ íƒ€ì¼ ë°©í–¥ìœ¼ë¡œ íšŒì „
     private async UniTask<bool> LookNextDestTile(Vector3 dir)
     {
         Quaternion start = _controller.transform.rotation;
