@@ -21,9 +21,10 @@ public class RotationTile : Tile
     [SerializeField] private float timeUntilResetRotation = 2f;
 
 
-    void Start()
+    private void Start()
     {
-        //SetBackTile(GetBackTile());
+        SetNextTile(GetNextTile());
+        SetBackTile(GetBackTile());
 
         // 주사위를 굴리고 난 후, 이벤트에 TurnOnDirectionUI 함수를 구독해줘야함
         //OnPlayerEnterDiretionTile -= TurnOnDirectionUI;
@@ -39,6 +40,15 @@ public class RotationTile : Tile
 
         OnPlayerLeaveDiretionTile -= ResetTileRotation;
         OnPlayerLeaveDiretionTile += ResetTileRotation;
+    }
+
+    private void OnDisable()
+    {
+        foreach (ArrowButton button in arrowButtons)
+        {
+            button.OnClickDirectionUI -= ActivateTileRotation;
+        }
+        OnPlayerLeaveDiretionTile -= ResetTileRotation;
     }
 
     private void TurnOnDirectionUI()
@@ -77,15 +87,16 @@ public class RotationTile : Tile
             collidedPlayerTransform.Rotate(Vector3.up, rotationDirection * rotationSpeed);
             await UniTask.Yield();
         }
+        transform.parent.rotation = targetRotation; // 1.111f 의 차이를 없애주기 위해 targetRotation 으로 변경해준다
     }
     private void ActivateTileRotation(float _rotation)
     {
         targetRotation = Quaternion.Euler(0f, _rotation, 0f);
 
         // Y축을 기준으로
-        if (_rotation < 0) // 양수면 오른쪽으로 돌고
+        if (_rotation < 0) // 음수면 왼쪽으로 돌고
             rotationDirection = LeftDirection;
-        else if (0 < _rotation) // 음수면 왼쪽으로 돈다
+        else if (0 < _rotation) // 양수라면 오른쪽으로 돈다
             rotationDirection = RightDirection;
 
         //StartCoroutine(_StartActiveRotation);
@@ -107,6 +118,7 @@ public class RotationTile : Tile
             transform.parent.Rotate(Vector3.up, -rotationDirection * rotationSpeed);
             await UniTask.Yield();
         }
+        transform.parent.rotation = initialRotation; // 1.111f 의 차이를 없애주기 위해 initalRotation 으로 변경해준다
     }
 
     //private IEnumerator StartResetRotation()

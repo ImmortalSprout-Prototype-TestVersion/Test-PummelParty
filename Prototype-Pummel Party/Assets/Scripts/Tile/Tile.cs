@@ -113,8 +113,11 @@ public abstract class Tile : MonoBehaviour
     /// <param name="_nextTile"></param>
     public void SetNextTile(Tile _nextTile)
     {
-        nextTile = _nextTile;
-        nextTilePosition = nextTile.transform.parent.position;
+        if (_nextTile != null)
+        {
+            nextTile = _nextTile;
+            nextTilePosition = nextTile.transform.parent.position;
+        }
     }
 
     /// <summary>
