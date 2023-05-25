@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class RotationTile : Tile
 {
+    [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
     [SerializeField] private GameObject arrowSwitch;
     [SerializeField] private ArrowButton[] arrowButtons;
 
@@ -16,13 +17,14 @@ public class RotationTile : Tile
     private const float minThreshold = 1.111f; // 최소감지가 1도 정도로 국한되서 1.111 넣은거임...
     private const float RightDirection = 1f;
     private const float LeftDirection = -1f;
-
+    [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
     [SerializeField][Range(1f, 4f)] private float rotationSpeed = 2f;
     [SerializeField] private float timeUntilResetRotation = 2f;
 
 
     private void Start()
     {
+        SetDefaultTile(GetDefaultTile());
         SetNextTile(GetNextTile());
         SetBackTile(GetBackTile());
 
@@ -32,6 +34,8 @@ public class RotationTile : Tile
         //OnPlayerLeaveDiretionTile -= TurnOffDirectionUI;
         //OnPlayerLeaveDiretionTile += TurnOffDirectionUI;
 
+        
+
         foreach (ArrowButton button in arrowButtons)
         {
             button.OnClickDirectionUI -= ActivateTileRotation;
@@ -40,7 +44,12 @@ public class RotationTile : Tile
 
         OnPlayerLeaveDiretionTile -= ResetTileRotation;
         OnPlayerLeaveDiretionTile += ResetTileRotation;
+        OnPlayerLeaveDiretionTile -= ResetDefaultTile;
+        OnPlayerLeaveDiretionTile += ResetDefaultTile;
     }
+
+   
+
 
     private void OnDisable()
     {
@@ -61,7 +70,10 @@ public class RotationTile : Tile
         arrowSwitch.SetActive(false);
     }
 
-
+    private void ResetDefaultTile()
+    {
+        SetNextTile(GetDefaultTile());
+    }
 
     //private IEnumerator StartActiveRotation()
     //{

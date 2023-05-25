@@ -14,9 +14,15 @@ public abstract class Tile : MonoBehaviour
 
     private Vector3 currentTilePosition; // 현재 타일의 위치
 
+    [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
+    [SerializeField] private Tile defaultTile; // 기본 타일
+    [SerializeField] private Vector3 defaultTilePosition;
+
+    [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
     [SerializeField] private Tile nextTile; // 플레이어가 이동할 다음타일은 1개이다
     [SerializeField] private Vector3 nextTilePosition;
 
+    [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
     [SerializeField] private Tile backTile; // 이전 타일은 1개이다
     [SerializeField] private Vector3 backTilePosition;
 
@@ -36,6 +42,16 @@ public abstract class Tile : MonoBehaviour
     #endregion
 
     #region Get Functions
+
+    public Tile GetDefaultTile()
+    {
+        return defaultTile;
+    }
+
+    public Vector3 GetDefaultTilePosition()
+    {
+        return defaultTilePosition;
+    }
 
     /// <summary>
     /// 현재 타일의 위치를 가져온다(부모 위치를 가져옴)
@@ -106,6 +122,20 @@ public abstract class Tile : MonoBehaviour
     #endregion
 
     #region Set Functions
+
+    /// <summary>
+    /// (1) 플레이어가 향할 다음 타일을 현재타일의 defaultTile로 할당하며, (2) 그 위치를 defaultTilePosition에 할당한다
+    /// </summary>
+    /// <param name="_defaultTile"></param>
+    public void SetDefaultTile(Tile _defaultTile)
+    {
+        if (_defaultTile != null)
+        {
+            defaultTile = _defaultTile;
+            defaultTilePosition = defaultTile.transform.parent.position;
+        }
+    }
+
 
     /// <summary>
     /// (1) 플레이어가 향할 다음 타일을 현재타일의 nextTile로 할당하며, (2) 그 위치를 nextTilePosition에 할당한다
