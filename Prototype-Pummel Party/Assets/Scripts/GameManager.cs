@@ -52,7 +52,8 @@ public class GameManager : MonoBehaviour
 
     private void LoadMinigameScene()
     {
-        SceneManager.LoadScene(minigameNumber);
+        SceneManager.LoadScene(minigameNumber, LoadSceneMode.Additive);
+        Invoke("LoadBoardgameScene", 1f);
     }
 
     private void LoadBoardgameScene()

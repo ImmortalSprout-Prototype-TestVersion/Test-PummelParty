@@ -1,13 +1,11 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private TurnManager _turnManager;
     [SerializeField] private GameObject _controller;
-
+    [SerializeField] private float _rotateTime = 1f;
     private Dice _dice;
     private Tile _currentTile;
     private Vector3 _destTilePosition;
@@ -16,8 +14,11 @@ public class PlayerController : MonoBehaviour
     private int _moveCount = 0;
     private bool _canRoll = false;
 
-    private const int DICE_ONE = 1;
-    private const int DICE_MINUS = -1;
+    public enum DICE_RESULT
+    {
+        Back = -1,
+        Move = 1,
+    }
 
     private void Awake()
     {
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
     //{
     //    _currentTile = other.gameObject.GetComponent<Tile>();
     //} 
-    // Àº¼ö, ¿ì¼®ÀÌ colliderÀÇ isTrigger¸¦ ÇØÁ¦ÇÏ¿´À½. ±×·¡¼­ ¾Æ·¡ÀÇ OnCollisionEnter·Î ¹Ù²Ş
+    // ì€ìˆ˜, ìš°ì„ì´ colliderì˜ isTriggerë¥¼ í•´ì œí•˜ì˜€ìŒ. ê·¸ë˜ì„œ ì•„ë˜ì˜ OnCollisionEnterë¡œ ë°”ê¿ˆ
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -78,52 +79,103 @@ public class PlayerController : MonoBehaviour
 
     private async UniTaskVoid Move()
     {
-        // ÁÖ»çÀ§ Ä«¿îÆ®°¡ ³²¾ÆÀÖ´Â µ¿¾È ÇÑ Ä­ ¾¿ ÀÌµ¿
+        // ì£¼ì‚¬ìœ„ ì¹´ìš´íŠ¸ê°€ ë‚¨ì•„ìˆëŠ” ë™ì•ˆ í•œ ì¹¸ ì”© ì´ë™
+        Vector3 start = Vector3.zero;
+        Vector3 end = Vector3.zero;
+
         while (_moveCount >= 1)
         {
             float t = 0f;
-            Vector3 start = _controller.transform.position;
-            Vector3 end = _destTilePosition;
+            start = _controller.transform.position;
+            end = _destTilePosition;
 
-            // start¿Í end°¡ °°Àº °æ¿ì ¾Æ·¡ while¹®À» Å» ÇÊ¿ä°¡ ¾ø´Âµ¥, °è¼Ó Å¸°í ÀÖÀ½!
+
+            await LookNextDestTile((end - start).normalized);
 
             while (t - 0.1f < 1f)
             {
                 t += Time.deltaTime;
                 _controller.transform.position = Vector3.Lerp(start, end, t / 1f);
-                await UniTask.Yield(); // yield return null;
+                await UniTask.NextFrame(); // yield return null;
             }
 
             Debug.Log($"Left MoveCount : {_moveCount}");
             _moveCount -= 1;
+            
             CheckGetatableTiles();
-
             // await UniTask.Delay(100);  => yield return new WaitForSeconds(100);
-            await UniTask.Yield();
+            await UniTask.NextFrame();
         }
 
-        Debug.Log("ÀÌµ¿ ³¡");
+        Debug.Log("ì´ë™ ë");
+        await LookCamera();
+
+        Debug.Log("íšŒì „ ë");
         _turnManager.EndPlayerTurn();
     }
 
-    // TODO: _diceResult¶û _moveCount ÀÇ¹Ì Á¦´ë·Î »ı°¢ÇØ¼­ ºĞ¸®..
-    // ÁÖ»çÀ§ ¼ö¿¡ µû¶ó µµ´ŞÇÒ ¼ö ÀÖ´Â Å¸ÀÏ ¹Ş¾Æ¿È
+    // TODO: _diceResultë‘ _moveCount ì˜ë¯¸ ì œëŒ€ë¡œ ìƒê°í•´ì„œ ë¶„ë¦¬..
+    // ì£¼ì‚¬ìœ„ ìˆ˜ì— ë”°ë¼ ë„ë‹¬í•  ìˆ˜ ìˆëŠ” íƒ€ì¼ ë°›ì•„ì˜´
     private void CheckGetatableTiles()
     {
         if (_moveCount >= 1)
         {
-            //_destTilePosition = _currentTile.GetNextTilePositions()[0];
-            // À§´Â ¹Î¿µÀÌ°¡ ÀÛ¼ºÇÑ ÄÚµåÀÎµ¥, ¿Å±â¸é¼­ ¾Æ·¡·Î ¹Ù²ãÁÖ¾úÀ½
-            _destTilePosition = _currentTile.GetNextTilePosition();  
+            // ìœ„ëŠ” ë¯¼ì˜ì´ê°€ ì‘ì„±í•œ ì½”ë“œì¸ë°, ì˜®ê¸°ë©´ì„œ ì•„ë˜ë¡œ ë°”ê¿”ì£¼ì—ˆìŒ
+            _destTilePosition = _currentTile.GetNextTilePosition();
         }
         else if(_moveCount == -1)
         {
             _destTilePosition = _currentTile.GetBackTilePosition();
+            _destTilePosition.y = _controller.transform.position.y;
             _moveCount = 1;
         }
         else
         {
-            Debug.Log("¿òÁ÷ÀÌÁö ¾ÊÀ½");
+            Debug.Log("ì›€ì§ì´ì§€ ì•ŠìŒ");
         }
+    }
+
+    // ì´ë™ì´ ëë‚œ í›„ ì •ë©´(ì¹´ë©”ë¼ ë°©í–¥) ë°”ë¼ë³´ê¸°
+    private async UniTask<bool> LookCamera()
+    {
+        Vector3 camDir = Camera.main.transform.position - _controller.transform.position; // ì¹´ë©”ë¼ ë³´ëŠ” ë°©í–¥ë²¡í„°
+        camDir.y = _controller.transform.position.y;
+        camDir = camDir.normalized;
+
+        Quaternion start = _controller.transform.rotation;
+        Quaternion end = Quaternion.LookRotation(camDir, _controller.transform.up);
+
+        float elapsedTime = 0f;
+        while(elapsedTime < _rotateTime)
+        {
+            elapsedTime += Time.deltaTime;
+            var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
+            _controller.transform.rotation = lerpval;
+            await UniTask.NextFrame();
+        }
+
+        return true;
+    }
+
+    // ì´ë™í•˜ê¸° ìœ„í•´ ëª©ì ì§€ íƒ€ì¼ ë°©í–¥ìœ¼ë¡œ íšŒì „
+    private async UniTask<bool> LookNextDestTile(Vector3 dir)
+    {
+        Quaternion start = _controller.transform.rotation;
+        Quaternion end = Quaternion.LookRotation(dir);
+
+        float elapsedTime = 0f;
+        while (elapsedTime < _rotateTime)
+        {
+            elapsedTime += Time.deltaTime;
+
+            if(_controller.transform.position != _destTilePosition)
+            {
+                var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
+                _controller.transform.rotation = lerpval;
+            }
+            await UniTask.NextFrame();
+        }
+
+        return true;
     }
 }
