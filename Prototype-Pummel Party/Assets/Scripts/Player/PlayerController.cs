@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private TurnManager _turnManager;  // TODO: 턴매니저 게임매니저 통해서 접근할 수 있도록 수정
-    
-    private GameObject _controller;
+    [SerializeField] private TurnManager _turnManager;
     private float _rotateTime = 1f;
 
     private Dice _dice;
@@ -25,7 +23,6 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _dice = new Dice();
-        _controller = transform.parent.gameObject;
     }
 
     private void OnEnable()
@@ -80,27 +77,30 @@ public class PlayerController : MonoBehaviour
         Vector3 start = Vector3.zero;
         Vector3 end = Vector3.zero;
 
+        if (transform.position == _destTilePosition)
+        {
+            return;
+        }
+
         while (_moveCount >= 1)
         {
-            float t = 0f;
-            start = _controller.transform.position;
+            float elapsedTime = 0f;
+            start = transform.position;
             end = _destTilePosition;
-
 
             await LookNextDestTile((end - start).normalized);
 
-            while (t - 0.1f < 1f)
+            while (elapsedTime - 0.1f < 1f)
             {
-                t += Time.deltaTime;
-                _controller.transform.position = Vector3.Lerp(start, end, t / 1f);
-                await UniTask.NextFrame(); // yield return null;
+                elapsedTime += Time.deltaTime;
+                transform.position = Vector3.Lerp(start, end, elapsedTime / 1f);
+                await UniTask.NextFrame();
             }
 
             Debug.Log($"Left MoveCount : {_moveCount}");
             _moveCount -= 1;
 
             CheckGetatableTiles();
-            // await UniTask.Delay(100);  => yield return new WaitForSeconds(100);
             await UniTask.NextFrame();
         }
 
@@ -117,13 +117,12 @@ public class PlayerController : MonoBehaviour
     {
         if (_moveCount >= 1)
         {
-            // TODO: 타일 프리팹 다시 완성 후 주석 해제 및 테스트
-            // _destTilePosition = _currentTile.GetNextTilePosition();
+            _destTilePosition = _currentTile.GetNextTilePosition();
         }
         else if (_moveCount == -1)
         {
             _destTilePosition = _currentTile.GetBackTilePosition();
-            _destTilePosition.y = _controller.transform.position.y;
+            _destTilePosition.y = transform.position.y;
             _moveCount = 1;
         }
         else
@@ -132,24 +131,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // TODO: 타일 설치 후 테스트 다시 해야 함 (방향 확인)
     // 이동이 끝난 후 정면 바라보기
     private async UniTask<bool> LookForward()
     {
-        // Vector3 camDir = Camera.main.transform.position - _controller.transform.position; // 카메라 보는 방향벡터
-        Vector3 camDir = Vector3.forward; // 바라봐야하는 방향 벡터
-        camDir.y = _controller.transform.position.y;
+        Vector3 camDir = Vector3.forward * -1f; // 바라봐야하는 방향 벡터
+        camDir.y = transform.position.y;
         camDir = camDir.normalized;
 
-        Quaternion start = _controller.transform.rotation;
-        Quaternion end = Quaternion.LookRotation(camDir, _controller.transform.up);
+        Quaternion start = transform.rotation;
+        Quaternion end = Quaternion.LookRotation(camDir, transform.up);
 
         float elapsedTime = 0f;
         while (elapsedTime < _rotateTime)
         {
             elapsedTime += Time.deltaTime;
             var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
-            _controller.transform.rotation = lerpval;
+            transform.rotation = lerpval;
             await UniTask.NextFrame();
         }
 
@@ -159,7 +156,7 @@ public class PlayerController : MonoBehaviour
     // 이동하기 위해 목적지 타일 방향으로 회전
     private async UniTask<bool> LookNextDestTile(Vector3 dir)
     {
-        Quaternion start = _controller.transform.rotation;
+        Quaternion start = transform.rotation;
         Quaternion end = Quaternion.LookRotation(dir);
 
         float elapsedTime = 0f;
@@ -167,14 +164,22 @@ public class PlayerController : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
 
-            if (_controller.transform.position != _destTilePosition)
+            if (transform.position != _destTilePosition)
             {
                 var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
-                _controller.transform.rotation = lerpval;
+                transform.rotation = lerpval;
             }
             await UniTask.NextFrame();
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// 주사위 굴린 결과를 반환
+    /// </summary>
+    public int GetDiceResult()
+    {
+        return _moveCount;
     }
 }
