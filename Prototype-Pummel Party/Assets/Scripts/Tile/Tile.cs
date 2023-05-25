@@ -71,6 +71,7 @@ public abstract class Tile : MonoBehaviour
         {
             Debug.Log("이동할 다음 타일의 위치는 null이다");
         }
+
         return nextTilePosition;
     }
 

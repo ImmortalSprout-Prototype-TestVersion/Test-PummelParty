@@ -20,20 +20,16 @@ public class RotationTile : Tile
     [SerializeField][Range(1f, 4f)] private float rotationSpeed = 2f;
     [SerializeField] private float timeUntilResetRotation = 2f;
 
-    //private IEnumerator _StartActiveRotation;
-    //private IEnumerator _StartResetRotation;
 
     void Start()
     {
-        //_StartActiveRotation = StartActiveRotation();
-        //_StartResetRotation = StartResetRotation();
-
         //SetBackTile(GetBackTile());
 
-        OnPlayerEnterDiretionTile -= TurnOnDirectionUI;
-        OnPlayerEnterDiretionTile += TurnOnDirectionUI;
-        OnPlayerLeaveDiretionTile -= TurnOffDirectionUI;
-        OnPlayerLeaveDiretionTile += TurnOffDirectionUI;
+        // 주사위를 굴리고 난 후, 이벤트에 TurnOnDirectionUI 함수를 구독해줘야함
+        //OnPlayerEnterDiretionTile -= TurnOnDirectionUI;
+        //OnPlayerEnterDiretionTile += TurnOnDirectionUI;
+        //OnPlayerLeaveDiretionTile -= TurnOffDirectionUI;
+        //OnPlayerLeaveDiretionTile += TurnOffDirectionUI;
 
         foreach (ArrowButton button in arrowButtons)
         {
