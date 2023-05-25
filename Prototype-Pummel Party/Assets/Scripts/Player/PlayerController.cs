@@ -4,13 +4,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private TurnManager _turnManager;
-    [SerializeField] private GameObject _controller;
     [SerializeField] private float _rotateTime = 1f;
+
+    private GameObject _controller;
+
     private Dice _dice;
+
     private Tile _currentTile;
     private Vector3 _destTilePosition;
 
-    private int _diceResult;
     private int _moveCount = 0;
     private bool _canRoll = false;
 
@@ -52,12 +54,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    _currentTile = other.gameObject.GetComponent<Tile>();
-    //} 
-    // 은수, 우석이 collider의 isTrigger를 해제하였음. 그래서 아래의 OnCollisionEnter로 바꿈
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Tile"))
@@ -96,14 +92,13 @@ public class PlayerController : MonoBehaviour
             {
                 t += Time.deltaTime;
                 _controller.transform.position = Vector3.Lerp(start, end, t / 1f);
-                await UniTask.NextFrame(); // yield return null;
+                await UniTask.NextFrame();
             }
 
             Debug.Log($"Left MoveCount : {_moveCount}");
             _moveCount -= 1;
             
             CheckGetatableTiles();
-            // await UniTask.Delay(100);  => yield return new WaitForSeconds(100);
             await UniTask.NextFrame();
         }
 
@@ -120,7 +115,6 @@ public class PlayerController : MonoBehaviour
     {
         if (_moveCount >= 1)
         {
-            // 위는 민영이가 작성한 코드인데, 옮기면서 아래로 바꿔주었음
             _destTilePosition = _currentTile.GetNextTilePosition();
         }
         else if(_moveCount == -1)
@@ -135,10 +129,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // 이동이 끝난 후 정면(카메라 방향) 바라보기
-    private async UniTask<bool> LookCamera()
+    // 이동이 끝난 후 정면 바라보기
+    private async UniTask<bool> LookForward()
     {
-        Vector3 camDir = Camera.main.transform.position - _controller.transform.position; // 카메라 보는 방향벡터
+        // Vector3 camDir = Camera.main.transform.position - _controller.transform.position;
+        Vector3 camDir = Vector3.forward; // 바라봐야하는 방향 
         camDir.y = _controller.transform.position.y;
         camDir = camDir.normalized;
 
