@@ -43,11 +43,19 @@ public abstract class Tile : MonoBehaviour
 
     #region Get Functions
 
+    /// <summary>
+    /// 현재 타일의 기본 다음 타일을 반환한다
+    /// </summary>
+    /// <returns></returns>
     public Tile GetDefaultTile()
     {
         return defaultTile;
     }
 
+    /// <summary>
+    /// 현재 타일의 기본 다음 타일의 위치를 반환한다
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetDefaultTilePosition()
     {
         return defaultTilePosition;
