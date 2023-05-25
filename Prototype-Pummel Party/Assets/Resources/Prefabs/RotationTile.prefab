@@ -45,9 +45,9 @@ GameObject:
   - component: {fileID: 5891641418224421645}
   - component: {fileID: 5891641418224421644}
   - component: {fileID: 6429789196106968183}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Tile
-  m_TagString: Untagged
+  m_TagString: RotationTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
