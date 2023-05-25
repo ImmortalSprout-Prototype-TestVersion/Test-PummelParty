@@ -7,7 +7,7 @@ using UnityEngine;
 public class RotationTile : Tile
 {
     [SerializeField] private GameObject arrowSwitch;
-    //[SerializeField] private ArrowButton[] arrowButtons;
+    [SerializeField] private ArrowButton[] arrowButtons;
 
     private Quaternion initialRotation = Quaternion.identity;
     private Quaternion targetRotation;
@@ -35,11 +35,11 @@ public class RotationTile : Tile
         OnPlayerLeaveDiretionTile -= TurnOffDirectionUI;
         OnPlayerLeaveDiretionTile += TurnOffDirectionUI;
 
-        //foreach (ArrowButton button in arrowButtons)
-        //{
-        //    button.OnClickDirectionUI -= ActivateTileRotation;
-        //    button.OnClickDirectionUI += ActivateTileRotation;
-        //}
+        foreach (ArrowButton button in arrowButtons)
+        {
+            button.OnClickDirectionUI -= ActivateTileRotation;
+            button.OnClickDirectionUI += ActivateTileRotation;
+        }
 
         OnPlayerLeaveDiretionTile -= ResetTileRotation;
         OnPlayerLeaveDiretionTile += ResetTileRotation;
