@@ -1,9 +1,13 @@
 using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public event Action OnDiceRolled;
+
     [SerializeField] private TurnManager _turnManager;
+    private float _moveTime = 1f;
     private float _rotateTime = 1f;
 
     private Dice _dice;
@@ -47,6 +51,7 @@ public class PlayerController : MonoBehaviour
 
             ChangeDiceAvailable();
             _moveCount = _dice.Roll();
+            OnDiceRolled?.Invoke();
             CheckGetatableTiles();
             HelpMoveAsync();
         }
@@ -93,7 +98,7 @@ public class PlayerController : MonoBehaviour
             while (elapsedTime - 0.1f < 1f)
             {
                 elapsedTime += Time.deltaTime;
-                transform.position = Vector3.Lerp(start, end, elapsedTime / 1f);
+                transform.position = Vector3.Lerp(start, end, elapsedTime / _moveTime);
                 await UniTask.NextFrame();
             }
 
