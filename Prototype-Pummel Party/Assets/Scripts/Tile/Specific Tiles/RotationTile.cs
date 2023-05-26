@@ -48,7 +48,16 @@ public class RotationTile : Tile
         OnPlayerLeaveDiretionTile += ResetDefaultTile;
     }
 
-   
+    RaycastHit hit;
+    private void Update()
+    {
+        Debug.DrawRay(transform.position, -transform.forward * int.MaxValue, Color.red);
+        Physics.Raycast(transform.position, -transform.forward * int.MaxValue, out hit);
+        if (hit.collider != null)
+        {
+            Debug.Log($"{gameObject.name} 이 쏘는 레이저에 맞은 놈 = {hit.collider.name}");
+        }
+    }
 
 
     private void OnDisable()
