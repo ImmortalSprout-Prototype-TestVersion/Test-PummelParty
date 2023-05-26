@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class RotationTile : Tile
 {
+    [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
     [SerializeField] private GameObject arrowSwitch;
     [SerializeField] private ArrowButton[] arrowButtons;
 
@@ -16,24 +17,24 @@ public class RotationTile : Tile
     private const float minThreshold = 1.111f; // 최소감지가 1도 정도로 국한되서 1.111 넣은거임...
     private const float RightDirection = 1f;
     private const float LeftDirection = -1f;
-
+    [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
     [SerializeField][Range(1f, 4f)] private float rotationSpeed = 2f;
     [SerializeField] private float timeUntilResetRotation = 2f;
 
-    //private IEnumerator _StartActiveRotation;
-    //private IEnumerator _StartResetRotation;
 
-    void Start()
+    private void Start()
     {
-        //_StartActiveRotation = StartActiveRotation();
-        //_StartResetRotation = StartResetRotation();
+        SetDefaultTile(GetDefaultTile());
+        SetNextTile(GetNextTile());
+        SetBackTile(GetBackTile());
 
-        //SetBackTile(GetBackTile());
+        // 주사위를 굴리고 난 후, 이벤트에 TurnOnDirectionUI 함수를 구독해줘야함
+        //OnPlayerEnterDiretionTile -= TurnOnDirectionUI;
+        //OnPlayerEnterDiretionTile += TurnOnDirectionUI;
+        //OnPlayerLeaveDiretionTile -= TurnOffDirectionUI;
+        //OnPlayerLeaveDiretionTile += TurnOffDirectionUI;
 
-        OnPlayerEnterDiretionTile -= TurnOnDirectionUI;
-        OnPlayerEnterDiretionTile += TurnOnDirectionUI;
-        OnPlayerLeaveDiretionTile -= TurnOffDirectionUI;
-        OnPlayerLeaveDiretionTile += TurnOffDirectionUI;
+        
 
         foreach (ArrowButton button in arrowButtons)
         {
@@ -43,6 +44,20 @@ public class RotationTile : Tile
 
         OnPlayerLeaveDiretionTile -= ResetTileRotation;
         OnPlayerLeaveDiretionTile += ResetTileRotation;
+        OnPlayerLeaveDiretionTile -= ResetDefaultTile;
+        OnPlayerLeaveDiretionTile += ResetDefaultTile;
+    }
+
+   
+
+
+    private void OnDisable()
+    {
+        foreach (ArrowButton button in arrowButtons)
+        {
+            button.OnClickDirectionUI -= ActivateTileRotation;
+        }
+        OnPlayerLeaveDiretionTile -= ResetTileRotation;
     }
 
     private void TurnOnDirectionUI()
@@ -55,7 +70,10 @@ public class RotationTile : Tile
         arrowSwitch.SetActive(false);
     }
 
-
+    private void ResetDefaultTile()
+    {
+        SetNextTile(GetDefaultTile());
+    }
 
     //private IEnumerator StartActiveRotation()
     //{
@@ -81,15 +99,16 @@ public class RotationTile : Tile
             collidedPlayerTransform.Rotate(Vector3.up, rotationDirection * rotationSpeed);
             await UniTask.Yield();
         }
+        transform.parent.rotation = targetRotation; // 1.111f 의 차이를 없애주기 위해 targetRotation 으로 변경해준다
     }
     private void ActivateTileRotation(float _rotation)
     {
         targetRotation = Quaternion.Euler(0f, _rotation, 0f);
 
         // Y축을 기준으로
-        if (_rotation < 0) // 양수면 오른쪽으로 돌고
+        if (_rotation < 0) // 음수면 왼쪽으로 돌고
             rotationDirection = LeftDirection;
-        else if (0 < _rotation) // 음수면 왼쪽으로 돈다
+        else if (0 < _rotation) // 양수라면 오른쪽으로 돈다
             rotationDirection = RightDirection;
 
         //StartCoroutine(_StartActiveRotation);
@@ -111,6 +130,7 @@ public class RotationTile : Tile
             transform.parent.Rotate(Vector3.up, -rotationDirection * rotationSpeed);
             await UniTask.Yield();
         }
+        transform.parent.rotation = initialRotation; // 1.111f 의 차이를 없애주기 위해 initalRotation 으로 변경해준다
     }
 
     //private IEnumerator StartResetRotation()
