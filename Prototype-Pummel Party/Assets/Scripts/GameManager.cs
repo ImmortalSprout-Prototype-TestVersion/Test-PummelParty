@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,12 +49,25 @@ public class GameManager : MonoBehaviour
 
     private void LoadMinigameScene()
     {
-        SceneManager.LoadScene(minigameNumber, LoadSceneMode.Additive);
-        Invoke("LoadBoardgameScene", 2f);
+        //SceneManager.LoadScene(minigameNumber, LoadSceneMode.Additive);
+        //Invoke("LoadBoardgameScene", 2f);
+
+        LoadMiniGameScene().Forget();
+    }
+
+    private async UniTaskVoid LoadMiniGameScene()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(1f)); // 1초 기다렸다가
+        SceneManager.LoadScene(minigameNumber, LoadSceneMode.Additive); // 미니게임씬을 additive 모드로 겹쳐서 로드한다
+        await UniTask.Delay(TimeSpan.FromSeconds(1f)); // 1초 기다렸다가
+        SceneManager.UnloadScene(minigameNumber); // 미니게임씬을 다시 Unload 한다
     }
 
     private void LoadBoardgameScene()
     {
         SceneManager.UnloadScene(minigameNumber);
     }
+
+    
+
 }
