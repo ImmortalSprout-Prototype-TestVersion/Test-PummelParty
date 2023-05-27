@@ -22,7 +22,6 @@ public class RotationTile : Tile
     [SerializeField] private float timeUntilResetRotation = 2f;
     [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
     [SerializeField] private bool isIntersection;
-    [SerializeField] private LayerMask interactableMask;
 
 
     private void Start()
