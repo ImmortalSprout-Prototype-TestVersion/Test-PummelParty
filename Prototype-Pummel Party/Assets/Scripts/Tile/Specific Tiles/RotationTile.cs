@@ -36,8 +36,6 @@ public class RotationTile : Tile
         //OnPlayerLeaveDiretionTile -= TurnOffDirectionUI;
         //OnPlayerLeaveDiretionTile += TurnOffDirectionUI;
 
-        
-
         foreach (ArrowButton button in arrowButtons)
         {
             button.OnClickDirectionUI -= ActivateTileRotation;
@@ -48,6 +46,8 @@ public class RotationTile : Tile
         OnPlayerLeaveDiretionTile += ResetTileRotation;
         OnPlayerLeaveDiretionTile -= ResetDefaultTile;
         OnPlayerLeaveDiretionTile += ResetDefaultTile;
+        player.OnDiceRolled -= TurnOnDirectionUI;
+        player.OnDiceRolled += TurnOnDirectionUI;
     }
 
 
