@@ -13,6 +13,7 @@ public class RotationTile : Tile
     private Quaternion initialRotation = Quaternion.identity;
     private Quaternion targetRotation;
     private float rotationDirection;
+    private bool isAlreadySub;
 
     private const float minThreshold = 1.111f; // 최소감지가 1도 정도로 국한되서 1.111 넣은거임...
     private const float RightDirection = 1f;
@@ -46,8 +47,6 @@ public class RotationTile : Tile
         OnPlayerLeaveDiretionTile += ResetTileRotation;
         OnPlayerLeaveDiretionTile -= ResetDefaultTile;
         OnPlayerLeaveDiretionTile += ResetDefaultTile;
-        player.OnDiceRolled -= TurnOnDirectionUI;
-        player.OnDiceRolled += TurnOnDirectionUI;
     }
 
 
@@ -131,6 +130,19 @@ public class RotationTile : Tile
         //{
         //    ShootRay();
         //}
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (isAlreadySub == false)
+            {
+                collision.gameObject.GetComponent<PlayerController>().OnDiceRolled -= TurnOnDirectionUI;
+                collision.gameObject.GetComponent<PlayerController>().OnDiceRolled += TurnOnDirectionUI;
+                isAlreadySub = true;
+            }
+        }
     }
 
     private void TurnOnDirectionUI()
