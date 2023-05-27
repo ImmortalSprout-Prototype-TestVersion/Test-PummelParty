@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TurnManager _turnManager;
     private float _moveTime = 1f;
     private float _rotateTime = 1f;
-    private int _waitTimeBeforMove = 3000;
+    [SerializeField] private int _waitTimeBeforMove = 1000;
 
     private Dice _dice;
     
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
 
         if (_currentTile.transform.position == _destTilePosition)
         {
-            return;
+            _turnManager.EndPlayerTurn();
         }
 
         while (_moveCount >= 1)
