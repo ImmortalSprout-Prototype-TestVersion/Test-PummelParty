@@ -24,6 +24,8 @@ public class RotationTile : Tile
     [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
     [SerializeField] private bool isIntersection;
 
+    
+
 
     private void Start()
     {
@@ -47,6 +49,8 @@ public class RotationTile : Tile
         OnPlayerLeaveDiretionTile += ResetTileRotation;
         OnPlayerLeaveDiretionTile -= ResetDefaultTile;
         OnPlayerLeaveDiretionTile += ResetDefaultTile;
+        OnPlayerLeaveDiretionTile -= TurnOffDirection;
+        OnPlayerLeaveDiretionTile += TurnOffDirection;
     }
 
 
@@ -57,100 +61,52 @@ public class RotationTile : Tile
             button.OnClickDirectionUI -= ActivateTileRotation;
         }
         OnPlayerLeaveDiretionTile -= ResetTileRotation;
+        OnPlayerLeaveDiretionTile -= ResetDefaultTile;
+        OnPlayerLeaveDiretionTile -= TurnOffDirection;
     }
 
-    //[SerializeField] private int countOfDiagnolTiles = 2;
-    //private RaycastHit[] hitTilesRandom;
-    //private RaycastHit[] hitTilesInOrder;
-    //private bool[] compareCheck;
-    //private int hitCount;
-    //private void ShootRay()
+
+
+    // 좋은 접근방식이긴 했는데... 이 OncollisionEnter가 Tile의 OncollisionEnter를 먹어버리네.. ㅠㅠㅠㅠㅠ 
+    //private void OnCollisionEnter(Collision collision)
     //{
-    //    if (isIntersection) // 자신이 교차로 이면 ray를 쏘지 않는다
+    //    if (collision.gameObject.CompareTag("Player"))
     //    {
-    //        return;
-    //    }
-
-    //    hitTilesRandom = new RaycastHit[countOfDiagnolTiles];
-    //    hitCount = Physics.RaycastNonAlloc(transform.position, -transform.forward, hitTilesRandom, float.MaxValue, interactableMask);
-    //    // hitTiles[]에 충돌순서 상관없이 랜덤하게 할당이 된다 => 거리가 짧은 순서대로 다시 담아야 한다
-
-    //    hitTilesInOrder = new RaycastHit[countOfDiagnolTiles];
-    //    compareCheck = new bool[countOfDiagnolTiles];
-
-    //    // 충돌된 오브젝트들을 충돌거리가 짧은 순서로 다시 담아주는 알고리즘
-    //    for (int i = 0; i < countOfDiagnolTiles ;++i)
-    //    {
-    //        float minDistance = float.MaxValue;
-    //        int selectedIndex = int.MaxValue;
-    //        RaycastHit targetData = default(RaycastHit);
-
-    //        for (int k = 0; k < countOfDiagnolTiles ;++k)
+    //        if (isAlreadySub == false) // 구독이 아직 되지 않았다면
     //        {
-    //            if (compareCheck[k] == false && hitTilesRandom[k].distance <= minDistance) // compareCheck를 먼저하여 단축평가 시행
-    //            {
-    //                minDistance= hitTilesRandom[k].distance;
-    //                selectedIndex = k;
-    //                targetData= hitTilesRandom[k];
-    //            }
+    //            collision.gameObject.GetComponent<PlayerController>().OnDiceRolled -= TurnOnDirectionUI;
+    //            collision.gameObject.GetComponent<PlayerController>().OnDiceRolled += TurnOnDirectionUI;
+    //            // 화살표를 띄워주는 함수를 OnDiceRolled 이벤츠에 구독을 해준다
+    //            isAlreadySub = true; // 다시 구독을 시키지 않기 위해 isAlreadySub 을 true로 만들어준다
     //        }
-    //        compareCheck[selectedIndex] = true;
-    //        hitTilesInOrder[i] = targetData;
-    //    }
-    //    // distance가 작은 순서대로 잘 담김
-
-    //    foreach (RaycastHit element in hitTilesInOrder)
-    //    {
-    //        Debug.Log($"이름 = {element.collider.name} / 길이 = {element.distance}");
     //    }
     //}
 
-    //public BasicTile GetNextTileOfIntersection()
-    //{
-    //    RotationTile intersectionTile = null;
-    //    BasicTile nextTileOfIntersection = null;
-
-    //    for (int i = 0; i < countOfDiagnolTiles ;++i)
-    //    {
-    //        if (hitTilesInOrder[i].collider.gameObject.GetComponent<RotationTile>().isIntersection == true)
-    //        {
-    //            nextTileOfIntersection = hitTilesInOrder[i + 1].collider.gameObject.GetComponent<BasicTile>();
-    //        }
-    //    }
-
-    //    Debug.Log($"{intersectionTile.name}의 다음 기본타일 = {nextTileOfIntersection.name}");
-    //    return nextTileOfIntersection;
-    //}
-
-
-    private void Update()
+    /// <summary>
+    /// 플레이어의 OnDiceRoll 이벤트에 TurnOnDirectionUI 함수를 구독시켜주기 위한 함수이다
+    /// </summary>
+    /// <param name="_playerController"></param>
+    public void SubscribeArrowPop(PlayerController _playerController)
     {
-        //Debug.DrawLine(transform.position, -transform.forward * float.MaxValue, Color.red);
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    ShootRay();
-        //}
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
+        if (isAlreadySub == false)
         {
-            if (isAlreadySub == false)
-            {
-                collision.gameObject.GetComponent<PlayerController>().OnDiceRolled -= TurnOnDirectionUI;
-                collision.gameObject.GetComponent<PlayerController>().OnDiceRolled += TurnOnDirectionUI;
-                isAlreadySub = true;
-            }
+            _playerController.OnDiceRolled -= TurnOnDirection;
+            _playerController.OnDiceRolled += TurnOnDirection;
+            isAlreadySub = true;
         }
     }
 
-    private void TurnOnDirectionUI()
+
+    private void TurnOnDirection()
     {
-        arrowSwitch.SetActive(true);
+        if (IsPlayerOnTile()) // 플레이어가 타일 위에 위치한다면 화살표를 띄워준다
+        {
+            arrowSwitch.SetActive(true);
+        }
+        // 플레이어가 타일위에 위치하고 있지 않다면 아무것도 하지 않는다 
     }
 
-    private void TurnOffDirectionUI()
+    private void TurnOffDirection()
     {
         arrowSwitch.SetActive(false);
     }
