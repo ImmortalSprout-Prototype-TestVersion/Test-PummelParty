@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TurnManager _turnManager;
     private float _moveTime = 1f;
     private float _rotateTime = 1f;
+    private int _waitTimeBeforMove = 3000;
 
     private Dice _dice;
     
@@ -53,7 +54,7 @@ public class PlayerController : MonoBehaviour
             _moveCount = _dice.Roll();
             OnDiceRolled?.Invoke();
             CheckGetatableTiles();
-            HelpMoveAsync();
+            HelpMoveAsync().Forget();
         }
     }
 
@@ -71,8 +72,9 @@ public class PlayerController : MonoBehaviour
         _canRoll = !_canRoll;
     }
 
-    private void HelpMoveAsync()
+    private async UniTaskVoid HelpMoveAsync()
     {
+        await UniTask.Delay(_waitTimeBeforMove);
         Move().Forget();
     }
 
@@ -82,7 +84,7 @@ public class PlayerController : MonoBehaviour
         Vector3 start = Vector3.zero;
         Vector3 end = Vector3.zero;
 
-        if (transform.position == _destTilePosition)
+        if (_currentTile.transform.position == _destTilePosition)
         {
             return;
         }
@@ -99,14 +101,14 @@ public class PlayerController : MonoBehaviour
             {
                 elapsedTime += Time.deltaTime;
                 transform.position = Vector3.Lerp(start, end, elapsedTime / _moveTime);
-                await UniTask.NextFrame();
+                await UniTask.Yield();
             }
 
             Debug.Log($"Left MoveCount : {_moveCount}");
             _moveCount -= 1;
 
             CheckGetatableTiles();
-            await UniTask.NextFrame();
+            await UniTask.Yield();
         }
 
         Debug.Log("¿Ãµø ≥°");
@@ -127,7 +129,7 @@ public class PlayerController : MonoBehaviour
         else if (_moveCount == -1)
         {
             _destTilePosition = _currentTile.GetBackTilePosition();
-            _destTilePosition.y = transform.position.y;
+            // _destTilePosition.y = transform.position.y;
             _moveCount = 1;
         }
         else
@@ -152,7 +154,7 @@ public class PlayerController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
             transform.rotation = lerpval;
-            await UniTask.NextFrame();
+            await UniTask.Yield();
         }
 
         return true;
@@ -174,7 +176,7 @@ public class PlayerController : MonoBehaviour
                 var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
                 transform.rotation = lerpval;
             }
-            await UniTask.NextFrame();
+            await UniTask.Yield();
         }
 
         return true;
