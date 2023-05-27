@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private int _moveCount = 0;
     private bool _canRoll = false;
+    private bool _canMoveOnDirectionTile = false; // 플레이어가 회전타일에서 움직일 수 있는지 여부
 
     public enum DICE_RESULT
     {
@@ -72,10 +73,20 @@ public class PlayerController : MonoBehaviour
         _canRoll = !_canRoll;
     }
 
+    
+
+
     private async UniTaskVoid HelpMoveAsync()
     {
-        await UniTask.Delay(_waitTimeBeforMove);
-        Move().Forget();
+        //await UniTask.Delay(_waitTimeBeforMove);
+
+
+        if (_currentTile.CompareTag("RotationTile")) // 현재 서있는 타일이 회전타일이라면
+        {
+            await UniTask.WaitUntil(() => _canMoveOnDirectionTile == true); // 움직일 수 있을떄 까지 기다린다
+        }
+        
+        Move().Forget(); // _canMove가 true로 되면 Move()함수를 호출한다
     }
 
     private async UniTaskVoid Move()
@@ -116,6 +127,7 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("회전 끝");
         _turnManager.EndPlayerTurn();
+        _canMoveOnDirectionTile = false;
     }
 
     // TODO: _diceResult랑 _moveCount 의미 제대로 생각해서 분리..
@@ -189,4 +201,13 @@ public class PlayerController : MonoBehaviour
     {
         return _moveCount;
     }
+
+    /// <summary>
+    /// 플레이어가 회전타일에서 움직여도 된다는 것을 알려주는 함수
+    /// </summary>
+    public void EnablePlayerMoveOnDirectionTile()
+    {
+        _canMoveOnDirectionTile = true;
+    }
+
 }
