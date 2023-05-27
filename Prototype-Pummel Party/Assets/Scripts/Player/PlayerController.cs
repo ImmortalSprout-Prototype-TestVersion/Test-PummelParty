@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour
             ChangeDiceAvailable();
             _moveCount = _dice.Roll();
             OnDiceRolled?.Invoke();
-            CheckGetatableTiles();
+            //CheckGetatableTiles();
             HelpMoveAsync().Forget();
         }
     }
@@ -83,9 +83,10 @@ public class PlayerController : MonoBehaviour
 
         if (_currentTile.CompareTag("RotationTile")) // 현재 서있는 타일이 회전타일이라면
         {
-            await UniTask.WaitUntil(() => _canMoveOnDirectionTile == true); // 움직일 수 있을떄 까지 기다린다
+            await UniTask.WaitUntil(() => _canMoveOnDirectionTile == true); // _canMoveOnDirectionTile 이 true가 될 때까지 기다린다
         }
-        
+
+        CheckGetatableTiles();
         Move().Forget(); // _canMove가 true로 되면 Move()함수를 호출한다
     }
 
