@@ -21,7 +21,8 @@ public class RotationTile : Tile
     [SerializeField][Range(1f, 4f)] private float rotationSpeed = 2f;
     [SerializeField] private float timeUntilResetRotation = 2f;
     [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
-    [SerializeField] LayerMask interactableMask;
+    [SerializeField] private bool isIntersection;
+    [SerializeField] private LayerMask interactableMask;
 
 
     private void Start()
@@ -60,55 +61,77 @@ public class RotationTile : Tile
         OnPlayerLeaveDiretionTile -= ResetTileRotation;
     }
 
-    [SerializeField] private int countOfDiagnolTiles = 2;
-    private RaycastHit[] hitTiles;
-    private RaycastHit[] hitTilesInOrder;
-    private bool[] compareCheck;
-    private int hitCount;
-    private void ShootRay()
-    {
-        
-        hitTiles = new RaycastHit[countOfDiagnolTiles];
-        hitCount = Physics.RaycastNonAlloc(transform.position, -transform.forward, hitTiles, float.MaxValue, interactableMask);
-        // hitTiles[]에 충돌순서 상관없이 랜덤하게 할당이 된다 => 거리가 짧은 순서대로 다시 담아야 한다
+    //[SerializeField] private int countOfDiagnolTiles = 2;
+    //private RaycastHit[] hitTilesRandom;
+    //private RaycastHit[] hitTilesInOrder;
+    //private bool[] compareCheck;
+    //private int hitCount;
+    //private void ShootRay()
+    //{
+    //    if (isIntersection) // 자신이 교차로 이면 ray를 쏘지 않는다
+    //    {
+    //        return;
+    //    }
 
-        hitTilesInOrder = new RaycastHit[countOfDiagnolTiles];
-        compareCheck = new bool[countOfDiagnolTiles];
+    //    hitTilesRandom = new RaycastHit[countOfDiagnolTiles];
+    //    hitCount = Physics.RaycastNonAlloc(transform.position, -transform.forward, hitTilesRandom, float.MaxValue, interactableMask);
+    //    // hitTiles[]에 충돌순서 상관없이 랜덤하게 할당이 된다 => 거리가 짧은 순서대로 다시 담아야 한다
 
-        for (int i = 0; i < countOfDiagnolTiles ;++i)
-        {
-            float minDistance = float.MaxValue;
-            int selectedIndex = int.MaxValue;
-            RaycastHit targetData = default(RaycastHit);
+    //    hitTilesInOrder = new RaycastHit[countOfDiagnolTiles];
+    //    compareCheck = new bool[countOfDiagnolTiles];
 
-            for (int k = 0; k < countOfDiagnolTiles ;++k)
-            {
-                if (compareCheck[k] == false && hitTiles[k].distance <= minDistance)
-                {
-                    minDistance= hitTiles[k].distance;
-                    selectedIndex = k;
-                    targetData= hitTiles[k];
-                }
-            }
+    //    // 충돌된 오브젝트들을 충돌거리가 짧은 순서로 다시 담아주는 알고리즘
+    //    for (int i = 0; i < countOfDiagnolTiles ;++i)
+    //    {
+    //        float minDistance = float.MaxValue;
+    //        int selectedIndex = int.MaxValue;
+    //        RaycastHit targetData = default(RaycastHit);
 
-            compareCheck[selectedIndex] = true;
-            hitTilesInOrder[i] = targetData;
-        }
+    //        for (int k = 0; k < countOfDiagnolTiles ;++k)
+    //        {
+    //            if (compareCheck[k] == false && hitTilesRandom[k].distance <= minDistance) // compareCheck를 먼저하여 단축평가 시행
+    //            {
+    //                minDistance= hitTilesRandom[k].distance;
+    //                selectedIndex = k;
+    //                targetData= hitTilesRandom[k];
+    //            }
+    //        }
+    //        compareCheck[selectedIndex] = true;
+    //        hitTilesInOrder[i] = targetData;
+    //    }
+    //    // distance가 작은 순서대로 잘 담김
 
-        foreach (RaycastHit element in hitTilesInOrder)
-        {
-            Debug.Log($"이름 = {element.collider.name} / 길이 = {element.distance}");
-        }
+    //    foreach (RaycastHit element in hitTilesInOrder)
+    //    {
+    //        Debug.Log($"이름 = {element.collider.name} / 길이 = {element.distance}");
+    //    }
+    //}
 
-    }
+    //public BasicTile GetNextTileOfIntersection()
+    //{
+    //    RotationTile intersectionTile = null;
+    //    BasicTile nextTileOfIntersection = null;
+
+    //    for (int i = 0; i < countOfDiagnolTiles ;++i)
+    //    {
+    //        if (hitTilesInOrder[i].collider.gameObject.GetComponent<RotationTile>().isIntersection == true)
+    //        {
+    //            nextTileOfIntersection = hitTilesInOrder[i + 1].collider.gameObject.GetComponent<BasicTile>();
+    //        }
+    //    }
+
+    //    Debug.Log($"{intersectionTile.name}의 다음 기본타일 = {nextTileOfIntersection.name}");
+    //    return nextTileOfIntersection;
+    //}
+
 
     private void Update()
     {
-        Debug.DrawLine(transform.position, -transform.forward * float.MaxValue, Color.red);
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ShootRay();
-        }
+        //Debug.DrawLine(transform.position, -transform.forward * float.MaxValue, Color.red);
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    ShootRay();
+        //}
     }
 
     private void TurnOnDirectionUI()

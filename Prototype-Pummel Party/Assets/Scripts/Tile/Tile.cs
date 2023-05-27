@@ -8,6 +8,7 @@ using UnityEngine.Rendering.Universal.Internal;
 public abstract class Tile : MonoBehaviour
 {
     public int tileIndex; // 타일 번호를 확인하기위해 만든 테스트용 코드
+    public PlayerController player;
     private bool isPlayerOnTile = false;
 
     protected Transform collidedPlayerTransform; // 현재 타일과 부딪힌 플레이어의 참조를 받아오기 위한 변수
@@ -25,7 +26,6 @@ public abstract class Tile : MonoBehaviour
     [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
     [SerializeField] private Tile backTile; // 이전 타일은 1개이다
     [SerializeField] private Vector3 backTilePosition;
-
 
 
 
@@ -183,6 +183,9 @@ public abstract class Tile : MonoBehaviour
             isPlayerOnTile = true;
             OnPlayerEnterDiretionTile?.Invoke();
             collidedPlayerTransform = collision.transform;
+
+            player = collision.gameObject.GetComponent<PlayerController>();
+
         }
     }
 
