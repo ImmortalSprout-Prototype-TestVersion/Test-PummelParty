@@ -83,7 +83,10 @@ public class PlayerController : MonoBehaviour
 
         if (_currentTile.CompareTag("RotationTile")) // 현재 서있는 타일이 회전타일이라면
         {
-            await UniTask.WaitUntil(() => _canMoveOnDirectionTile == true); // _canMoveOnDirectionTile 이 true가 될 때까지 기다린다
+            if (1 <= _moveCount) // 주사위 수가 1 이상 이라면 
+            {
+                await UniTask.WaitUntil(() => _canMoveOnDirectionTile == true); // _canMoveOnDirectionTile 이 true가 될 때까지 기다린다
+            }
         }
 
         CheckGetatableTiles();

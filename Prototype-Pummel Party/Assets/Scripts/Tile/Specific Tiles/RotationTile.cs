@@ -101,7 +101,10 @@ public class RotationTile : Tile
     {
         if (IsPlayerOnTile()) // 플레이어가 타일 위에 위치한다면 화살표를 띄워준다
         {
-            arrowSwitch.SetActive(true);
+            if (1 <= player.GetDiceResult()) // 플레이어의 주사위값이 1이상이라면
+            {
+                arrowSwitch.SetActive(true); // 화살표를 띄워준다
+            }
         }
         // 플레이어가 타일위에 위치하고 있지 않다면 아무것도 하지 않는다 
     }
