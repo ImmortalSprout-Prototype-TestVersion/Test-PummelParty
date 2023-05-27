@@ -20,6 +20,8 @@ public class RotationTile : Tile
     [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
     [SerializeField][Range(1f, 4f)] private float rotationSpeed = 2f;
     [SerializeField] private float timeUntilResetRotation = 2f;
+    [Header("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n")]
+    [SerializeField] LayerMask interactableMask;
 
 
     private void Start()
@@ -48,17 +50,6 @@ public class RotationTile : Tile
         OnPlayerLeaveDiretionTile += ResetDefaultTile;
     }
 
-    RaycastHit hit;
-    private void Update()
-    {
-        Debug.DrawRay(transform.position, -transform.forward * int.MaxValue, Color.red);
-        Physics.Raycast(transform.position, -transform.forward * int.MaxValue, out hit);
-        if (hit.collider != null)
-        {
-            Debug.Log($"{gameObject.name} 이 쏘는 레이저에 맞은 놈 = {hit.collider.name}");
-        }
-    }
-
 
     private void OnDisable()
     {
@@ -67,6 +58,57 @@ public class RotationTile : Tile
             button.OnClickDirectionUI -= ActivateTileRotation;
         }
         OnPlayerLeaveDiretionTile -= ResetTileRotation;
+    }
+
+    [SerializeField] private int countOfDiagnolTiles = 2;
+    private RaycastHit[] hitTiles;
+    private RaycastHit[] hitTilesInOrder;
+    private bool[] compareCheck;
+    private int hitCount;
+    private void ShootRay()
+    {
+        
+        hitTiles = new RaycastHit[countOfDiagnolTiles];
+        hitCount = Physics.RaycastNonAlloc(transform.position, -transform.forward, hitTiles, float.MaxValue, interactableMask);
+        // hitTiles[]에 충돌순서 상관없이 랜덤하게 할당이 된다 => 거리가 짧은 순서대로 다시 담아야 한다
+
+        hitTilesInOrder = new RaycastHit[countOfDiagnolTiles];
+        compareCheck = new bool[countOfDiagnolTiles];
+
+        for (int i = 0; i < countOfDiagnolTiles ;++i)
+        {
+            float minDistance = float.MaxValue;
+            int selectedIndex = int.MaxValue;
+            RaycastHit targetData = default(RaycastHit);
+
+            for (int k = 0; k < countOfDiagnolTiles ;++k)
+            {
+                if (compareCheck[k] == false && hitTiles[k].distance <= minDistance)
+                {
+                    minDistance= hitTiles[k].distance;
+                    selectedIndex = k;
+                    targetData= hitTiles[k];
+                }
+            }
+
+            compareCheck[selectedIndex] = true;
+            hitTilesInOrder[i] = targetData;
+        }
+
+        foreach (RaycastHit element in hitTilesInOrder)
+        {
+            Debug.Log($"이름 = {element.collider.name} / 길이 = {element.distance}");
+        }
+
+    }
+
+    private void Update()
+    {
+        Debug.DrawLine(transform.position, -transform.forward * float.MaxValue, Color.red);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ShootRay();
+        }
     }
 
     private void TurnOnDirectionUI()
