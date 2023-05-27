@@ -174,6 +174,8 @@ public abstract class Tile : MonoBehaviour
     protected event Action OnPlayerEnterDiretionTile;
     protected event Action OnPlayerLeaveDiretionTile;
 
+    
+
     #region Other Functions
 
     private void OnCollisionEnter(Collision collision)
@@ -185,6 +187,13 @@ public abstract class Tile : MonoBehaviour
             collidedPlayerTransform = collision.transform;
 
             player = collision.gameObject.GetComponent<PlayerController>();
+
+            if (this.tag == "RotationTile") // 현재 자신의 태그가 RotationTile 이라면
+            {
+                RotationTile rotationTile = gameObject.GetComponent<RotationTile>(); // 자신의 RotationTile 스크립트를 가져와서
+                rotationTile.SubscribeArrowPop(player); // SubscribeArrowPop 함수를 호출한다
+            }
+            
         }
     }
 
