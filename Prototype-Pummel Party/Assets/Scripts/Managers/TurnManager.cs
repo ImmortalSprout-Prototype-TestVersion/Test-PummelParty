@@ -7,7 +7,6 @@ using UnityEngine;
 public class TurnManager : MonoBehaviour
 {
     public event Action OnTurnStarted;
-    public event Action OnContinueMove;
     public event Action OnTurnEnd;
 
     private void Start()
@@ -25,17 +24,9 @@ public class TurnManager : MonoBehaviour
     {
         Debug.Log("턴 종료");
         OnTurnEnd?.Invoke();
-
-        StartMinigame();
     }
 
-    private void StartMinigame()
-    {
-        Debug.Log("미니게임 시작");
-        Invoke("EndMinigame", 3f);
-    }
-
-    private void EndMinigame()
+    public void EndMinigame()
     {
         Debug.Log("미니게임 끝");
         Invoke("StartPlayerTurn", 1f);
