@@ -8,6 +8,6 @@ public class Dice
     {
         int num = Random.Range(-1, 4);
         Debug.Log($"주사위 결과: {num}");
-        return 3;
+        return num;
     }
 }
