@@ -54,7 +54,6 @@ public class PlayerController : MonoBehaviour
             ChangeDiceAvailable();
             _moveCount = _dice.Roll();
             OnDiceRolled?.Invoke();
-            //CheckGetatableTiles();
             HelpMoveAsync().Forget();
         }
     }
@@ -73,23 +72,19 @@ public class PlayerController : MonoBehaviour
         _canRoll = !_canRoll;
     }
 
-    
-
-
     private async UniTaskVoid HelpMoveAsync()
     {
-        //await UniTask.Delay(_waitTimeBeforMove);
-
-
         if (_currentTile.CompareTag("RotationTile")) // 현재 서있는 타일이 회전타일이라면
         {
-            if (1 <= _moveCount) // 주사위 수가 1 이상 이라면 
+            if (0 < _moveCount) // 주사위 수가 1 이상 이라면 
             {
                 await UniTask.WaitUntil(() => _canMoveOnDirectionTile == true); // _canMoveOnDirectionTile 이 true가 될 때까지 기다린다
             }
         }
 
         CheckGetatableTiles();
+
+        await UniTask.Delay(_waitTimeBeforMove);
         Move().Forget(); // _canMove가 true로 되면 Move()함수를 호출한다
     }
 
@@ -102,6 +97,7 @@ public class PlayerController : MonoBehaviour
         if (_currentTile.transform.position == _destTilePosition)
         {
             _turnManager.EndPlayerTurn();
+            return;
         }
 
         while (_moveCount >= 1)
@@ -109,6 +105,9 @@ public class PlayerController : MonoBehaviour
             float elapsedTime = 0f;
             start = transform.position;
             end = _destTilePosition;
+
+            Debug.Log($"Left MoveCount : {_moveCount}");
+            _moveCount -= 1;
 
             await LookNextDestTile((end - start).normalized);
 
@@ -119,9 +118,6 @@ public class PlayerController : MonoBehaviour
                 await UniTask.Yield();
             }
 
-            Debug.Log($"Left MoveCount : {_moveCount}");
-            _moveCount -= 1;
-
             CheckGetatableTiles();
             await UniTask.Yield();
         }
@@ -131,7 +127,6 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("회전 끝");
         _turnManager.EndPlayerTurn();
-        _canMoveOnDirectionTile = false;
     }
 
     // TODO: _diceResult랑 _moveCount 의미 제대로 생각해서 분리..
@@ -145,7 +140,6 @@ public class PlayerController : MonoBehaviour
         else if (_moveCount == -1)
         {
             _destTilePosition = _currentTile.GetBackTilePosition();
-            // _destTilePosition.y = transform.position.y;
             _moveCount = 1;
         }
         else
@@ -165,7 +159,7 @@ public class PlayerController : MonoBehaviour
         Quaternion end = Quaternion.LookRotation(camDir, transform.up);
 
         float elapsedTime = 0f;
-        while (elapsedTime < _rotateTime)
+        while (elapsedTime <= _rotateTime)
         {
             elapsedTime += Time.deltaTime;
             var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
@@ -179,8 +173,10 @@ public class PlayerController : MonoBehaviour
     // 이동하기 위해 목적지 타일 방향으로 회전
     private async UniTask<bool> LookNextDestTile(Vector3 dir)
     {
-        if(_currentTile.CompareTag("RotationTile"))
+        // 회전타일에서부터 출발하는 턴에서는 회전하지 않음
+        if(_currentTile.CompareTag("RotationTile") && _canMoveOnDirectionTile)
         {
+            _canMoveOnDirectionTile = false;
             return true;
         }
 
