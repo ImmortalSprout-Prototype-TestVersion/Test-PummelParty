@@ -179,6 +179,11 @@ public class PlayerController : MonoBehaviour
     // 이동하기 위해 목적지 타일 방향으로 회전
     private async UniTask<bool> LookNextDestTile(Vector3 dir)
     {
+        if(_currentTile.CompareTag("RotationTile"))
+        {
+            return true;
+        }
+
         Quaternion start = transform.rotation;
         Quaternion end = Quaternion.LookRotation(dir);
 
