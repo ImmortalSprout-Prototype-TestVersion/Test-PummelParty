@@ -64,6 +64,7 @@ public class RoomList : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         Debug.Log($"{PhotonNetwork.CurrentRoom.Name} 방에 들어왔습니다");
+        PhotonNetwork.LoadLevel("InRoom");
     }
 
 
