@@ -46,6 +46,28 @@ public class RoomList : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
+    /// 선택한 방에 들어가는 함수입니다
+    /// </summary>
+    public void JoinSelectedRoom()
+    {
+        if (selectedRoom == null)
+        {
+            Debug.Log("방을 먼저 선택해주세요!");
+        }
+        else
+        {
+            PhotonNetwork.JoinRoom(selectedRoom.roomName);
+        }
+        
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log($"{PhotonNetwork.CurrentRoom.Name} 방에 들어왔습니다");
+    }
+
+
+    /// <summary>
     /// 선택한 방을 반환하는 함수입니다
     /// </summary>
     /// <returns></returns>
