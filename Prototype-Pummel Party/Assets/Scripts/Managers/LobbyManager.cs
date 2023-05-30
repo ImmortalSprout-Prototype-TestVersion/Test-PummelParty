@@ -11,6 +11,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private const string lobbyName = "Immortal Sprouts";
     public string NickName { get; set; } // 일단 열어둘게
 
+    private int repeatTime = 1;
     void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -25,7 +26,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (!PhotonNetwork.InLobby)
         {
             PhotonNetwork.JoinLobby();
-            PhotonNetwork.CurrentLobby.Name= lobbyName;
         }
     }
 
@@ -38,12 +38,20 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log($"{PhotonNetwork.CurrentLobby.Name} 로비에 연결이 되었어요!");
+        if (0 < repeatTime)
+        {
+            repeatTime -= 1;
+            PhotonNetwork.LeaveLobby();
+        }
+        PhotonNetwork.CurrentLobby.Name= lobbyName;
     }
 
     public override void OnLeftLobby()
     {
         Debug.Log($"{PhotonNetwork.CurrentLobby.Name} 로비를 떠났어요!");
+        PhotonNetwork.JoinLobby();
     }
+
 
     
 }
