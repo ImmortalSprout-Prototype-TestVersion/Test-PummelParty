@@ -28,5 +28,8 @@ public class InputNickNameField : MonoBehaviour
         PlayerPrefs.SetString(playerNamePrefKey, playerInput);
 
         Debug.Log($"플레이어 이름: {PhotonNetwork.NickName}");
+
+        inputField.GetComponent<Image>().color = new Color32 (134, 219, 255, 255);
+
     }
 }
