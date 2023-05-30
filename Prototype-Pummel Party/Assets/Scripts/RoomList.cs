@@ -45,21 +45,36 @@ public class RoomList : MonoBehaviourPunCallbacks
         }
     }
 
+    /// <summary>
+    /// 선택한 방을 반환하는 함수입니다
+    /// </summary>
+    /// <returns></returns>
     public RoomData GetSelectedRoom()
     {
         return selectedRoom;
     }
 
+    /// <summary>
+    /// 선택한 방을 지정해주는 함수입니다
+    /// </summary>
+    /// <param name="_selectedRoom"></param>
     public void SetSelectedRoom(RoomData _selectedRoom)
     {
         selectedRoom = _selectedRoom;
     }
 
+    /// <summary>
+    /// 선택한 방을 없애버리는 함수입니다
+    /// </summary>
     public void SetRoomNull()
     {
         selectedRoom = null;
     }
 
+    /// <summary>
+    /// 룸 딕셔너리를 반환하는 함수
+    /// </summary>
+    /// <returns></returns>
     public Dictionary<string, RoomData> GetRoomList()
     {
         return rooms;

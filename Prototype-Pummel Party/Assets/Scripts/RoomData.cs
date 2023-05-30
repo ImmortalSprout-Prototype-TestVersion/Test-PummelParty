@@ -22,12 +22,23 @@ public class RoomData : MonoBehaviour
     {
         rooms = transform.GetComponentInParent<RoomList>();
     }
+
+    /// <summary>
+    /// 매개변수로 받는 roomInformation을 방 정보로 세팅하겠다 라는 함수입니다
+    /// </summary>
+    /// <param name="roomInformation"></param>
     public void SetRoomInfo(RoomInfo roomInformation)
     {
         information = roomInformation;
         roomName = roomInformation.Name;
     }
 
+    /// <summary>
+    /// 방의 제목을 설정하는 함수입니다
+    /// </summary>
+    /// <param name="roomName"></param>
+    /// <param name="currentPlayerCount"></param>
+    /// <param name="maxPlayerCount"></param>
     public void SetRoomText(string roomName, int currentPlayerCount, int maxPlayerCount)
     {
         roomButtonText.text = roomName + $" ({currentPlayerCount} / {maxPlayerCount})";
