@@ -2028,7 +2028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8401380878150958058, guid: 05d5e55e5166aaa4dba0506a688d7a49, type: 3}
       propertyPath: m_Name
-      value: GoalLine
+      value: Arrival
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05d5e55e5166aaa4dba0506a688d7a49, type: 3}
