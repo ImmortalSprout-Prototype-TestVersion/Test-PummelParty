@@ -28,9 +28,10 @@ public class Goal : MonoBehaviour
          * 보드게임 로드 신
          */
             stopTimer = true;
+            other.gameObject.GetComponent<Move>().raceGame.isRace = false; // 도착해서 레이스가 끝났다.
             Debug.Log("와 ! 도착 1등 보드게임으로 돌아가요");
             Debug.Log($"걸린 시간 : {time}");
-            Time.timeScale = 0f;
+          //  Time.timeScale = 0f;
         }
 
 
