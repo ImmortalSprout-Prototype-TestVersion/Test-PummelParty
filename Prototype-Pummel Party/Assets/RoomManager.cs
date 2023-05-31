@@ -31,17 +31,18 @@ public class RoomManager : MonoBehaviourPunCallbacks
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
     }
 
-    public override void OnJoinedRoom()
+    public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        Debug.Log("JoinRoom");
         photonView.RPC("PlusOrderNumber", RpcTarget.All);
     }
-
+   
 
     [PunRPC]
     void PlusOrderNumber()
     {
         playerEnterOther++;
-        Debug.Log("»£√‚µ ?");
+        Debug.Log("RPC");
 
     }
 
