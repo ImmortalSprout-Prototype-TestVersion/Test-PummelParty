@@ -41,7 +41,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     void PlusOrderNumber()
     {
         playerEnterOther++;
-        Debug.Log("»£√‚");
+        Debug.Log("»£√‚µ ?");
 
     }
 
