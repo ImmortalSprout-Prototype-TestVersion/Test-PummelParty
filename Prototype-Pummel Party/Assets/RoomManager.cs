@@ -16,7 +16,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private bool[] isOccupying = new bool[PhotonNetwork.CurrentRoom.MaxPlayers + 1]; 
     private TMP_Text roomNameText;
-    private int playerEnterOther = 0;
+    private int playerEnterOther = 1;
 
     private void Awake()
     {
@@ -26,16 +26,23 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public override void OnEnable()
     {
-        photonView.RPC("PlusOrderNumber", RpcTarget.All);
+        Debug.Log(playerEnterOther);
         PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, Quaternion.identity);
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
     }
-    
+
+    public override void OnJoinedRoom()
+    {
+        photonView.RPC("PlusOrderNumber", RpcTarget.All);
+    }
+
 
     [PunRPC]
-    public void PlusOrderNumber()
+    void PlusOrderNumber()
     {
         playerEnterOther++;
+        Debug.Log("»£√‚");
+
     }
-  
+
 }
