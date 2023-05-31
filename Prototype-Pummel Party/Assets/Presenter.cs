@@ -11,9 +11,10 @@ public class Presenter : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject roomName;
     [SerializeField] private Transform[] spawnPositions;
     [SerializeField] private GameObject[] models;
+
     private bool[] isOccupying = new bool[PhotonNetwork.CurrentRoom.MaxPlayers + 1]; 
     private TextMeshPro roomNameText;
-    private int playerEnterOther = 1;
+    private int playerEnterOther = 2;
 
     private void Awake()
     {
@@ -22,7 +23,16 @@ public class Presenter : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Instantiate(models[playerEnterOther], spawnPositions[playerEnterOther].position, Quaternion.identity);
+        Debug.Log("µé¾î¿È");
+        Instantiate(models[playerEnterOther], spawnPositions[playerEnterOther]);
+        isOccupying[playerEnterOther] = true;
+        playerEnterOther++;
+    }
+
+
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
         
     }
 
