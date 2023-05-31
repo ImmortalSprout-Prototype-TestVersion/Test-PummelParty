@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private const int boardgameNumber = 0;
     private const int minigameNumber = 1;
     public int playerCount = 4;
+    public int playerOrderNumber;
 
 
     private static GameManager instance = null;
