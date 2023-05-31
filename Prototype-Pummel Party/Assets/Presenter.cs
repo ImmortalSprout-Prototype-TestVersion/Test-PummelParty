@@ -24,7 +24,7 @@ public class Presenter : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log("µé¾î¿È");
-        Instantiate(models[playerEnterOther], spawnPositions[playerEnterOther]);
+        PhotonNetwork.Instantiate("InRoomPlayerBlue", spawnPositions[playerEnterOther].position, Quaternion.identity);
         isOccupying[playerEnterOther] = true;
         playerEnterOther++;
     }
