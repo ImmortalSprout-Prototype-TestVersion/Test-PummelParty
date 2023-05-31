@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 3720337570842942496}
   - component: {fileID: 6446396508616808266}
   m_Layer: 0
-  m_Name: InRoomPlayer
+  m_Name: InRoomPlayerWhite
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
