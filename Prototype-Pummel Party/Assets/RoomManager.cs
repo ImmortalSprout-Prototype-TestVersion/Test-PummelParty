@@ -6,7 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Unity.VisualScripting;
 
-public class RoomManager : MonoBehaviourPunCallbacks
+public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     public PhotonView photonView;
 
@@ -21,24 +21,28 @@ public class RoomManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         roomNameText = roomName.GetComponent<TMP_Text>();
+       
     }
 
-
+   
     public override void OnEnable()
     {
         Debug.Log(playerEnterOther);
         PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, Quaternion.identity);
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
 
-        photonView.RPC("PlusOrderNumber", RpcTarget.All);
+        playerEnterOther++;
     }
 
-
-    [PunRPC]
-    void PlusOrderNumber(int playerOrder)
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        playerOrder = playerEnterOther;
-        Debug.Log("RPC");
-
+        if (stream.IsWriting)
+        {
+            stream.SendNext(playerEnterOther);
+        }
+        else
+        {
+            playerEnterOther = (int)stream.ReceiveNext();
+        }
     }
 }

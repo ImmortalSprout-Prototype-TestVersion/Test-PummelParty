@@ -934,6 +934,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1772293350}
   - component: {fileID: 1772293351}
+  - component: {fileID: 1772293352}
   m_Layer: 0
   m_Name: RoomManager
   m_TagString: Untagged
@@ -982,6 +983,28 @@ MonoBehaviour:
   - {fileID: 3720337570842942497, guid: 2f087a23a97c1554aa7d1cfd7c7edd3d, type: 3}
   - {fileID: 3720337570842942497, guid: 7b9e49a511fe5524db9cb727bde7ab1a, type: 3}
   - {fileID: 3720337570842942497, guid: ed0699b4a9a8b8648a42a3178d754fee, type: 3}
+--- !u!114 &1772293352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772293349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 12
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!224 &1840527622 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4466031098011479668, guid: 38f3b2f7634611146b7e863c27cac4bc, type: 3}
