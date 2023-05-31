@@ -29,21 +29,16 @@ public class RoomManager : MonoBehaviourPunCallbacks
         Debug.Log(playerEnterOther);
         PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, Quaternion.identity);
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
-    }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        Debug.Log("JoinRoom");
         photonView.RPC("PlusOrderNumber", RpcTarget.All);
     }
-   
+
 
     [PunRPC]
-    void PlusOrderNumber()
+    void PlusOrderNumber(int playerOrder)
     {
-        playerEnterOther++;
+        playerOrder = playerEnterOther;
         Debug.Log("RPC");
 
     }
-
 }
