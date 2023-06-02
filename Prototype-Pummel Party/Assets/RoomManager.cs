@@ -26,7 +26,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     private void Awake()
     {
         roomNameText = roomName.GetComponent<TMP_Text>();
-        PV = buttons[2].GetPhotonView();
+        PV = buttons[playerEnterOther].GetPhotonView();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
