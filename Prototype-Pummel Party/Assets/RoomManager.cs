@@ -36,8 +36,11 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, Quaternion.identity);
-        playerEnterOther++;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, Quaternion.identity);
+            playerEnterOther++;
+        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
