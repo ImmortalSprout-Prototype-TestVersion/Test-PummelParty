@@ -34,11 +34,6 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        Debug.Log($"{newPlayer.NickName} 플레이어 입장");
-    }
-
     public override void OnJoinedRoom()
     {
         Debug.Log("입장~");
@@ -47,5 +42,8 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
 
         playerEnterOther++;
+        Debug.Log($"입장 수 : {playerEnterOther}");
     }
+
+
 }
