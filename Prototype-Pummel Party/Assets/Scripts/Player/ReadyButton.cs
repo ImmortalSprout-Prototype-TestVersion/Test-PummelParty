@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ReadyButton : MonoBehaviourPunCallbacks
 {
+    private PhotonView PV;
     public void OnClickReadyButton()
     {
 

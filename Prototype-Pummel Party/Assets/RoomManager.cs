@@ -46,7 +46,6 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
-            playerEnterOther++;
         }
 
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
@@ -57,8 +56,8 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
             playerEnterOther++;
+            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
             PV = buttons[playerEnterOther].GetPhotonView();
             PV.TransferOwnership(newPlayer);
         }
