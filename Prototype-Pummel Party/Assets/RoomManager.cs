@@ -65,6 +65,8 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnClickReadyButton()
     {
+        PV = buttons[playerEnterOther].GetPhotonView();
+
         if (PV.IsMine)
         {
             if (isClickedButton == false)
