@@ -7,18 +7,21 @@ using Photon.Realtime;
 using Unity.VisualScripting;
 using Photon.Utilities;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.UI;
 
 public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField] private GameObject roomName;
+    [SerializeField] private GameObject PlayerInfo;
     [SerializeField] private Transform[] spawnPositions;
     [SerializeField] private GameObject[] models;
     [SerializeField] private GameObject[] buttons;
 
     private PhotonView PV;
     private TMP_Text roomNameText;
-    private int playerEnterOther = 1;
     private Quaternion playerRotate = Quaternion.Euler(0, 180, 0);
+    private int playerEnterOther = 1;
+    private bool isClickedButton;
 
     private void Awake()
     {
@@ -59,5 +62,28 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
             PV.TransferOwnership(newPlayer);
             playerEnterOther++;
         }
+    }
+
+    public void OnClickReadyButton()
+    {
+        if (PV.IsMine)
+        {
+            if (isClickedButton == false)
+            {
+                PlayerInfo.GetComponent<Image>().color = new Color32(38, 255, 0, 255);
+                isClickedButton = true;
+            }
+
+            else
+            {
+                PlayerInfo.GetComponent<Image>().color = new Color32(111, 111, 111, 255);
+                isClickedButton = false;
+            }
+        }
+
+        else
+        {
+            return;
+        }      
     }
 }

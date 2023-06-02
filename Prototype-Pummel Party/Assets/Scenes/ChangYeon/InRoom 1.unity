@@ -557,6 +557,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ready
       objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1772293351}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickReadyButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RoomManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1064479830834929995, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -3
@@ -911,6 +939,34 @@ PrefabInstance:
     - target: {fileID: 1064479830834929992, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_Name
       value: Ready
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1772293351}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickReadyButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RoomManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1064479830834929995, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1325,6 +1381,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ready
       objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1772293351}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickReadyButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RoomManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1064479830834929995, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -3
@@ -1719,6 +1803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomName: {fileID: 1162065760}
+  PlayerInfo: {fileID: 0}
   spawnPositions:
   - {fileID: 0}
   - {fileID: 641288926}
@@ -1731,7 +1816,12 @@ MonoBehaviour:
   - {fileID: 3720337570842942497, guid: a8b8957c1464f4543b934e66715a7e54, type: 3}
   - {fileID: 3720337570842942497, guid: 1bf3e423de7a7a84cb283131d6f81377, type: 3}
   - {fileID: 3720337570842942497, guid: 66d80f0b830749a44a5f844956bda888, type: 3}
-  buttons: []
+  buttons:
+  - {fileID: 0}
+  - {fileID: 753243595}
+  - {fileID: 652983545}
+  - {fileID: 869814597}
+  - {fileID: 1581943255}
 --- !u!114 &1772293352
 MonoBehaviour:
   m_ObjectHideFlags: 0
