@@ -36,14 +36,22 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("입장~");
-        Debug.Log(playerEnterOther);
         PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, Quaternion.identity);
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
-
-        playerEnterOther++;
-        Debug.Log($"입장 수 : {playerEnterOther}");
+        Debug.Log("1");
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            playerEnterOther++;
+        }
+
+        Debug.Log("2");
+    }
+
+
 
 
 }
