@@ -40,6 +40,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, Quaternion.identity);
             playerEnterOther++;
+            Debug.Log("½ÇÇè");
         }
     }
 
