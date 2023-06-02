@@ -26,7 +26,6 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     private void Awake()
     {
         roomNameText = roomName.GetComponent<TMP_Text>();
-        PV = buttons[playerEnterOther].GetPhotonView();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -59,6 +58,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
+            PV = buttons[playerEnterOther].GetPhotonView();
             PV.TransferOwnership(newPlayer);
             playerEnterOther++;
         }
