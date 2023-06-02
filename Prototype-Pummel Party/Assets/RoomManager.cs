@@ -45,4 +45,12 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
             playerEnterOther = (int)stream.ReceiveNext();
         }
     }
+
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("플레이어 입장");
+        }
+    }
 }

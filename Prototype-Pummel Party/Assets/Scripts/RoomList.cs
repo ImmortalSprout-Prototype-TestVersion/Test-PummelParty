@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomList : MonoBehaviourPunCallbacks
 {
@@ -60,6 +61,8 @@ public class RoomList : MonoBehaviourPunCallbacks
         }
         
     }
+
+    private bool isReady;
 
     public override void OnJoinedRoom()
     {
