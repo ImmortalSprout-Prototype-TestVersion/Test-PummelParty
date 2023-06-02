@@ -388,6 +388,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerBox 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8484001842628990175, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8484001842628990175, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8484001842628990175, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1675338426272680211, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
     - {fileID: 1394820000978827053, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}

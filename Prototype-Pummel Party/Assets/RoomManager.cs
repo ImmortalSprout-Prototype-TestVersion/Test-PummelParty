@@ -16,10 +16,16 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private TMP_Text roomNameText;
     private int playerEnterOther = 1;
+    private Quaternion playerRotate;
 
     private void Awake()
     {
         roomNameText = roomName.GetComponent<TMP_Text>();       
+    }
+
+    private void Start()
+    {
+        playerRotate = Quaternion.Euler(0, 180, 0);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -38,7 +44,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, Quaternion.identity);
+            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
             playerEnterOther++;
             Debug.Log("½ÇÇè");
         }
@@ -48,7 +54,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, Quaternion.identity);
+            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
             roomNameText.text = PhotonNetwork.CurrentRoom.Name;
             playerEnterOther++;
         }
