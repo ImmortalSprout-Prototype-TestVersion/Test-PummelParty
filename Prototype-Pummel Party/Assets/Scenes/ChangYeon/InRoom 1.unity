@@ -1542,7 +1542,12 @@ MonoBehaviour:
   - {fileID: 1999523517}
   - {fileID: 1436027880}
   - {fileID: 534107274}
-  model: {fileID: 3720337570842942497, guid: 2f087a23a97c1554aa7d1cfd7c7edd3d, type: 3}
+  models:
+  - {fileID: 0}
+  - {fileID: 3720337570842942497, guid: 2f087a23a97c1554aa7d1cfd7c7edd3d, type: 3}
+  - {fileID: 3720337570842942497, guid: a8b8957c1464f4543b934e66715a7e54, type: 3}
+  - {fileID: 3720337570842942497, guid: 1bf3e423de7a7a84cb283131d6f81377, type: 3}
+  - {fileID: 3720337570842942497, guid: 66d80f0b830749a44a5f844956bda888, type: 3}
 --- !u!114 &1772293352
 MonoBehaviour:
   m_ObjectHideFlags: 0

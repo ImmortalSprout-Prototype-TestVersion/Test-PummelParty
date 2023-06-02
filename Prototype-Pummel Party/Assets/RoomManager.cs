@@ -12,7 +12,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     [SerializeField] private GameObject roomName;
     [SerializeField] private Transform[] spawnPositions;
-    [SerializeField] private GameObject model;
+    [SerializeField] private GameObject[] models;
 
     private GameObject playerMeterial;
     private TMP_Text roomNameText;
@@ -40,7 +40,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate(model.name, spawnPositions[playerEnterOther].position, playerRotate);
+            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
             playerEnterOther++;
         }
 
@@ -51,7 +51,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate(model.name, spawnPositions[playerEnterOther].position, playerRotate);
+            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
             playerEnterOther++;
         }
     }
