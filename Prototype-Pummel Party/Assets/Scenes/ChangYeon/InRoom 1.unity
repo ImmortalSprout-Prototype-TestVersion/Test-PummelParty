@@ -577,6 +577,22 @@ PrefabInstance:
       propertyPath: playerModel
       value: 
       objectReference: {fileID: 3720337570842942497, guid: 7b9e49a511fe5524db9cb727bde7ab1a, type: 3}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 3911080176347365896, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -697,6 +713,22 @@ PrefabInstance:
     - target: {fileID: 1064479831340774173, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_text
       value: Start
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 3911080176347365896, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_Pivot.x
@@ -846,6 +878,22 @@ PrefabInstance:
       propertyPath: playerModel
       value: 
       objectReference: {fileID: 3720337570842942497, guid: 2f087a23a97c1554aa7d1cfd7c7edd3d, type: 3}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 3911080176347365896, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1212,6 +1260,22 @@ PrefabInstance:
       propertyPath: playerModel
       value: 
       objectReference: {fileID: 3720337570842942497, guid: ed0699b4a9a8b8648a42a3178d754fee, type: 3}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3604854224182517582, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 3911080176347365896, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1737,7 +1801,7 @@ Camera:
   m_GameObject: {fileID: 1990356503}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 4
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
