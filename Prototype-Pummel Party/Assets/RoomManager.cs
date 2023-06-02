@@ -12,7 +12,7 @@ using UnityEngine.UI;
 public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField] private GameObject roomName;
-    [SerializeField] private GameObject PlayerInfo;
+    [SerializeField] private GameObject[] PlayerInfo;
     [SerializeField] private Transform[] spawnPositions;
     [SerializeField] private GameObject[] models;
     [SerializeField] private GameObject[] buttons;
@@ -70,13 +70,13 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (isClickedButton == false)
             {
-                PlayerInfo.GetComponent<Image>().color = new Color32(38, 255, 0, 255);
+                PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
             }
 
             else
             {
-                PlayerInfo.GetComponent<Image>().color = new Color32(111, 111, 111, 255);
+                PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
             }
         }

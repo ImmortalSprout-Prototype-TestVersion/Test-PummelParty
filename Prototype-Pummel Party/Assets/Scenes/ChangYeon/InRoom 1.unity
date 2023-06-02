@@ -754,6 +754,11 @@ MonoBehaviour:
   sceneViewId: 3
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!1 &652983547 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3209713111621986525, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+  m_PrefabInstance: {fileID: 652983544}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &753243594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -924,6 +929,11 @@ MonoBehaviour:
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!1 &753243597 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3209713111621986525, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+  m_PrefabInstance: {fileID: 753243594}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &761313651 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8484001842628990175, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
@@ -1157,6 +1167,11 @@ MonoBehaviour:
   sceneViewId: 4
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!1 &869814599 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3209713111621986525, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+  m_PrefabInstance: {fileID: 869814596}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1162065760
 GameObject:
   m_ObjectHideFlags: 0
@@ -1578,6 +1593,11 @@ MonoBehaviour:
   sceneViewId: 5
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!1 &1581943257 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3209713111621986525, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
+  m_PrefabInstance: {fileID: 1581943254}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1647625246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1803,7 +1823,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomName: {fileID: 1162065760}
-  PlayerInfo: {fileID: 0}
+  PlayerInfo:
+  - {fileID: 0}
+  - {fileID: 753243597}
+  - {fileID: 652983547}
+  - {fileID: 869814599}
+  - {fileID: 1581943257}
   spawnPositions:
   - {fileID: 0}
   - {fileID: 641288926}
