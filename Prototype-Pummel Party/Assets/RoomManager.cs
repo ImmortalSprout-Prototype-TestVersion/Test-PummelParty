@@ -37,18 +37,17 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     public override void OnJoinedRoom()
     {
         PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, Quaternion.identity);
-        roomNameText.text = PhotonNetwork.CurrentRoom.Name;
-        Debug.Log("1");
+        playerEnterOther++;
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, Quaternion.identity);
+            roomNameText.text = PhotonNetwork.CurrentRoom.Name;
             playerEnterOther++;
         }
-
-        Debug.Log("2");
     }
 
 
