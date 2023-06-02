@@ -3,10 +3,13 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class RoomList : MonoBehaviourPunCallbacks
 {
+    public UnityEvent setting;
+
     [SerializeField] private RoomData roomData;
     [SerializeField] private Transform roomListPosition;
 
@@ -58,18 +61,15 @@ public class RoomList : MonoBehaviourPunCallbacks
         else
         {
             PhotonNetwork.JoinRoom(selectedRoom.roomName);
+            SceneManager.LoadScene(1);
         }
         
     }
 
-    private bool isReady;
-
-    public override void OnJoinedRoom()
+    public void LoadScene()
     {
-        Debug.Log($"{PhotonNetwork.CurrentRoom.Name} 방에 들어왔습니다");
-        PhotonNetwork.LoadLevel(1);
+        SceneManager.LoadScene(1);
     }
-
 
     /// <summary>
     /// 선택한 방을 반환하는 함수입니다
