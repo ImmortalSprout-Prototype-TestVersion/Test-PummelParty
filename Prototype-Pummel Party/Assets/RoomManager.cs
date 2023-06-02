@@ -12,20 +12,16 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     [SerializeField] private GameObject roomName;
     [SerializeField] private Transform[] spawnPositions;
-    [SerializeField] private GameObject[] models;
+    [SerializeField] private GameObject model;
 
+    private GameObject playerMeterial;
     private TMP_Text roomNameText;
     private int playerEnterOther = 1;
-    private Quaternion playerRotate;
+    private Quaternion playerRotate = Quaternion.Euler(0, 180, 0);
 
     private void Awake()
     {
         roomNameText = roomName.GetComponent<TMP_Text>();       
-    }
-
-    private void Start()
-    {
-        playerRotate = Quaternion.Euler(0, 180, 0);
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -44,21 +40,22 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
+            PhotonNetwork.Instantiate(model.name, spawnPositions[playerEnterOther].position, playerRotate);
             playerEnterOther++;
-            Debug.Log("½ÇÇè");
         }
+
+        roomNameText.text = PhotonNetwork.CurrentRoom.Name;
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
-            roomNameText.text = PhotonNetwork.CurrentRoom.Name;
+            PhotonNetwork.Instantiate(model.name, spawnPositions[playerEnterOther].position, playerRotate);
             playerEnterOther++;
         }
     }
+      
 
 
 
