@@ -1,18 +1,12 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReadyButton : MonoBehaviour
+public class ReadyButton : MonoBehaviourPunCallbacks
 {
-    // Start is called before the first frame update
-    void Start()
+    public void OnClickReadyButton()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

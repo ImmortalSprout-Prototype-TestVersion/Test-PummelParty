@@ -6,17 +6,16 @@ using Photon.Pun;
 using Photon.Realtime;
 using Unity.VisualScripting;
 using Photon.Utilities;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 {
-    public PhotonView photonView;
-
     [SerializeField] private GameObject roomName;
     [SerializeField] private Transform[] spawnPositions;
     [SerializeField] private GameObject[] models;
     [SerializeField] private GameObject[] buttons;
 
-    private GameObject playerMeterial;
+    private PhotonView PV;
     private TMP_Text roomNameText;
     private int playerEnterOther = 1;
     private Quaternion playerRotate = Quaternion.Euler(0, 180, 0);
@@ -24,7 +23,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     private void Awake()
     {
         roomNameText = roomName.GetComponent<TMP_Text>();
-        photonView = buttons[1].GetPhotonView();
+        PV = buttons[2].GetPhotonView();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -46,8 +45,6 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
             playerEnterOther++;
-
-            photonView.RequestOwnership();
         }
 
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
@@ -59,12 +56,8 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
+            PV.TransferOwnership(newPlayer);
             playerEnterOther++;
         }
-
-        //if ()
-        //{
-            
-        //}
     }
 }

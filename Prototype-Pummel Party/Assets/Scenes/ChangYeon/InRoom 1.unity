@@ -720,7 +720,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents: []
   sceneViewId: 3
@@ -890,7 +890,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 1
+  OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
   sceneViewId: 1
@@ -1095,7 +1095,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents: []
   sceneViewId: 4
@@ -1488,7 +1488,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents: []
   sceneViewId: 5
@@ -1718,7 +1718,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ac5574391de3d04eb57c417ccbcc5c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  photonView: {fileID: 0}
   roomName: {fileID: 1162065760}
   spawnPositions:
   - {fileID: 0}
@@ -1732,12 +1731,7 @@ MonoBehaviour:
   - {fileID: 3720337570842942497, guid: a8b8957c1464f4543b934e66715a7e54, type: 3}
   - {fileID: 3720337570842942497, guid: 1bf3e423de7a7a84cb283131d6f81377, type: 3}
   - {fileID: 3720337570842942497, guid: 66d80f0b830749a44a5f844956bda888, type: 3}
-  buttons:
-  - {fileID: 0}
-  - {fileID: 753243595}
-  - {fileID: 652983545}
-  - {fileID: 869814597}
-  - {fileID: 1581943255}
+  buttons: []
 --- !u!114 &1772293352
 MonoBehaviour:
   m_ObjectHideFlags: 0
