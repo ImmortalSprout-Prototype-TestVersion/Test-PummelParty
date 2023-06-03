@@ -60,9 +60,9 @@ public class GameManager : MonoBehaviour
     {
         await UniTask.Delay(TimeSpan.FromSeconds(1f)); // 1초 기다렸다가
         SceneManager.LoadScene(minigameNumber, LoadSceneMode.Additive); // 미니게임씬을 additive 모드로 겹쳐서 로드한다
-        await UniTask.Delay(TimeSpan.FromSeconds(1f)); // 1초 기다렸다가
-        SceneManager.UnloadScene(minigameNumber); // 미니게임씬을 다시 Unload 한다
-        _turnManager.EndMinigame();  // 미니게임씬 unload 후 턴매니저에게 알림
+        // await UniTask.Delay(TimeSpan.FromSeconds(1f)); // 1초 기다렸다가
+        // SceneManager.UnloadScene(minigameNumber); // 미니게임씬을 다시 Unload 한다
+        // _turnManager.EndMinigame();  // 미니게임씬 unload 후 턴매니저에게 알림
     }
 
     private void LoadBoardgameScene()
