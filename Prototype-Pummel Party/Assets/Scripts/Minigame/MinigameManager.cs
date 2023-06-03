@@ -12,7 +12,6 @@ public class MinigameManager : MonoBehaviour
     private int _actorNumber;
 
     private List<(float, int)> _minigameRecord = new List<(float, int)>(PhotonNetwork.PlayerList.Length + 1);
-    // private List<int> _
     private int _goalInPlayerCount = 0;
 
     private void Awake()
@@ -39,7 +38,6 @@ public class MinigameManager : MonoBehaviour
         }
     }
 
-    private List<int> _ranking = new List<int>();
     private void Rank()
     {
         if(PhotonNetwork.IsMasterClient)
@@ -48,21 +46,19 @@ public class MinigameManager : MonoBehaviour
 
             for(int i = 0; i < _minigameRecord.Count; i++)
             {
-                int ranking = i;
                 int actorNumber = _minigameRecord[i].Item2;
-                gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.MasterClient, ranking, actorNumber);
+                gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.MasterClient, actorNumber);
             }
-            // TODO: 보드게임으로 씬전환
+
+            // TODO: 보드게임으로 씬전환 연결 후 테스트해야함
             PhotonNetwork.LoadLevel(2);
         }
     }
 
     [PunRPC]
-    private void SendResultToGameManager(int ranking, int actorNumber)
+    private void SendResultToGameManager(int actorNumber)
     {
         if(PhotonNetwork.IsMasterClient)
            GameManager.Instance.MinigameResult.Add(actorNumber);
-
-        Debug.Log("TEST");
     }
 }

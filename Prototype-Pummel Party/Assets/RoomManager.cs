@@ -168,7 +168,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("Minigame 3");
+            PhotonNetwork.LoadLevel("Boardgame");
         }
     }
 
@@ -218,7 +218,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     private void OnActiveStartButton()
     {
         // TODO: 테스트용으로 레디 필요한 수 바꿈 -> 커밋 or 머지할 때 꼭 지우기!!!
-        if (readyCount == 1 && PhotonNetwork.IsMasterClient)
+        if (readyCount == 3 && PhotonNetwork.IsMasterClient)
         {
             PhotonView.Get(gameObject).RPC("ActivateStartButton", RpcTarget.All);
         }
