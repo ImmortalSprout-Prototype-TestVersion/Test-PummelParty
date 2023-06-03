@@ -41,6 +41,15 @@ MonoBehaviour:
   - RespawnSpaceship
   - IncreaseNumber
   - PlusOrderNumber
+  - DisplayPlayerInfo
+  - CheckReadyButton
+  - PushReadyButton
+  - ActivateStartButton
+  - DeActivateStartButton
+  - DecreaseReadyCount
+  - IncreaseReadyCount
+  - ChangeColor
+  - KickOutPlayers
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
