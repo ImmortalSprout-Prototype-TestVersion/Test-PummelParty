@@ -32,7 +32,7 @@ public class MinigameManager : MonoBehaviour
             _minigameRecord.Add((time, actorNumber));
             _goalInPlayerCount++;
 
-            if(_goalInPlayerCount == PhotonNetwork.PlayerList.Length)
+             if(_goalInPlayerCount == PhotonNetwork.PlayerList.Length)
             {
                 Rank();
             }
@@ -59,6 +59,6 @@ public class MinigameManager : MonoBehaviour
     [PunRPC]
     private void SendResultToGameManager(int ranking, int actorNumber)
     {
-        GameManager.Instance.MinigameResult[ranking + 1] = actorNumber;
+         GameManager.Instance.MinigameResult[ranking] = actorNumber;
     }
 }
