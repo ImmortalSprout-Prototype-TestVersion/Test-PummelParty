@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Cinemachine;
 
 public class MinigameManager : MonoBehaviour
 {
     [SerializeField] private Transform[] _playerSpawnPosition;
+    [SerializeField] CinemachineVirtualCamera _virtualCamera;
+
+    private List<GameObject> _playerPrefabs = new List<GameObject>();
 
     private void Awake()
     {
@@ -20,6 +24,21 @@ public class MinigameManager : MonoBehaviour
             {
                 GameObject newPlayerPrefab = PhotonNetwork.Instantiate("Prefabs/Minigame/BoardgamePlayer", _playerSpawnPosition[i].position, Quaternion.identity);
                 newPlayerPrefab.GetPhotonView().TransferOwnership(PhotonNetwork.PlayerList[i]);
+                _playerPrefabs.Add(newPlayerPrefab);
+            }
+        }
+    }
+
+    private void Start()
+    {
+        for (int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
+        {
+            PhotonView pv = _playerPrefabs[i].GetComponent<PhotonView>();
+
+            if (pv.IsMine)
+            {
+                _virtualCamera.LookAt = _playerPrefabs[i].transform;
+                _virtualCamera.Follow = _playerPrefabs[i].transform;
             }
         }
     }
