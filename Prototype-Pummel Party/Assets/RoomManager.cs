@@ -185,25 +185,25 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     // 4) 눌린 레디 버튼이 3개 미만이라면 모든 클라이언트의 start버튼을 비활성화시킨다
 
     [PunRPC]
-    private void IncreaseReadyCount()
+    public void IncreaseReadyCount()
     {
         ++readyCount;
     }
 
     [PunRPC]
-    private void DecreaseReadyCount()
+    public void DecreaseReadyCount()
     {
         --readyCount;
     }
 
     [PunRPC]
-    private void ActivateStartButton()
+    public void ActivateStartButton()
     {
         startButton.interactable = true;
     }
 
     [PunRPC]
-    private void DeActivateStartButton()
+    public void DeActivateStartButton()
     {
         startButton.interactable = false;
     }
