@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3720337569980694429}
   - component: {fileID: 3720337569980694426}
   - component: {fileID: 3720337569980694427}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3720337569981758198}
   - component: {fileID: 3720337569981758195}
   - component: {fileID: 3720337569981758196}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 3720337570130904668}
   - component: {fileID: 3720337570130904665}
   - component: {fileID: 3720337570130904666}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 3720337570369655482}
   - component: {fileID: 3720337570369655483}
   - component: {fileID: 3720337570369655484}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +350,7 @@ GameObject:
   - component: {fileID: 4845411879295458017}
   - component: {fileID: -6282194104166055490}
   - component: {fileID: 4435482951274168167}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: InRoomPlayerBlue
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -364,15 +364,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3720337570842942497}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 7, y: 7, z: 7}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3720337570369655482}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &6446396508616808266
 Animator:
   serializedVersion: 5
@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 6575616285544247623}
   - component: {fileID: 3322633512951792890}
   - component: {fileID: 2566456640811308746}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -544,7 +544,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6934851038423230620}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RightWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -576,7 +576,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4529054938289081527}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LeftWing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -610,7 +610,7 @@ GameObject:
   - component: {fileID: 2237508223669445026}
   - component: {fileID: 5316895807579788986}
   - component: {fileID: 7546792132110935025}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -5,19 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Lobby.unity
     guid: 91013ebaa64c44541887e097389ea750
+  - enabled: 0
+    path: Assets/Scenes/BoardGame.unity
+    guid: 2b9d01fd26138e545823a6c0152c5e0f
+  - enabled: 0
+    path: Assets/Scenes/Minigame.unity
+    guid: 9637146e1c74aee4fa7175497dd339ed
+  - enabled: 1
+    path: Assets/Scenes/ChangYeon/Lobby 1.unity
+    guid: e1f94170a68dd1245bdb0cccb0731b32
   - enabled: 1
     path: Assets/Scenes/ChangYeon/InRoom 1.unity
     guid: a4a403c5036ba824ea0e931fde56a63c
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/BoardGame.unity
-    guid: 2b9d01fd26138e545823a6c0152c5e0f
-  - enabled: 1
-    path: Assets/Scenes/Minigame.unity
-    guid: 9637146e1c74aee4fa7175497dd339ed
+    path: Assets/Scenes/ChangYeon/BoardGame 1.unity
+    guid: d48e5295010812741879641e13526137
   m_configObjects: {}
