@@ -50,7 +50,7 @@ public class MinigameManager : MonoBehaviour
             {
                 int ranking = i;
                 int actorNumber = _minigameRecord[i].Item2;
-                gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.All, ranking, actorNumber);
+                gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.MasterClient, ranking, actorNumber);
             }
             // 보드게임으로 씬전환
         }
@@ -59,6 +59,7 @@ public class MinigameManager : MonoBehaviour
     [PunRPC]
     private void SendResultToGameManager(int ranking, int actorNumber)
     {
-         GameManager.Instance.MinigameResult.Add(actorNumber);
+        if(PhotonNetwork.IsMasterClient)
+          GameManager.Instance.MinigameResult.Add(actorNumber);
     }
 }
