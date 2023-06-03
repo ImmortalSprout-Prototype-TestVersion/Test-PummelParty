@@ -48,17 +48,17 @@ public class MinigameManager : MonoBehaviour
 
             for(int i = 0; i < _minigameRecord.Count; i++)
             {
-                _ranking.Add(_minigameRecord[i].Item2);
+                int ranking = i;
+                int actorNumber = _minigameRecord[i].Item2;
+                gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.All, ranking, actorNumber);
             }
-            // 게임매니저한테 등수 리스트 만들어서 액터넘버 전달해주기
-            gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.All, _ranking);
             // 보드게임으로 씬전환
         }
     }
 
     [PunRPC]
-    private void SendResultToGameManager(List<int> ranking)
+    private void SendResultToGameManager(int ranking, int actorNumber)
     {
-        GameManager.Instance.MinigameResult = ranking;
+        GameManager.Instance.MinigameResult[ranking + 1] = actorNumber;
     }
 }
