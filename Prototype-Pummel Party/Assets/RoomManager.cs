@@ -13,7 +13,7 @@ using Cysharp.Threading.Tasks;
 public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     [SerializeField] private GameObject roomName;
-    [SerializeField] private GameObject[] PlayerInfo;
+    [SerializeField] private Image[] StatusBar;
     [SerializeField] private Transform[] spawnPositions;
     [SerializeField] private GameObject[] models;
     [SerializeField] private GameObject[] buttons;
@@ -24,6 +24,10 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     private Quaternion playerRotate = Quaternion.Euler(0, 180, 0);
     private int playerEnterOther = 1;
     private bool isClickedButton;
+
+    private Color defaultColor = Color.grey;
+    //private Color hostColor = Color.red;
+    private Color readyColor = Color.green;
 
     private void Awake()
     {
@@ -84,16 +88,18 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (isClickedButton == false)
             {
-                PlayerInfo[2].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
+                //StatusBar[2].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
                 PhotonView.Get(gameObject).RPC("IncreaseReadyCount", RpcTarget.MasterClient);
+                PhotonView.Get(gameObject).RPC("ChangeColor", RpcTarget.All, 2, isClickedButton);
             }
 
             else
             {
-                PlayerInfo[2].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
+                StatusBar[2].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
                 PhotonView.Get(gameObject).RPC("DecreaseReadyCount", RpcTarget.MasterClient);
+                PhotonView.Get(gameObject).RPC("ChangeColor", RpcTarget.All, 2, isClickedButton);
             }
         }
 
@@ -109,16 +115,18 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (isClickedButton == false)
             {
-                PlayerInfo[3].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
+                //StatusBar[3].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
                 PhotonView.Get(gameObject).RPC("IncreaseReadyCount", RpcTarget.MasterClient);
+                PhotonView.Get(gameObject).RPC("ChangeColor", RpcTarget.All, 3, isClickedButton);
             }
 
             else
             {
-                PlayerInfo[3].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
+                //StatusBar[3].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
                 PhotonView.Get(gameObject).RPC("DecreaseReadyCount", RpcTarget.MasterClient);
+                PhotonView.Get(gameObject).RPC("ChangeColor", RpcTarget.All, 3, isClickedButton);
             }
         }
 
@@ -134,16 +142,18 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (isClickedButton == false)
             {
-                PlayerInfo[4].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
+                //StatusBar[4].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
                 PhotonView.Get(gameObject).RPC("IncreaseReadyCount", RpcTarget.MasterClient);
+                PhotonView.Get(gameObject).RPC("ChangeColor", RpcTarget.All, 4, isClickedButton);
             }
 
             else
             {
-                PlayerInfo[4].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
+                //StatusBar[4].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
                 PhotonView.Get(gameObject).RPC("DecreaseReadyCount", RpcTarget.MasterClient);
+                PhotonView.Get(gameObject).RPC("ChangeColor", RpcTarget.All, 4, isClickedButton);
             }
         }
 
@@ -162,7 +172,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         while (true)
         {
-            await UniTask.WaitUntil(() => readyCount == PhotonNetwork.CurrentRoom.MaxPlayers - 1); // 방장 본인은 빼줌
+            await UniTask.WaitUntil(() => readyCount == 1); // 방장 본인은 빼줌
             // Start버튼을 활성화하는 함수를 실행함
             if (PhotonNetwork.IsMasterClient)
             {
@@ -176,7 +186,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         while (true)
         {
-            await UniTask.WaitUntil(() => readyCount < PhotonNetwork.CurrentRoom.MaxPlayers - 1); // 전체가 레디를 하지 않았다면
+            await UniTask.WaitUntil(() => readyCount < 1); // 전체가 레디를 하지 않았다면
             // Start 버튼을 비활성화하는 함수를 실행함
             if (PhotonNetwork.IsMasterClient)
             {
@@ -216,4 +226,17 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         startButton.interactable = false;
     }
 
+    [PunRPC]
+    private void ChangeColor(int number, bool readyResult)
+    {
+        if (readyResult)
+        {
+            StatusBar[number].color = readyColor;
+        }
+        else
+        {
+            StatusBar[number].color = defaultColor;
+        }
+        
+    }
 }
