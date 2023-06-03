@@ -23,7 +23,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     private PhotonView[] PV;
     private TMP_Text roomNameText;
     private Quaternion playerRotate = Quaternion.Euler(0, 180, 0);
-    private int playerEnterOther = 1;
+    private int playerEnterOrder = 1;
     private bool isClickedButton;
 
     private Color defaultColor = Color.grey;
@@ -47,11 +47,11 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (stream.IsWriting)
             {
-                stream.SendNext(playerEnterOther);
+                stream.SendNext(playerEnterOrder);
             }
             else
             {
-                playerEnterOther = (int)stream.ReceiveNext();
+                playerEnterOrder = (int)stream.ReceiveNext();
             }
         }
     }
@@ -61,7 +61,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         // 마스터 클라이언트 생성 구간 생성하면서 방장의 정보를 어딘가에 저장해서 보드게임으로 가져갈 필요가 있음
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
+            PhotonNetwork.Instantiate(models[playerEnterOrder].name, spawnPositions[playerEnterOrder].position, playerRotate);
         }
 
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
@@ -72,9 +72,10 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            playerEnterOther++;
-            PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
-            PV[playerEnterOther].TransferOwnership(newPlayer);
+            playerEnterOrder++;
+            GameObject newPlayerModel = PhotonNetwork.Instantiate(models[playerEnterOrder].name, spawnPositions[playerEnterOrder].position, playerRotate);
+            newPlayerModel.GetPhotonView().TransferOwnership(newPlayer);
+            PV[playerEnterOrder].TransferOwnership(newPlayer);
         }
     }
 
@@ -165,7 +166,10 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnClickStartButton()
     {
-        PhotonNetwork.LoadLevel("BoardGame");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("BoardGame");
+        }
     }
 
     public int readyCount = 0; // 이걸 방장한테 알려줘야할듯?
@@ -210,7 +214,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     //    }
     //}
 
-   
+
     private void OnActiveStartButton()
     {
         if (readyCount == 3 && PhotonNetwork.IsMasterClient)
@@ -265,11 +269,26 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnClickBackButton()
     {
+        
         if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonView.Get(gameObject).RPC("KickOutPlayers", RpcTarget.All);
+        }
+        else
         {
             PhotonNetwork.LeaveRoom();
         }
-        
-        //PhotonNetwork.LoadLevel("Lobby");
     }
+
+    [PunRPC]
+    private void KickOutPlayers()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel("Lobby");
+    }
+    
 }
