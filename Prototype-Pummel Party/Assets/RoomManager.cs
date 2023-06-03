@@ -165,7 +165,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnClickStartButton()
     {
-        PhotonNetwork.LoadLevel("BoardGame 1");
+        PhotonNetwork.LoadLevel("BoardGame");
     }
 
     public int readyCount = 0; // 이걸 방장한테 알려줘야할듯?
@@ -265,6 +265,11 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnClickBackButton()
     {
-        PhotonNetwork.LoadLevel("Lobby 1");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        
+        //PhotonNetwork.LoadLevel("Lobby");
     }
 }

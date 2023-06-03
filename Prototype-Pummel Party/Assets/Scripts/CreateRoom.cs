@@ -18,7 +18,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 4;
 
-        PhotonNetwork.JoinOrCreateRoom(_roomName.text, options, TypedLobby.Default);
+        PhotonNetwork.CreateRoom(_roomName.text, options, TypedLobby.Default);
         Debug.Log($"{_roomName.text} 방을 만들었습니다");
     }
 
