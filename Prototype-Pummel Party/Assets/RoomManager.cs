@@ -17,7 +17,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private GameObject[] models;
     [SerializeField] private GameObject[] buttons;
 
-    private PhotonView PV;
+    private PhotonView[] PV;
     private TMP_Text roomNameText;
     private Quaternion playerRotate = Quaternion.Euler(0, 180, 0);
     private int playerEnterOther = 1;
@@ -26,6 +26,11 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     private void Awake()
     {
         roomNameText = roomName.GetComponent<TMP_Text>();
+        
+        for (int i = 1; i < 5; ++i)
+        {
+            PV[i] = buttons[i].GetPhotonView();
+        }
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -58,17 +63,13 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             playerEnterOther++;
             PhotonNetwork.Instantiate(models[playerEnterOther].name, spawnPositions[playerEnterOther].position, playerRotate);
-            PV = buttons[playerEnterOther].GetPhotonView();
-            PV.TransferOwnership(newPlayer);
+            PV[playerEnterOther].TransferOwnership(newPlayer);
         }
     }
 
     public void OnClickReadyButton()
     {
-        PV = buttons[playerEnterOther].GetPhotonView();
-        Debug.Log(playerEnterOther);
-
-        if (PV.IsMine)
+        if (PV[playerEnterOther].IsMine)
         {
             if (isClickedButton == false)
             {
