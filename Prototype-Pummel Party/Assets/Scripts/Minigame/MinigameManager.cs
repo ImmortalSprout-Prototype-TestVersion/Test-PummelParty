@@ -18,7 +18,7 @@ public class MinigameManager : MonoBehaviour
         {
             for(int i = 0; i < PhotonNetwork.PlayerList.Length; ++i)
             {
-                GameObject newPlayerPrefab = PhotonNetwork.Instantiate("Prefabs/Minigame/BoardgamePlayer", transform.position, Quaternion.identity);
+                GameObject newPlayerPrefab = PhotonNetwork.Instantiate("Prefabs/Minigame/BoardgamePlayer", _playerSpawnPosition[i].position, Quaternion.identity);
                 newPlayerPrefab.GetPhotonView().TransferOwnership(PhotonNetwork.PlayerList[i]);
             }
         }
