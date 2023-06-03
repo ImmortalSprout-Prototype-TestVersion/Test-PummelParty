@@ -26,7 +26,8 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     private void Awake()
     {
         roomNameText = roomName.GetComponent<TMP_Text>();
-        
+        PV = new PhotonView[5];
+
         for (int i = 1; i < 5; ++i)
         {
             PV[i] = buttons[i].GetPhotonView();
