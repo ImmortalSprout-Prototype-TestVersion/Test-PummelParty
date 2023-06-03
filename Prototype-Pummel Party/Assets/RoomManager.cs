@@ -68,20 +68,22 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    #region Ready Button ÇÔ¼ö
+
     public void OnClickReady1Button()
     {
-        if (PV[playerEnterOther].IsMine)
+        if (PV[2].IsMine)
         {
             if (isClickedButton == false)
             {
-                PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
+                PlayerInfo[2].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
                 Debug.Log("³»²¨ ÄÑÁü");
             }
 
             else
             {
-                PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
+                PlayerInfo[2].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
                 Debug.Log("³»²¨ ²¨Áü");
             }
@@ -95,18 +97,18 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnClickReady2Button()
     {
-        if (PV[playerEnterOther].IsMine)
+        if (PV[3].IsMine)
         {
             if (isClickedButton == false)
             {
-                PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
+                PlayerInfo[3].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
                 Debug.Log("³»²¨ ÄÑÁü");
             }
 
             else
             {
-                PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
+                PlayerInfo[3].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
                 Debug.Log("³»²¨ ²¨Áü");
             }
@@ -120,18 +122,18 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnClickReady3Button()
     {
-        if (PV[playerEnterOther].IsMine)
+        if (PV[4].IsMine)
         {
             if (isClickedButton == false)
             {
-                PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
+                PlayerInfo[4].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
                 Debug.Log("³»²¨ ÄÑÁü");
             }
 
             else
             {
-                PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
+                PlayerInfo[4].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
                 Debug.Log("³»²¨ ²¨Áü");
             }
@@ -142,4 +144,6 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
             return;
         }
     }
+
+    #endregion
 }
