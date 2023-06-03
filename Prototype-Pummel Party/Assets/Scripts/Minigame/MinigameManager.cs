@@ -59,6 +59,6 @@ public class MinigameManager : MonoBehaviour
     [PunRPC]
     private void SendResultToGameManager(int ranking, int actorNumber)
     {
-         GameManager.Instance.MinigameResult[ranking] = actorNumber;
+         GameManager.Instance.MinigameResult.Add(actorNumber);
     }
 }
