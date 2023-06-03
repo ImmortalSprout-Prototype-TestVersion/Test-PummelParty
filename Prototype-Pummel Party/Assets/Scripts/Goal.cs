@@ -36,7 +36,11 @@ public class Goal : MonoBehaviourPunCallbacks
             // Time.timeScale = 0f;
             int playerActorNum = other.gameObject.GetPhotonView().Owner.ActorNumber;
 
-            _minigameManager.gameObject.GetPhotonView().RPC("Record", RpcTarget.MasterClient, time, playerActorNum);
+            if(other.gameObject.GetPhotonView().IsMine)
+            {
+                _minigameManager.gameObject.GetPhotonView().RPC("Record", RpcTarget.MasterClient, time, playerActorNum);
+            }
+
         }
     }
 }

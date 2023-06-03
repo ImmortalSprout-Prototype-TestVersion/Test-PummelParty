@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ public class GameManager : MonoBehaviour
     private const int minigameNumber = 1;
     public int playerCount = 4;
     public int playerOrderNumber;
+
+    public List<int> MinigameResult = new List<int>(PhotonNetwork.PlayerList.Length + 1);
 
 
     private static GameManager instance = null;

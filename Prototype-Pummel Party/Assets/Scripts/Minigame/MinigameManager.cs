@@ -12,6 +12,7 @@ public class MinigameManager : MonoBehaviour
     private int _actorNumber;
 
     private List<(float, int)> _minigameRecord = new List<(float, int)>(PhotonNetwork.PlayerList.Length + 1);
+    // private List<int> _
     private int _goalInPlayerCount = 0;
 
     private void Awake()
@@ -29,6 +30,7 @@ public class MinigameManager : MonoBehaviour
         if(PhotonNetwork.IsMasterClient)
         {
             _minigameRecord.Add((time, actorNumber));
+            _goalInPlayerCount++;
 
             if(_goalInPlayerCount == PhotonNetwork.PlayerList.Length)
             {
@@ -42,7 +44,19 @@ public class MinigameManager : MonoBehaviour
         if(PhotonNetwork.IsMasterClient)
         {
             _minigameRecord.Sort();
-            Debug.Log("TEST");
+
+            // 게임매니저한테 등수 리스트 만들어서 액터넘버 전달해주기
+            gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.All, _minigameRecord);
+            // 보드게임으로 씬전환
+        }
+    }
+
+    [PunRPC]
+    private void SendResultToGameManager(List<(float, int)> minigameRecord)
+    {
+        for(int i = 0; i < minigameRecord.Count; ++i)
+        {
+            GameManager.Instance.MinigameResult[i + 1] = minigameRecord[i].Item2;
         }
     }
 }
