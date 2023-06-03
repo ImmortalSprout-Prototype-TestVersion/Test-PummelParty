@@ -86,14 +86,14 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 PlayerInfo[2].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
-                PV[playerEnterOther].RPC("IncreaseReadyCount", RpcTarget.MasterClient);
+                PhotonView.Get(gameObject).RPC("IncreaseReadyCount", RpcTarget.MasterClient);
             }
 
             else
             {
                 PlayerInfo[2].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
-                PV[playerEnterOther].RPC("DecreaseReadyCount", RpcTarget.MasterClient);
+                PhotonView.Get(gameObject).RPC("DecreaseReadyCount", RpcTarget.MasterClient);
             }
         }
 
@@ -111,14 +111,14 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 PlayerInfo[3].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
-                PV[playerEnterOther].RPC("IncreaseReadyCount", RpcTarget.MasterClient);
+                PhotonView.Get(gameObject).RPC("IncreaseReadyCount", RpcTarget.MasterClient);
             }
 
             else
             {
                 PlayerInfo[3].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
-                PV[playerEnterOther].RPC("DecreaseReadyCount", RpcTarget.MasterClient);
+                PhotonView.Get(gameObject).RPC("DecreaseReadyCount", RpcTarget.MasterClient);
             }
         }
 
@@ -136,14 +136,14 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 PlayerInfo[4].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
-                PV[playerEnterOther].RPC("IncreaseReadyCount", RpcTarget.MasterClient);
+                PhotonView.Get(gameObject).RPC("IncreaseReadyCount", RpcTarget.MasterClient);
             }
 
             else
             {
                 PlayerInfo[4].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
-                PV[playerEnterOther].RPC("DecreaseReadyCount", RpcTarget.MasterClient);
+                PhotonView.Get(gameObject).RPC("DecreaseReadyCount", RpcTarget.MasterClient);
             }
         }
 
@@ -155,7 +155,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #endregion
 
-    private int readyCount = 0; // 이걸 방장한테 알려줘야할듯?
+    public int readyCount = 0; // 이걸 방장한테 알려줘야할듯?
                                 // RpcTarget.MasterClient 로 하면 될듯? 굳이 다른애들한테도 readyCount 를 업데이트해줄 필요가 없음
 
     private async UniTaskVoid ShowStartButton()
@@ -185,25 +185,25 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     // 4) 눌린 레디 버튼이 3개 미만이라면 모든 클라이언트의 start버튼을 비활성화시킨다
 
     [PunRPC]
-    public void IncreaseReadyCount()
+    private void IncreaseReadyCount()
     {
         ++readyCount;
     }
 
     [PunRPC]
-    public void DecreaseReadyCount()
+    private void DecreaseReadyCount()
     {
         --readyCount;
     }
 
     [PunRPC]
-    public void ActivateStartButton()
+    private void ActivateStartButton()
     {
         startButton.interactable = true;
     }
 
     [PunRPC]
-    public void DeActivateStartButton()
+    private void DeActivateStartButton()
     {
         startButton.interactable = false;
     }
