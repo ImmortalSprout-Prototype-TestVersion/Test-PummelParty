@@ -160,22 +160,30 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private async UniTaskVoid ShowStartButton()
     {
-        await UniTask.WaitUntil(() => readyCount == 3);
-        // Start버튼을 활성화하는 함수를 실행함
-        if (PhotonNetwork.IsMasterClient)
+        while (true)
         {
-            gameObject.GetPhotonView().RPC("ActivateStartButton", RpcTarget.All);
+            await UniTask.WaitUntil(() => readyCount == PhotonNetwork.CurrentRoom.MaxPlayers - 1); // 방장 본인은 빼줌
+            // Start버튼을 활성화하는 함수를 실행함
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonView.Get(gameObject).RPC("ActivateStartButton", RpcTarget.All);
+            }
         }
+        
     }
 
     private async UniTaskVoid HideStartButton()
     {
-        await UniTask.WaitUntil(() => readyCount < 3);
-        // Start 버튼을 비활성화하는 함수를 실행함
-        if (PhotonNetwork.IsMasterClient)
+        while (true)
         {
-            gameObject.GetPhotonView().RPC("DeActivateStartButton", RpcTarget.All);
+            await UniTask.WaitUntil(() => readyCount < PhotonNetwork.CurrentRoom.MaxPlayers - 1); // 전체가 레디를 하지 않았다면
+            // Start 버튼을 비활성화하는 함수를 실행함
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonView.Get(gameObject).RPC("DeActivateStartButton", RpcTarget.All);
+            }
         }
+        
     }
 
     // 1) 레디 버튼이 눌렸을 때 눌린 레디 버튼 개수를 1개 증가시킨다

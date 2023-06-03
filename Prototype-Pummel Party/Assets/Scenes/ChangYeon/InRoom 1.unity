@@ -794,7 +794,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_Interactable
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1064479831340774173, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_text
@@ -1925,6 +1925,7 @@ MonoBehaviour:
   - {fileID: 869814597}
   - {fileID: 1581943255}
   startButton: {fileID: 753243598}
+  readyCount: 0
 --- !u!114 &1772293352
 MonoBehaviour:
   m_ObjectHideFlags: 0
