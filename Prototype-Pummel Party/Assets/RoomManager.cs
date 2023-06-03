@@ -169,6 +169,11 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     #endregion
 
+    public void OnClickStartButton()
+    {
+        PhotonNetwork.LoadLevel("BoardGame 1");
+    }
+
     public int readyCount = 0; // 이걸 방장한테 알려줘야할듯?
                                // RpcTarget.MasterClient 로 하면 될듯? 굳이 다른애들한테도 readyCount 를 업데이트해줄 필요가 없음
 
@@ -239,6 +244,5 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             StatusBar[number].color = defaultColor;
         }
-
     }
 }
