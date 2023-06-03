@@ -48,14 +48,18 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        if (stream.IsWriting)
+        if (this != null)
         {
-            stream.SendNext(playerEnterOther);
+            if (stream.IsWriting)
+            {
+                stream.SendNext(playerEnterOther);
+            }
+            else
+            {
+                playerEnterOther = (int)stream.ReceiveNext();
+            }
         }
-        else
-        {
-            playerEnterOther = (int)stream.ReceiveNext();
-        }
+
     }
 
     public override void OnJoinedRoom()
@@ -106,7 +110,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         else
         {
             return;
-        }      
+        }
     }
 
     public void OnClickReady2Button()
@@ -166,34 +170,32 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     #endregion
 
     public int readyCount = 0; // 이걸 방장한테 알려줘야할듯?
-                                // RpcTarget.MasterClient 로 하면 될듯? 굳이 다른애들한테도 readyCount 를 업데이트해줄 필요가 없음
+                               // RpcTarget.MasterClient 로 하면 될듯? 굳이 다른애들한테도 readyCount 를 업데이트해줄 필요가 없음
 
     private async UniTaskVoid ShowStartButton()
     {
-        while (true)
+        while (PhotonNetwork.InRoom)
         {
-            await UniTask.WaitUntil(() => readyCount == 1); // 방장 본인은 빼줌
-            // Start버튼을 활성화하는 함수를 실행함
+            await UniTask.WaitUntil(() => readyCount == 3); // 방장 본인은 빼줌
+                                                            // Start버튼을 활성화하는 함수를 실행함
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonView.Get(gameObject).RPC("ActivateStartButton", RpcTarget.All);
             }
         }
-        
     }
 
     private async UniTaskVoid HideStartButton()
     {
-        while (true)
+        while (PhotonNetwork.InRoom)
         {
-            await UniTask.WaitUntil(() => readyCount < 1); // 전체가 레디를 하지 않았다면
-            // Start 버튼을 비활성화하는 함수를 실행함
+            await UniTask.WaitUntil(() => readyCount < 3); // 전체가 레디를 하지 않았다면
+                                                           // Start 버튼을 비활성화하는 함수를 실행함
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonView.Get(gameObject).RPC("DeActivateStartButton", RpcTarget.All);
             }
         }
-        
     }
 
     // 1) 레디 버튼이 눌렸을 때 눌린 레디 버튼 개수를 1개 증가시킨다
@@ -237,6 +239,6 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             StatusBar[number].color = defaultColor;
         }
-        
+
     }
 }

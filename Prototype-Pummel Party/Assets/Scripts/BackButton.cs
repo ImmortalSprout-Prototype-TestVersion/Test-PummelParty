@@ -9,6 +9,6 @@ public class BackButton : MonoBehaviour
 {
     public void OnClickBackButton()
     {
-        SceneManager.LoadScene(0);
+        PhotonNetwork.LoadLevel("Lobby 1");
     }
 }
