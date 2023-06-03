@@ -9,6 +9,7 @@ using Photon.Utilities;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
+using System;
 
 public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -40,12 +41,6 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    private void Start()
-    {
-        ShowStartButton().Forget();
-        HideStartButton().Forget();
-    }
-
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (this != null)
@@ -59,7 +54,6 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
                 playerEnterOther = (int)stream.ReceiveNext();
             }
         }
-
     }
 
     public override void OnJoinedRoom()
@@ -177,48 +171,71 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     public int readyCount = 0; // 이걸 방장한테 알려줘야할듯?
                                // RpcTarget.MasterClient 로 하면 될듯? 굳이 다른애들한테도 readyCount 를 업데이트해줄 필요가 없음
 
-    private async UniTaskVoid ShowStartButton()
+    //private async UniTaskVoid ShowStartButton1()
+    //{
+    //    while (true)
+    //    {
+    //        if (!isInRoom)
+    //        {
+    //            return;
+    //        }
+
+    //        Debug.Log("방에 있음");
+    //        await UniTask.WaitUntil(() => readyCount == 3); // 방장 본인은 빼줌
+    //                                                        // Start버튼을 활성화하는 함수를 실행함
+    //        Debug.Log("3이 되었음");
+    //        if (PhotonNetwork.IsMasterClient)
+    //        {
+    //            Debug.Log("방장이라서 ACTIVATE RPC로 뿌림");
+    //            PhotonView.Get(gameObject).RPC("ActivateStartButton", RpcTarget.All);
+    //        }
+    //    }
+    //}
+
+    //private async UniTaskVoid HideStartButton1()
+    //{
+    //    while (true)
+    //    {
+    //        if (!isInRoom)
+    //        {
+    //            return;
+    //        }
+
+    //        await UniTask.WaitUntil(() => readyCount < 3); // 전체가 레디를 하지 않았다면
+    //                                                       // Start 버튼을 비활성화하는 함수를 실행함
+    //        if (PhotonNetwork.IsMasterClient)
+    //        {
+    //            PhotonView.Get(gameObject).RPC("DeActivateStartButton", RpcTarget.All);
+    //        }
+    //    }
+    //}
+
+   
+    private void OnActiveStartButton()
     {
-        while (PhotonNetwork.InRoom)
+        if (readyCount == 3 && PhotonNetwork.IsMasterClient)
         {
-            await UniTask.WaitUntil(() => readyCount == 3); // 방장 본인은 빼줌
-                                                            // Start버튼을 활성화하는 함수를 실행함
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PhotonView.Get(gameObject).RPC("ActivateStartButton", RpcTarget.All);
-            }
+            PhotonView.Get(gameObject).RPC("ActivateStartButton", RpcTarget.All);
+        }
+
+        else
+        {
+            PhotonView.Get(gameObject).RPC("DeActivateStartButton", RpcTarget.All);
         }
     }
-
-    private async UniTaskVoid HideStartButton()
-    {
-        while (PhotonNetwork.InRoom)
-        {
-            await UniTask.WaitUntil(() => readyCount < 3); // 전체가 레디를 하지 않았다면
-                                                           // Start 버튼을 비활성화하는 함수를 실행함
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PhotonView.Get(gameObject).RPC("DeActivateStartButton", RpcTarget.All);
-            }
-        }
-    }
-
-    // 1) 레디 버튼이 눌렸을 때 눌린 레디 버튼 개수를 1개 증가시킨다
-    // 2) 레디 버튼을 뗐을 때는 레디 버튼 개수를 1개 감소시킨다
-
-    // 3) 눌린 레디 버튼이 3개가 된다면 4개의 클라이언트의 start버튼을 모두 활성화시킨다
-    // 4) 눌린 레디 버튼이 3개 미만이라면 모든 클라이언트의 start버튼을 비활성화시킨다
 
     [PunRPC]
     private void IncreaseReadyCount()
     {
         ++readyCount;
+        OnActiveStartButton();
     }
 
     [PunRPC]
     private void DecreaseReadyCount()
     {
         --readyCount;
+        OnActiveStartButton();
     }
 
     [PunRPC]
@@ -244,5 +261,10 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             StatusBar[number].color = defaultColor;
         }
+    }
+
+    public void OnClickBackButton()
+    {
+        PhotonNetwork.LoadLevel("Lobby 1");
     }
 }

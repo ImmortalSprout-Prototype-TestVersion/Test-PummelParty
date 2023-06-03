@@ -174,6 +174,18 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 3822287231216922922, guid: ba1606ad05298fb4790e0337257d6ff8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2910093138650756733}
+    - target: {fileID: 3822287231216922922, guid: ba1606ad05298fb4790e0337257d6ff8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickBackButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3822287231216922922, guid: ba1606ad05298fb4790e0337257d6ff8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: RoomManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4267934119418003801, guid: ba1606ad05298fb4790e0337257d6ff8, type: 3}
       propertyPath: sceneViewId
       value: 17
