@@ -76,13 +76,14 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
-                Debug.Log("³»²¨");
+                Debug.Log("³»²¨ ÄÑÁü");
             }
 
             else
             {
                 PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
+                Debug.Log("³»²¨ ²¨Áü");
             }
         }
 
