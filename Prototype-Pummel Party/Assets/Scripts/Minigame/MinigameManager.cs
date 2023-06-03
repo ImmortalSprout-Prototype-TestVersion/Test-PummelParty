@@ -39,24 +39,26 @@ public class MinigameManager : MonoBehaviour
         }
     }
 
+    private List<int> _ranking = new List<int>();
     private void Rank()
     {
         if(PhotonNetwork.IsMasterClient)
         {
             _minigameRecord.Sort();
 
+            for(int i = 0; i < _minigameRecord.Count; i++)
+            {
+                _ranking.Add(_minigameRecord[i].Item2);
+            }
             // 게임매니저한테 등수 리스트 만들어서 액터넘버 전달해주기
-            gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.All, _minigameRecord);
+            gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.All, _ranking);
             // 보드게임으로 씬전환
         }
     }
 
     [PunRPC]
-    private void SendResultToGameManager(List<(float, int)> minigameRecord)
+    private void SendResultToGameManager(List<int> ranking)
     {
-        for(int i = 0; i < minigameRecord.Count; ++i)
-        {
-            GameManager.Instance.MinigameResult[i + 1] = minigameRecord[i].Item2;
-        }
+        GameManager.Instance.MinigameResult = ranking;
     }
 }
