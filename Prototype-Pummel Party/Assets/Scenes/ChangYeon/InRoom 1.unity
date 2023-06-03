@@ -759,6 +759,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3209713111621986525, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
   m_PrefabInstance: {fileID: 652983544}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &652983548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 652983547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 9
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1001 &753243594
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1172,6 +1194,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3209713111621986525, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
   m_PrefabInstance: {fileID: 869814596}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &869814600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869814599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 10
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1162065760
 GameObject:
   m_ObjectHideFlags: 0
@@ -1598,6 +1642,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3209713111621986525, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
   m_PrefabInstance: {fileID: 1581943254}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1581943258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581943257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 11
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1647625246
 GameObject:
   m_ObjectHideFlags: 0

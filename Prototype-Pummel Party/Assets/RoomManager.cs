@@ -66,6 +66,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     public void OnClickReadyButton()
     {
         PV = buttons[playerEnterOther].GetPhotonView();
+        Debug.Log(playerEnterOther);
 
         if (PV.IsMine)
         {
@@ -73,6 +74,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
+                Debug.Log("³»²¨");
             }
 
             else
