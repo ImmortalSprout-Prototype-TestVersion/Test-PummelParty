@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using Photon.Utilities;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
 public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -16,6 +17,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField] private Transform[] spawnPositions;
     [SerializeField] private GameObject[] models;
     [SerializeField] private GameObject[] buttons;
+    [SerializeField] private Button startButton;
 
     private PhotonView[] PV;
     private TMP_Text roomNameText;
@@ -32,6 +34,12 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             PV[i] = buttons[i].GetPhotonView();
         }
+    }
+
+    private void Start()
+    {
+        ShowStartButton().Forget();
+        HideStartButton().Forget();
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -78,14 +86,14 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 PlayerInfo[2].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
-                Debug.Log("내꺼 켜짐");
+                PV[playerEnterOther].RPC("IncreaseReadyCount", RpcTarget.MasterClient);
             }
 
             else
             {
                 PlayerInfo[2].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
-                Debug.Log("내꺼 꺼짐");
+                PV[playerEnterOther].RPC("DecreaseReadyCount", RpcTarget.MasterClient);
             }
         }
 
@@ -103,14 +111,14 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 PlayerInfo[3].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
-                Debug.Log("내꺼 켜짐");
+                PV[playerEnterOther].RPC("IncreaseReadyCount", RpcTarget.MasterClient);
             }
 
             else
             {
                 PlayerInfo[3].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
-                Debug.Log("내꺼 꺼짐");
+                PV[playerEnterOther].RPC("DecreaseReadyCount", RpcTarget.MasterClient);
             }
         }
 
@@ -128,14 +136,14 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
             {
                 PlayerInfo[4].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
                 isClickedButton = true;
-                Debug.Log("내꺼 켜짐");
+                PV[playerEnterOther].RPC("IncreaseReadyCount", RpcTarget.MasterClient);
             }
 
             else
             {
                 PlayerInfo[4].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
                 isClickedButton = false;
-                Debug.Log("내꺼 꺼짐");
+                PV[playerEnterOther].RPC("DecreaseReadyCount", RpcTarget.MasterClient);
             }
         }
 
@@ -146,4 +154,58 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     #endregion
+
+    private int readyCount = 0; // 이걸 방장한테 알려줘야할듯?
+                                // RpcTarget.MasterClient 로 하면 될듯? 굳이 다른애들한테도 readyCount 를 업데이트해줄 필요가 없음
+
+    private async UniTaskVoid ShowStartButton()
+    {
+        await UniTask.WaitUntil(() => readyCount == 3);
+        // Start버튼을 활성화하는 함수를 실행함
+        if (PhotonNetwork.IsMasterClient)
+        {
+            gameObject.GetPhotonView().RPC("ActivateStartButton", RpcTarget.All);
+        }
+    }
+
+    private async UniTaskVoid HideStartButton()
+    {
+        await UniTask.WaitUntil(() => readyCount < 3);
+        // Start 버튼을 비활성화하는 함수를 실행함
+        if (PhotonNetwork.IsMasterClient)
+        {
+            gameObject.GetPhotonView().RPC("DeActivateStartButton", RpcTarget.All);
+        }
+    }
+
+    // 1) 레디 버튼이 눌렸을 때 눌린 레디 버튼 개수를 1개 증가시킨다
+    // 2) 레디 버튼을 뗐을 때는 레디 버튼 개수를 1개 감소시킨다
+
+    // 3) 눌린 레디 버튼이 3개가 된다면 4개의 클라이언트의 start버튼을 모두 활성화시킨다
+    // 4) 눌린 레디 버튼이 3개 미만이라면 모든 클라이언트의 start버튼을 비활성화시킨다
+
+    [PunRPC]
+    private void IncreaseReadyCount()
+    {
+        ++readyCount;
+    }
+
+    [PunRPC]
+    private void DecreaseReadyCount()
+    {
+        --readyCount;
+    }
+
+    [PunRPC]
+    private void ActivateStartButton()
+    {
+        startButton.interactable = true;
+    }
+
+    [PunRPC]
+    private void DeActivateStartButton()
+    {
+        startButton.interactable = false;
+    }
+
 }
