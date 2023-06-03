@@ -566,6 +566,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7990883830463907532, guid: a8cdaca543d59334e8ebc5f5259a60b3, type: 3}
+      propertyPath: _minigameManager
+      value: 
+      objectReference: {fileID: 1262404371}
+    - target: {fileID: 8436328933613822105, guid: a8cdaca543d59334e8ebc5f5259a60b3, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8cdaca543d59334e8ebc5f5259a60b3, type: 3}
 --- !u!1 &922680522
