@@ -575,7 +575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClickReadyButton
+      value: OnClickReady1Button
       objectReference: {fileID: 0}
     - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -990,7 +990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClickReadyButton
+      value: OnClickReady2Button
       objectReference: {fileID: 0}
     - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -1458,7 +1458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClickReadyButton
+      value: OnClickReady3Button
       objectReference: {fileID: 0}
     - target: {fileID: 1064479830834929994, guid: cba596de6dff9a5458cddea947b71ec1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

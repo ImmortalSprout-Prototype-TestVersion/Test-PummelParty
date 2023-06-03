@@ -68,7 +68,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    public void OnClickReadyButton()
+    public void OnClickReady1Button()
     {
         if (PV[playerEnterOther].IsMine)
         {
@@ -91,5 +91,55 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         {
             return;
         }      
+    }
+
+    public void OnClickReady2Button()
+    {
+        if (PV[playerEnterOther].IsMine)
+        {
+            if (isClickedButton == false)
+            {
+                PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
+                isClickedButton = true;
+                Debug.Log("³»²¨ ÄÑÁü");
+            }
+
+            else
+            {
+                PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
+                isClickedButton = false;
+                Debug.Log("³»²¨ ²¨Áü");
+            }
+        }
+
+        else
+        {
+            return;
+        }
+    }
+
+    public void OnClickReady3Button()
+    {
+        if (PV[playerEnterOther].IsMine)
+        {
+            if (isClickedButton == false)
+            {
+                PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(38, 255, 0, 255);
+                isClickedButton = true;
+                Debug.Log("³»²¨ ÄÑÁü");
+            }
+
+            else
+            {
+                PlayerInfo[playerEnterOther].GetComponent<Image>().color = new Color32(111, 111, 111, 255);
+                isClickedButton = false;
+                Debug.Log("³»²¨ ²¨Áü");
+            }
+        }
+
+        else
+        {
+            return;
+        }
     }
 }
