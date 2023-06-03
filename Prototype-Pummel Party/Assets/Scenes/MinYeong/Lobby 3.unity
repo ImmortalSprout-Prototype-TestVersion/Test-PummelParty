@@ -150,6 +150,34 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3033525522168432917, guid: 716af9e7df122b8448f352d7607d75c0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033525522168432917, guid: 716af9e7df122b8448f352d7607d75c0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033525522168432917, guid: 716af9e7df122b8448f352d7607d75c0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 162733546}
+    - target: {fileID: 3033525522168432917, guid: 716af9e7df122b8448f352d7607d75c0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033525522168432917, guid: 716af9e7df122b8448f352d7607d75c0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: LoadScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033525522168432917, guid: 716af9e7df122b8448f352d7607d75c0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: RoomList, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3033525522168432917, guid: 716af9e7df122b8448f352d7607d75c0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4086396829975153688, guid: 716af9e7df122b8448f352d7607d75c0, type: 3}
       propertyPath: m_Name
       value: Lobby UI Canvas
@@ -240,6 +268,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 716af9e7df122b8448f352d7607d75c0, type: 3}
+--- !u!114 &162733546 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 376877444496200059, guid: 716af9e7df122b8448f352d7607d75c0, type: 3}
+  m_PrefabInstance: {fileID: 162733545}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 875f9f71f9bf0aa43867a94dd4455287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1006502464
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,8 +498,8 @@ Camera:
   m_GameObject: {fileID: 2021608454}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -476,7 +515,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
