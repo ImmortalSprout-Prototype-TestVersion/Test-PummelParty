@@ -33,7 +33,6 @@ public class TurnManager : MonoBehaviour
         {
             turn.SetOrder(1, 2, 3, 4);
 
-            Debug.Log(turn.turnOrder.Dequeue().ActorNumber);
             BoardGameframeWork.StartTurn.Invoke();
         }
     }
@@ -48,13 +47,15 @@ public class TurnManager : MonoBehaviour
 
     public void OnStartTurn()
     {
+        Debug.Log(currentTurnPlayer.ActorNumber);
        cuttrentTurnView = PhotonView.Find(currentTurnPlayer.ActorNumber);
+        Debug.Log(cuttrentTurnView.ViewID);
        currentController = cuttrentTurnView.gameObject.GetComponent<PlayerController>();
 
        currentController.gameObject.SetActive(true);
     }
 
-    public 
+    
     //private void StartPlayerTurn()
     //{
     //    Debug.Log("≈œ Ω√¿€");

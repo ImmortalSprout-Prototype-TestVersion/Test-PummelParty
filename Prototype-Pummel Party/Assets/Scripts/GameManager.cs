@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int playerOrderNumber;
     public PlayerModelData models;
     public PositionData positions;
+    public PhotonView[] playerPv;
 
 
     private static GameManager instance = null;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        playerPv = new PhotonView[playerCount + 1];
         if (instance == null)
         {
             instance = this;
@@ -92,6 +94,7 @@ public class GameManager : MonoBehaviour
                 GameObject player = PhotonNetwork.Instantiate(models.BoardGameModel[actorNumber].name, positions.BoardGameSpawnPosition[actorNumber].transform.position,
                     Quaternion.identity);
                 PhotonView pv = player.GetPhotonView();
+                playerPv[actorNumber] = pv;
                 pv.TransferOwnership(actorNumber);
             }
         }
