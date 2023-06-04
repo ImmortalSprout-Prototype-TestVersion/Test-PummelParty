@@ -90,7 +90,13 @@ public class TurnManager : MonoBehaviour
     }
 
 
-
+    public void LoadMinigameScene()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("Minigame");
+        }
+    }
 
 
     //private void StartPlayerTurn()
