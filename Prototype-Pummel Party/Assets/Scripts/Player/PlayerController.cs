@@ -53,6 +53,10 @@ public class PlayerController : MonoBehaviour
     {
         _turnManager = GameManager.Instance.ReturnTurnManager();
         turnManagerPV = PhotonView.Get(_turnManager);
+        if (playerPV.IsMine)
+        {
+            GameManager.Instance.SetVirtualCamera(transform);
+        }
     }
 
     private void OnEnable()
