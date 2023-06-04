@@ -194,11 +194,11 @@ public class PlayerController : MonoBehaviour
 
         if (PhotonNetwork.IsMasterClient)
         {
-            pv.RPC("InvokePlayerTurnEndEventRPC", RpcTarget.MasterClient);
+            _turnManager.InvokePlayerTurnEndEvent();
         }
         else
         {
-            _turnManager.InvokePlayerTurnEndEvent();
+            pv.RPC("InvokePlayerTurnEndEventRPC", RpcTarget.MasterClient);
         }
 
         return true;
