@@ -18,10 +18,23 @@ public class PlayerController : MonoBehaviour
     private Vector3 _destTilePosition;
 
     private int _moveCount = 0;
-    private bool _canRoll = false;
+    //private bool _canRoll = false;
+    public bool _canRoll = false;
     private bool _canMoveOnDirectionTile = false; // 플레이어가 회전타일에서 움직일 수 있는지 여부
 
     private PhotonView pv;
+
+    [PunRPC]
+    private void EnablePlayerMove()
+    {
+        _canRoll = true;
+    }
+
+    [PunRPC]
+    private void DisablePlayerMove()
+    {
+        _canRoll = false;
+    }
 
     public enum DICE_RESULT
     {

@@ -64,7 +64,7 @@ public class TurnManager : MonoBehaviour
     {
         currentTurnView = GameManager.Instance.playerPv[currentTurnPlayer.ActorNumber];
         currentController = currentTurnView.gameObject.GetComponent<PlayerController>();
-        currentController.gameObject.SetActive(true);
+        currentTurnView.RPC("EnablePlayerMove", currentTurnPlayer);
     }
 
 
