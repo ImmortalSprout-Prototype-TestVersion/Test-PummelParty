@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,29 +8,106 @@ using UnityEngine;
 
 public class TurnManager : MonoBehaviour
 {
-    public event Action OnTurnStarted;
-    public event Action OnTurnEnd;
+    //public event Action OnTurnStarted;
+    //public event Action OnTurnEnd;
+    public BoardGameEvent BoardGameframeWork;
+
+    //private Player currentTurnPlayer;
+    public Player currentTurnPlayer;
+    private PhotonView currentTurnView;
+    public PlayerController currentController;
+    private Turn turn;
+
+    private void Awake()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            turn = new Turn();
+            turn.Init();
+        }
+    }
 
     private void Start()
     {
-        StartPlayerTurn();
+        //StartPlayerTurn();
+        WaitUntilAllPlayerInstantiated().Forget();
+        //Debug.Log("턴 시작되쓰요");
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    turn.SetOrder(1, 2, 3, 4);
+
+        //    BoardGameframeWork.StartTurn.Invoke();
+        //}
     }
 
-    private void StartPlayerTurn()
+    private async UniTaskVoid WaitUntilAllPlayerInstantiated()
     {
-        Debug.Log("턴 시작");
-        OnTurnStarted?.Invoke();
+        await UniTask.WaitUntil(() => GameManager.Instance.isPlayerAllInstantiated == true);
+        Debug.Log("턴 시작되쓰요");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            turn.SetOrder(1, 2, 3, 4);
+
+            BoardGameframeWork.OnStartTurn.Invoke();
+        }
     }
 
-    public void EndPlayerTurn()
+    [PunRPC]
+    public void InvokePlayerTurnEndEventRPC()
     {
-        Debug.Log("턴 종료");
-        OnTurnEnd?.Invoke();
+        BoardGameframeWork.OnEndTurn.Invoke();
     }
 
-    public void EndMinigame()
+    public void InvokePlayerTurnEndEvent()
     {
-        Debug.Log("미니게임 끝");
-        Invoke("StartPlayerTurn", 1f);
+        BoardGameframeWork.OnEndTurn.Invoke();
     }
+
+
+
+
+    /// <summary>
+    /// 현재 턴인 플레이어 설정
+    /// </summary>
+    /// <returns></returns>
+    public void PlayerSet()
+    {
+        if (turn.turnOrder.Count == 0)
+        {
+            BoardGameframeWork.OnAllEndTurn.Invoke();
+        }
+        else
+        {
+            currentTurnPlayer = turn.Guide();
+        }
+    }
+
+    public void OnStartTurn()
+    {
+        currentTurnView = GameManager.Instance.playerPv[currentTurnPlayer.ActorNumber];
+        currentController = currentTurnView.gameObject.GetComponent<PlayerController>();
+        currentTurnView.RPC("EnablePlayerMove", currentTurnPlayer);
+    }
+
+
+
+
+
+    //private void StartPlayerTurn()
+    //{
+    //    Debug.Log("턴 시작");
+    //    OnTurnStarted?.Invoke();
+    //}
+
+    //public void EndPlayerTurn()
+    //{
+    //    Debug.Log("턴 종료");
+    //    OnTurnEnd?.Invoke();
+    //}
+
+    //public void EndMinigame()
+    //{
+    //    Debug.Log("미니게임 끝");
+    //    Invoke("StartPlayerTurn", 1f);
+    //}
 }
