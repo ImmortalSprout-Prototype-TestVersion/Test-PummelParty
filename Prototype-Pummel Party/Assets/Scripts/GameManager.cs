@@ -9,6 +9,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private TurnManager _turnManager;
+    public TurnManager ReturnTurnManager()
+    {
+        return _turnManager;
+    }
 
     private const int boardgameNumber = 0;
     private const int minigameNumber = 1;

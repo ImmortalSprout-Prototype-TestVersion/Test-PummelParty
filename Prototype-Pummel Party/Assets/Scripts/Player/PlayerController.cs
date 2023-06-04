@@ -48,6 +48,11 @@ public class PlayerController : MonoBehaviour
         pv = PhotonView.Get(gameObject);
     }
 
+    private void Start()
+    {
+        _turnManager = GameManager.Instance.ReturnTurnManager();
+    }
+
     private void OnEnable()
     {
         //_turnManager.OnTurnStarted -= ChangeDiceAvailable;
@@ -187,6 +192,7 @@ public class PlayerController : MonoBehaviour
             await UniTask.Yield();
         }
 
+        _turnManager.InvokePlayerTurnEndEvent();
         return true;
     }
 

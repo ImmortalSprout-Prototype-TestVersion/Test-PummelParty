@@ -390,6 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _turnManager: {fileID: 0}
   _waitTimeBeforMove: 1000
+  _canRoll: 0
 --- !u!65 &8597516925941939378
 BoxCollider:
   m_ObjectHideFlags: 0

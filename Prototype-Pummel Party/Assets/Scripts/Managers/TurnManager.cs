@@ -12,9 +12,10 @@ public class TurnManager : MonoBehaviour
     //public event Action OnTurnEnd;
     public BoardGameEvent BoardGameframeWork;
 
-    private Player currentTurnPlayer;
+    //private Player currentTurnPlayer;
+    public Player currentTurnPlayer;
     private PhotonView currentTurnView;
-    private PlayerController currentController;
+    public PlayerController currentController;
     private Turn turn;
 
     private void Awake()
@@ -47,9 +48,15 @@ public class TurnManager : MonoBehaviour
         {
             turn.SetOrder(1, 2, 3, 4);
 
-            BoardGameframeWork.StartTurn.Invoke();
+            BoardGameframeWork.OnStartTurn.Invoke();
         }
     }
+
+    public void InvokePlayerTurnEndEvent()
+    {
+        BoardGameframeWork.OnEndTurn.Invoke();
+    }
+
 
     /// <summary>
     /// 현재 턴인 플레이어 설정
@@ -57,7 +64,14 @@ public class TurnManager : MonoBehaviour
     /// <returns></returns>
     public void PlayerSet()
     {
-        currentTurnPlayer = turn.Guide();
+        if (turn.turnOrder.Count == 0)
+        {
+            BoardGameframeWork.OnAllEndTurn.Invoke();
+        }
+        else
+        {
+            currentTurnPlayer = turn.Guide();
+        }
     }
 
     public void OnStartTurn()
@@ -66,6 +80,9 @@ public class TurnManager : MonoBehaviour
         currentController = currentTurnView.gameObject.GetComponent<PlayerController>();
         currentTurnView.RPC("EnablePlayerMove", currentTurnPlayer);
     }
+
+
+
 
 
     //private void StartPlayerTurn()

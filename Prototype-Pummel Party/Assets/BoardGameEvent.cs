@@ -5,11 +5,12 @@ using UnityEngine.Events;
 
 public class BoardGameEvent : MonoBehaviour
 {
-    public UnityEvent StartTurn;
-
     public UnityEvent OnStartTurn;
 
-    public UnityEvent EndTurn;
+    //public UnityEvent OnStartTurn;
 
     public UnityEvent OnEndTurn;
+
+    //public UnityEvent OnEndTurn;
+    public UnityEvent OnAllEndTurn;
 }

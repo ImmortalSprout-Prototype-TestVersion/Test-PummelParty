@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a22ce9c7adcd8d45bf4a2de29c989a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartTurn:
+  OnStartTurn:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1818665547}
@@ -179,13 +179,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnStartTurn:
-    m_PersistentCalls:
-      m_Calls: []
-  EndTurn:
-    m_PersistentCalls:
-      m_Calls: []
   OnEndTurn:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1818665547}
+        m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
+        m_MethodName: PlayerSet
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1818665547}
+        m_TargetAssemblyTypeName: TurnManager, Assembly-CSharp
+        m_MethodName: OnStartTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnAllEndTurn:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &45301636
