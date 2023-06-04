@@ -98,11 +98,9 @@ public class GameManager : MonoBehaviour
                 playerPv[actorNumber] = pv;
                 pv.TransferOwnership(actorNumber);
             }
-
-
-            isPlayerAllInstantiated = true;
         }
         
+        isPlayerAllInstantiated = true;
     }
     
 
