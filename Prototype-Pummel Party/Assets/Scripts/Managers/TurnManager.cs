@@ -47,11 +47,8 @@ public class TurnManager : MonoBehaviour
 
     public void OnStartTurn()
     {
-        Debug.Log(currentTurnPlayer.ActorNumber);
-       cuttrentTurnView = PhotonView.Find(currentTurnPlayer.ActorNumber);
-        Debug.Log(cuttrentTurnView.ViewID);
+       cuttrentTurnView = GameManager.Instance.playerPv[currentTurnPlayer.ActorNumber];
        currentController = cuttrentTurnView.gameObject.GetComponent<PlayerController>();
-
        currentController.gameObject.SetActive(true);
     }
 
