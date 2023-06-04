@@ -53,11 +53,18 @@ public class PlayerController : MonoBehaviour
     {
         _turnManager = GameManager.Instance.ReturnTurnManager();
         turnManagerPV = PhotonView.Get(_turnManager);
+        WaitUntilAllPlayersInstantiated().Forget();
+    }
+
+    private async UniTaskVoid WaitUntilAllPlayersInstantiated()
+    {
+        await UniTask.WaitUntil(() => GameManager.Instance.isPlayerAllInstantiated == true);
         if (playerPV.IsMine)
         {
             GameManager.Instance.SetVirtualCamera(transform);
         }
     }
+
 
     private void OnEnable()
     {
