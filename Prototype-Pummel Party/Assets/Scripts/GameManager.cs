@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
         }
         
         isPlayerAllInstantiated = true;
+        Debug.Break();
     }
     
 
