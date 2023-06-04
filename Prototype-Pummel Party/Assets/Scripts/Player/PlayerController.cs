@@ -33,13 +33,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        _turnManager.OnTurnStarted -= ChangeDiceAvailable;
-        _turnManager.OnTurnStarted += ChangeDiceAvailable;
+        //_turnManager.OnTurnStarted -= ChangeDiceAvailable;
+        //_turnManager.OnTurnStarted += ChangeDiceAvailable;
     }
 
     private void OnDisable()
     {
-        _turnManager.OnTurnStarted -= ChangeDiceAvailable;
+        //_turnManager.OnTurnStarted -= ChangeDiceAvailable;
     }
 
     private void Update()
@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
 
         if (_currentTile.transform.position == _destTilePosition)
         {
-            _turnManager.EndPlayerTurn();
+            //_turnManager.EndPlayerTurn();
             return;
         }
 
@@ -126,7 +126,7 @@ public class PlayerController : MonoBehaviour
         await LookForward();
 
         Debug.Log("회전 끝");
-        _turnManager.EndPlayerTurn();
+     //   _turnManager.EndPlayerTurn();
     }
 
     // TODO: _diceResult랑 _moveCount 의미 제대로 생각해서 분리..

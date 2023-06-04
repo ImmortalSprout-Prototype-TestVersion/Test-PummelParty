@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06716f4ca920a6044b0274decd8f41f6, type: 3}
+  m_Name: PositionData
+  m_EditorClassIdentifier: 
+  BoardGameSpawnPosition:
+  - {fileID: 0}
+  - {fileID: 392156023640524981, guid: 74785cc18f526bb47ac0e3c357222a17, type: 3}
+  - {fileID: 4229045535912910659, guid: 6ba1876989d61744fb7050e8fc98c3ce, type: 3}
+  - {fileID: 2250169279700239343, guid: 258dd700fe5a75b47b0e2d3fa10ac3ed, type: 3}
+  - {fileID: 834815258687580088, guid: 6c9cd15dd8ad95b4484ae389ceace2b9, type: 3}
+  RaceSpawnPosition: []

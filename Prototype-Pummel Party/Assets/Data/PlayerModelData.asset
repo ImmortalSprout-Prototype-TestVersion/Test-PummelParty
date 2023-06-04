@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 719890bd74c96024fbf7d8bbe60b053f, type: 3}
+  m_Name: PlayerModelData
+  m_EditorClassIdentifier: 
+  BoardGameModel:
+  - {fileID: 0}
+  - {fileID: 3720337570842942497, guid: b874d0faf69de0a49adad69486868b7d, type: 3}
+  - {fileID: 3720337570842942497, guid: 7a0ab168f0b936641be89ec503d5050d, type: 3}
+  - {fileID: 3720337570842942497, guid: 2ac1d924bb6308246bee32e46b77f3cd, type: 3}
+  - {fileID: 3720337570842942497, guid: a073a6d03a060f1428b9703925190cf0, type: 3}

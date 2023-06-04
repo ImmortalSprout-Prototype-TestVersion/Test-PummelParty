@@ -168,7 +168,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel("BoardGame");
+            PhotonNetwork.LoadLevel(2);
         }
     }
 
