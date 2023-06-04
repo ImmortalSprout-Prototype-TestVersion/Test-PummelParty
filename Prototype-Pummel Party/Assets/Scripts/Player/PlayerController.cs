@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Photon.Pun;
 using System;
 using UnityEngine;
 
@@ -20,6 +21,8 @@ public class PlayerController : MonoBehaviour
     private bool _canRoll = false;
     private bool _canMoveOnDirectionTile = false; // 플레이어가 회전타일에서 움직일 수 있는지 여부
 
+    private PhotonView pv;
+
     public enum DICE_RESULT
     {
         Back = -1,
@@ -29,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _dice = new Dice();
+        pv = PhotonView.Get(gameObject);
     }
 
     private void OnEnable()
@@ -44,17 +48,20 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (pv.IsMine)
         {
-            if (_canRoll == false)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                return;
-            }
+                if (_canRoll == false)
+                {
+                    return;
+                }
 
-            ChangeDiceAvailable();
-            _moveCount = _dice.Roll();
-            OnDiceRolled?.Invoke();
-            HelpMoveAsync().Forget();
+                ChangeDiceAvailable();
+                _moveCount = _dice.Roll();
+                OnDiceRolled?.Invoke();
+                HelpMoveAsync().Forget();
+            }
         }
     }
 

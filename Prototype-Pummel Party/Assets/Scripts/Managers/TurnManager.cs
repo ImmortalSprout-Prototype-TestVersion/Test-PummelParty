@@ -14,7 +14,7 @@ public class TurnManager : MonoBehaviour
 
     private Player currentTurnPlayer;
     private PhotonView cuttrentTurnView;
-
+    private PlayerController currentController;
     private Turn turn;
 
     private void Awake()
@@ -49,12 +49,12 @@ public class TurnManager : MonoBehaviour
     public void OnStartTurn()
     {
        cuttrentTurnView = PhotonView.Find(currentTurnPlayer.ActorNumber);
-       cuttrentTurnView.gameObject.GetComponent<PlayerController>();
+       currentController = cuttrentTurnView.gameObject.GetComponent<PlayerController>();
 
-
-        
+       currentController.gameObject.SetActive(true);
     }
 
+    public 
     //private void StartPlayerTurn()
     //{
     //    Debug.Log("≈œ Ω√¿€");

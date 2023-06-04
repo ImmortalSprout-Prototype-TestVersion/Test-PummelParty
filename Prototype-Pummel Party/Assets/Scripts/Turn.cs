@@ -8,7 +8,6 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class Turn
 {
     public Queue<Player> turnOrder;
-    private Player player;
 
     /// <summary>
     /// Queue √ ±‚»≠
