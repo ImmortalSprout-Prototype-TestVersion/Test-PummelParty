@@ -1,3 +1,4 @@
+using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Photon.Pun;
 using System;
@@ -9,6 +10,14 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private TurnManager _turnManager;
+    [SerializeField] private CinemachineVirtualCamera virtualCam;
+
+    public void SetVirtualCamera(Transform playerTransform)
+    {
+        virtualCam.Follow = playerTransform;
+        virtualCam.LookAt = playerTransform;
+    }
+
     public TurnManager ReturnTurnManager()
     {
         return _turnManager;
@@ -50,17 +59,17 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-    }
 
-    void Start()
-    {
+
         if (PhotonNetwork.IsMasterClient)
         {
             SpawnPlayer().Forget();
         }
+    }
 
-        //_turnManager.OnTurnEnd -= LoadMinigameScene;
-        //_turnManager.OnTurnEnd += LoadMinigameScene;
+    void Start()
+    {
+        
     }
 
     private void LoadMinigameScene()
