@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
     public bool _canRoll = false;
     private bool _canMoveOnDirectionTile = false; // 플레이어가 회전타일에서 움직일 수 있는지 여부
 
-    private PhotonView pv;
+    private PhotonView playerPV;
+    private PhotonView turnManagerPV;
 
     [PunRPC]
     private void EnablePlayerMove()
@@ -45,12 +46,13 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _dice = new Dice();
-        pv = PhotonView.Get(gameObject);
+        playerPV = PhotonView.Get(gameObject);
     }
 
     private void Start()
     {
         _turnManager = GameManager.Instance.ReturnTurnManager();
+        turnManagerPV = PhotonView.Get(_turnManager);
     }
 
     private void OnEnable()
@@ -66,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (pv.IsMine)
+        if (playerPV.IsMine)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -198,7 +200,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            pv.RPC("InvokePlayerTurnEndEventRPC", RpcTarget.MasterClient);
+            turnManagerPV.RPC("InvokePlayerTurnEndEventRPC", RpcTarget.MasterClient);
         }
 
         return true;
