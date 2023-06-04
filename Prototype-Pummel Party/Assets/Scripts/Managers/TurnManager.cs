@@ -52,10 +52,13 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    [PunRPC]
     public void InvokePlayerTurnEndEvent()
     {
         BoardGameframeWork.OnEndTurn.Invoke();
     }
+
+
 
 
     /// <summary>
