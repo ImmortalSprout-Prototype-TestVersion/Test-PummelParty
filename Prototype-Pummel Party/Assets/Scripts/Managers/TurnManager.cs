@@ -13,7 +13,7 @@ public class TurnManager : MonoBehaviour
     public BoardGameEvent BoardGameframeWork;
 
     private Player currentTurnPlayer;
-    private PhotonView cuttrentTurnView;
+    private PhotonView currentTurnView;
     private PlayerController currentController;
     private Turn turn;
 
@@ -29,6 +29,8 @@ public class TurnManager : MonoBehaviour
     private void Start()
     {
         //StartPlayerTurn();
+        WaitUntilAllPlayerInstantiated().Forget();
+        Debug.Log("턴 시작되쓰요");
         if (PhotonNetwork.IsMasterClient)
         {
             turn.SetOrder(1, 2, 3, 4);
@@ -36,6 +38,12 @@ public class TurnManager : MonoBehaviour
             BoardGameframeWork.StartTurn.Invoke();
         }
     }
+
+    private async UniTaskVoid WaitUntilAllPlayerInstantiated()
+    {
+        await UniTask.WaitUntil(() => GameManager.Instance.isPlayerAllInstantiated == true);
+    }
+
     /// <summary>
     /// 현재 턴인 플레이어 설정
     /// </summary>
@@ -47,12 +55,12 @@ public class TurnManager : MonoBehaviour
 
     public void OnStartTurn()
     {
-       cuttrentTurnView = GameManager.Instance.playerPv[currentTurnPlayer.ActorNumber];
-       currentController = cuttrentTurnView.gameObject.GetComponent<PlayerController>();
-       currentController.gameObject.SetActive(true);
+        currentTurnView = GameManager.Instance.playerPv[currentTurnPlayer.ActorNumber];
+        currentController = currentTurnView.gameObject.GetComponent<PlayerController>();
+        currentController.gameObject.SetActive(true);
     }
 
-    
+
     //private void StartPlayerTurn()
     //{
     //    Debug.Log("턴 시작");

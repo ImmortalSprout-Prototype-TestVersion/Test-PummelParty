@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public PositionData positions;
     public PhotonView[] playerPv;
 
+    public bool isPlayerAllInstantiated;
 
     private static GameManager instance = null;
     public static GameManager Instance
@@ -97,6 +98,9 @@ public class GameManager : MonoBehaviour
                 playerPv[actorNumber] = pv;
                 pv.TransferOwnership(actorNumber);
             }
+
+
+            isPlayerAllInstantiated = true;
         }
         
     }
