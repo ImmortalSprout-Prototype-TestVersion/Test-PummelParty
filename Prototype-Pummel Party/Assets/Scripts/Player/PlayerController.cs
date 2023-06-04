@@ -46,30 +46,21 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _dice = new Dice();
-        //playerPV = PhotonView.Get(gameObject);
+        playerPV = PhotonView.Get(gameObject);
     }
 
     private void Start()
     {
         _turnManager = GameManager.Instance.ReturnTurnManager();
         turnManagerPV = PhotonView.Get(_turnManager);
-
+        
         WaitUntilAllPlayersInstantiated().Forget();
-
-        //if (playerPV.IsMine)
-        //{
-        //    GameManager.Instance.SetVirtualCamera(transform);
-        //}
-
-        //WaitUntilAllPlayersInstantiated().Forget();
     }
 
     private async UniTaskVoid WaitUntilAllPlayersInstantiated()
     {
-        await UniTask.WaitUntil(() => GameManager.Instance.isPlayerAllInstantiated == true);
-
-        playerPV = PhotonView.Get(gameObject);
-
+        await UniTask.Delay(TimeSpan.FromSeconds(2f)); // 시간초를 안주면 포톤뷰 양도권을 넘기기전에 카메라에 넣어버려서 문제가 됌
+        
         if (playerPV.IsMine)
         {
             GameManager.Instance.SetVirtualCamera(transform);

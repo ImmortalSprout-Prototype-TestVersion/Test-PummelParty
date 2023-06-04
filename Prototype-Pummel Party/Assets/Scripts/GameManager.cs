@@ -59,17 +59,17 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-    }
 
-    void Start()
-    {
+
         if (PhotonNetwork.IsMasterClient)
         {
             SpawnPlayer().Forget();
         }
+    }
 
-        //_turnManager.OnTurnEnd -= LoadMinigameScene;
-        //_turnManager.OnTurnEnd += LoadMinigameScene;
+    void Start()
+    {
+        
     }
 
     private void LoadMinigameScene()
@@ -114,7 +114,6 @@ public class GameManager : MonoBehaviour
         }
         
         isPlayerAllInstantiated = true;
-        Debug.Break();
     }
     
 
