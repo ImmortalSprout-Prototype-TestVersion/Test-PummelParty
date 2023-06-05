@@ -8,25 +8,18 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/MinYeong/Lobby 3.unity
-    guid: 6e049897fddee7e439ca4945df1d410a
+    path: Assets/Scenes/Lobby.unity
+    guid: 91013ebaa64c44541887e097389ea750
   - enabled: 1
-    path: Assets/Scenes/MinYeong/InRoom 3.unity
-    guid: ed0e103b0b8dbe14291581a204b11d06
+    path: Assets/Scenes/InRoom.unity
+    guid: 30dfbf8746f90c747a63c91459e614ab
   - enabled: 1
-
     path: Assets/Scenes/ChangYeon/BoardGame 1.unity
     guid: 3a270f06702c4a24e94bc5880e9a30da
   - enabled: 1
-    path: Assets/Scenes/Minigame.unity
-    guid: 9637146e1c74aee4fa7175497dd339ed
+    path: Assets/Scenes/MinYeong/Minigame 3.unity
+    guid: af6b42f9d50a38d4da2d77048010394f
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
@@ -34,7 +27,15 @@ EditorBuildSettings:
     path: 
     guid: 00000000000000000000000000000000
   - enabled: 0
+    path: Assets/Scenes/MinYeong/Lobby 3.unity
+    guid: 6e049897fddee7e439ca4945df1d410a
+  - enabled: 0
+    path: Assets/Scenes/MinYeong/InRoom 3.unity
+    guid: ed0e103b0b8dbe14291581a204b11d06
+  - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}
