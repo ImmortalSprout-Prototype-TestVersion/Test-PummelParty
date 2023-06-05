@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class TurnManager : MonoBehaviour
@@ -65,7 +66,10 @@ public class TurnManager : MonoBehaviour
         BoardGameframeWork.OnEndTurn.Invoke();
     }
 
-
+    public void InvokeOnBackToBoardGame()
+    {
+        BoardGameframeWork.OnBackToBoardGame.Invoke();
+    }
 
 
     /// <summary>
@@ -98,13 +102,8 @@ public class TurnManager : MonoBehaviour
         {
             for (int actorNumber = 1; actorNumber < PhotonNetwork.CurrentRoom.PlayerCount + 1 ;++actorNumber)
             {
-                if (PhotonNetwork.CurrentRoom.GetPlayer(actorNumber).CustomProperties.ContainsKey("MyPreviousPosition"))
-                {
-                    return;
-                }
-
-                PhotonNetwork.CurrentRoom.GetPlayer(actorNumber).CustomProperties["MyPreviousPosition"] = 
-                    GameManager.Instance.playerPv[actorNumber].gameObject.transform.position;
+                Player currentPlayer = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
+                currentPlayer.CustomProperties["MyPreviousPosition"] = GameManager.Instance.playerPv[actorNumber].gameObject.transform.position;
             }
             PhotonNetwork.LoadLevel("Minigame");
         }
