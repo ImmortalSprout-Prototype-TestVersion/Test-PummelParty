@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using Photon.Pun;
 using System;
 using UnityEngine;
 
@@ -17,8 +18,24 @@ public class PlayerController : MonoBehaviour
     private Vector3 _destTilePosition;
 
     private int _moveCount = 0;
-    private bool _canRoll = false;
+    //private bool _canRoll = false;
+    public bool _canRoll = false;
     private bool _canMoveOnDirectionTile = false; // 플레이어가 회전타일에서 움직일 수 있는지 여부
+
+    private PhotonView playerPV;
+    private PhotonView turnManagerPV;
+
+    [PunRPC]
+    private void EnablePlayerMove()
+    {
+        _canRoll = true;
+    }
+
+    [PunRPC]
+    private void DisablePlayerMove()
+    {
+        _canRoll = false;
+    }
 
     public enum DICE_RESULT
     {
@@ -29,32 +46,55 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _dice = new Dice();
+        playerPV = PhotonView.Get(gameObject);
     }
+
+    private void Start()
+    {
+        _turnManager = GameManager.Instance.ReturnTurnManager();
+        turnManagerPV = PhotonView.Get(_turnManager);
+        
+        WaitUntilAllPlayersInstantiated().Forget();
+    }
+
+    private async UniTaskVoid WaitUntilAllPlayersInstantiated()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(2f)); // 시간초를 안주면 포톤뷰 양도권을 넘기기전에 카메라에 넣어버려서 문제가 됌
+        
+        if (playerPV.IsMine)
+        {
+            GameManager.Instance.SetVirtualCamera(transform);
+        }
+    }
+
 
     private void OnEnable()
     {
-        _turnManager.OnTurnStarted -= ChangeDiceAvailable;
-        _turnManager.OnTurnStarted += ChangeDiceAvailable;
+        //_turnManager.OnTurnStarted -= ChangeDiceAvailable;
+        //_turnManager.OnTurnStarted += ChangeDiceAvailable;
     }
 
     private void OnDisable()
     {
-        _turnManager.OnTurnStarted -= ChangeDiceAvailable;
+        //_turnManager.OnTurnStarted -= ChangeDiceAvailable;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (playerPV.IsMine)
         {
-            if (_canRoll == false)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                return;
-            }
+                if (_canRoll == false)
+                {
+                    return;
+                }
 
-            ChangeDiceAvailable();
-            _moveCount = _dice.Roll();
-            OnDiceRolled?.Invoke();
-            HelpMoveAsync().Forget();
+                ChangeDiceAvailable();
+                _moveCount = _dice.Roll();
+                OnDiceRolled?.Invoke();
+                HelpMoveAsync().Forget();
+            }
         }
     }
 
@@ -96,7 +136,7 @@ public class PlayerController : MonoBehaviour
 
         if (_currentTile.transform.position == _destTilePosition)
         {
-            _turnManager.EndPlayerTurn();
+            await LookForward();
             return;
         }
 
@@ -126,7 +166,7 @@ public class PlayerController : MonoBehaviour
         await LookForward();
 
         Debug.Log("회전 끝");
-        _turnManager.EndPlayerTurn();
+     //   _turnManager.EndPlayerTurn();
     }
 
     // TODO: _diceResult랑 _moveCount 의미 제대로 생각해서 분리..
@@ -165,6 +205,15 @@ public class PlayerController : MonoBehaviour
             var lerpval = Quaternion.Lerp(start, end, elapsedTime / _rotateTime);
             transform.rotation = lerpval;
             await UniTask.Yield();
+        }
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            _turnManager.InvokePlayerTurnEndEvent();
+        }
+        else
+        {
+            turnManagerPV.RPC("InvokePlayerTurnEndEventRPC", RpcTarget.MasterClient);
         }
 
         return true;
