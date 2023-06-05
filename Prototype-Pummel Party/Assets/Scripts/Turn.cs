@@ -25,7 +25,7 @@ public class Turn
     /// <param name="second"></param>
     /// <param name="third"></param>
     /// <param name="fourth"></param>
-    public void SetOrder(int first, int second, int third, int fourth) 
+    public void SetPlayerOrder(int first, int second, int third, int fourth) 
     {
         turnOrder.Enqueue(PhotonNetwork.CurrentRoom.GetPlayer(first));
         turnOrder.Enqueue(PhotonNetwork.CurrentRoom.GetPlayer(second));
@@ -38,7 +38,7 @@ public class Turn
     /// 호출 되는 순서에 따라 턴이 정해진다
     /// </summary>
     /// <returns></returns>
-    public Player Guide()
+    public Player GetCurrentPlayer()
     {
         return turnOrder.Dequeue();
     }

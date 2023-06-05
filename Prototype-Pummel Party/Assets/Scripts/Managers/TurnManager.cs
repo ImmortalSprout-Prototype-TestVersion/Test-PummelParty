@@ -14,8 +14,8 @@ public class TurnManager : MonoBehaviour
 
     //private Player currentTurnPlayer;
     public Player currentTurnPlayer;
-    private PhotonView currentTurnView;
-    public PlayerController currentController;
+    private PhotonView currentPlayerPhotonView;
+    public PlayerController currentController; // 테스트용 에디터에서 볼려구
     private Turn turn;
 
     private void Awake()
@@ -46,7 +46,7 @@ public class TurnManager : MonoBehaviour
         Debug.Log("턴 시작되쓰요");
         if (PhotonNetwork.IsMasterClient)
         {
-            turn.SetOrder(1, 2, 3, 4);
+            turn.SetPlayerOrder(1, 2, 3, 4);
 
             BoardGameframeWork.OnStartTurn.Invoke();
         }
@@ -78,15 +78,15 @@ public class TurnManager : MonoBehaviour
         }
         else
         {
-            currentTurnPlayer = turn.Guide();
+            currentTurnPlayer = turn.GetCurrentPlayer();
         }
     }
 
     public void OnStartTurn()
     {
-        currentTurnView = GameManager.Instance.playerPv[currentTurnPlayer.ActorNumber];
-        currentController = currentTurnView.gameObject.GetComponent<PlayerController>();
-        currentTurnView.RPC("EnablePlayerMove", currentTurnPlayer);
+        currentPlayerPhotonView = GameManager.Instance.playerPv[currentTurnPlayer.ActorNumber];
+        currentController = currentPlayerPhotonView.gameObject.GetComponent<PlayerController>();
+        currentPlayerPhotonView.RPC("EnablePlayerMove", currentTurnPlayer);
     }
 
 

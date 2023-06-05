@@ -6,4 +6,6 @@ using UnityEngine;
 public class PlayerModelData : ScriptableObject
 {
     public GameObject[] BoardGameModel;
+
+    public GameObject[] MiniGameModel;
 }
