@@ -1,10 +1,12 @@
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class TurnManager : MonoBehaviour
 {
@@ -94,9 +96,20 @@ public class TurnManager : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            for (int actorNumber = 1; actorNumber < PhotonNetwork.CurrentRoom.PlayerCount + 1 ;++actorNumber)
+            {
+                if (PhotonNetwork.CurrentRoom.GetPlayer(actorNumber).CustomProperties.ContainsKey("MyPreviousPosition"))
+                {
+                    return;
+                }
+
+                PhotonNetwork.CurrentRoom.GetPlayer(actorNumber).CustomProperties["MyPreviousPosition"] = 
+                    GameManager.Instance.playerPv[actorNumber].gameObject.transform.position;
+            }
             PhotonNetwork.LoadLevel("Minigame");
         }
     }
+    
 
 
     //private void StartPlayerTurn()

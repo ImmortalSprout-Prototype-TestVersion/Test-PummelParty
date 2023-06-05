@@ -1,11 +1,13 @@
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,7 +32,7 @@ public class GameManager : MonoBehaviour
     public PlayerModelData models;
     public PositionData positions;
     public PhotonView[] playerPv;
-
+    private Hashtable playerPreviousPosition;
 
     public bool isPlayerAllInstantiated;
 
@@ -68,13 +70,20 @@ public class GameManager : MonoBehaviour
 
         if (PhotonNetwork.IsMasterClient)
         {
-            SpawnPlayer().Forget();
+            SpawnPlayerFirstTime().Forget();
         }
     }
 
 
     void Start()
     {
+        if (playerPreviousPosition == null)
+        {
+            playerPreviousPosition = new Hashtable()
+            {
+                { "MyPreviousPosition", new Vector3()}
+            };
+        }
         
     }
 
@@ -104,7 +113,7 @@ public class GameManager : MonoBehaviour
         SceneManager.UnloadScene(minigameNumber);
     }
 
-    private async UniTaskVoid SpawnPlayer()
+    private async UniTaskVoid SpawnPlayerFirstTime()
     {
         await UniTask.Delay(TimeSpan.FromSeconds(2f));
             
@@ -112,6 +121,7 @@ public class GameManager : MonoBehaviour
         {
             for (int actorNumber = 1; actorNumber < PhotonNetwork.CurrentRoom.PlayerCount + 1; actorNumber++)
             {
+                PhotonNetwork.CurrentRoom.GetPlayer(actorNumber).SetCustomProperties(playerPreviousPosition); // 등록을 함
                 GameObject player = PhotonNetwork.Instantiate(models.BoardGameModel[actorNumber].name, positions.BoardGameSpawnPosition[actorNumber].transform.position,
                     Quaternion.identity);
                 PhotonView pv = player.GetPhotonView();
@@ -122,7 +132,33 @@ public class GameManager : MonoBehaviour
         
         isPlayerAllInstantiated = true;
     }
-    
+
+
+
+    public void SpawnPlayer()
+    {
+        SpawnPlayerAsync().Forget();
+    }
+
+    private async UniTaskVoid SpawnPlayerAsync()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(2f));
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            for (int actorNumber = 1; actorNumber < PhotonNetwork.CurrentRoom.PlayerCount + 1; actorNumber++)
+            {
+                Player photonPlayer = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
+                GameObject player = PhotonNetwork.Instantiate(models.BoardGameModel[actorNumber].name, (Vector3) photonPlayer.CustomProperties["MyPreviousPosition"],
+                    Quaternion.identity);
+                PhotonView pv = player.GetPhotonView();
+                playerPv[actorNumber] = pv;
+                pv.TransferOwnership(actorNumber);
+            }
+        }
+
+        isPlayerAllInstantiated = true;
+    }
 
 
 }
