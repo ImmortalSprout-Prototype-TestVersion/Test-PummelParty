@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Photon.Pun;
 
-public class Goal : MonoBehaviour
+public class Goal : MonoBehaviourPunCallbacks
 {
+    [SerializeField] MinigameManager _minigameManager;
+
     private float time;
     private bool stopTimer;
 
@@ -30,9 +33,14 @@ public class Goal : MonoBehaviour
             stopTimer = true;
             Debug.Log("와 ! 도착 1등 보드게임으로 돌아가요");
             Debug.Log($"걸린 시간 : {time}");
-            Time.timeScale = 0f;
+            // Time.timeScale = 0f;
+            int playerActorNum = other.gameObject.GetPhotonView().Owner.ActorNumber;
+
+            if(other.gameObject.GetPhotonView().IsMine)
+            {
+                _minigameManager.gameObject.GetPhotonView().RPC("Record", RpcTarget.MasterClient, time, playerActorNum);
+            }
+
         }
-
-
     }
 }

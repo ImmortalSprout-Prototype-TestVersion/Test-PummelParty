@@ -58,7 +58,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     public override void OnJoinedRoom()
     {
-        // ¸¶½ºÅÍ Å¬¶óÀÌ¾ðÆ® »ý¼º ±¸°£ »ý¼ºÇÏ¸é¼­ ¹æÀåÀÇ Á¤º¸¸¦ ¾îµò°¡¿¡ ÀúÀåÇØ¼­ º¸µå°ÔÀÓÀ¸·Î °¡Á®°¥ ÇÊ¿ä°¡ ÀÖÀ½
+        // ë§ˆìŠ¤í„° í´ë¼ì´ì–¸íŠ¸ ìƒì„± êµ¬ê°„ ìƒì„±í•˜ë©´ì„œ ë°©ìž¥ì˜ ì •ë³´ë¥¼ ì–´ë”˜ê°€ì— ì €ìž¥í•´ì„œ ë³´ë“œê²Œìž„ìœ¼ë¡œ ê°€ì ¸ê°ˆ í•„ìš”ê°€ ìžˆìŒ
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.Instantiate(models[playerEnterOrder].name, spawnPositions[playerEnterOrder].position, playerRotate);
@@ -67,7 +67,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         roomNameText.text = PhotonNetwork.CurrentRoom.Name;
     }
 
-    // Å¬¶óÀÌ¾ðÆ® »ý¼º »ý¼º ½Ã Å¬¶óÀÌ¾ðÆ®ÀÇ Á¤º¸¸¦ ¾îµò°¡¿¡ ÀúÀåÇØ¼­ º¸µå°ÔÀÓÀ¸·Î °¡Á®°¥ ÇÊ¿ä°¡ ÀÖÀ½
+    // í´ë¼ì´ì–¸íŠ¸ ìƒì„± ìƒì„± ì‹œ í´ë¼ì´ì–¸íŠ¸ì˜ ì •ë³´ë¥¼ ì–´ë”˜ê°€ì— ì €ìž¥í•´ì„œ ë³´ë“œê²Œìž„ìœ¼ë¡œ ê°€ì ¸ê°ˆ í•„ìš”ê°€ ìžˆìŒ
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         if (PhotonNetwork.IsMasterClient)
@@ -79,7 +79,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-    #region Ready Button ÇÔ¼ö
+    #region Ready Button í•¨ìˆ˜
 
     public void OnClickReady1Button()
     {
@@ -168,12 +168,14 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (PhotonNetwork.IsMasterClient)
         {
+
             PhotonNetwork.LoadLevel(2);
+
         }
     }
 
-    public int readyCount = 0; // ÀÌ°É ¹æÀåÇÑÅ× ¾Ë·ÁÁà¾ßÇÒµí?
-                               // RpcTarget.MasterClient ·Î ÇÏ¸é µÉµí? ±»ÀÌ ´Ù¸¥¾ÖµéÇÑÅ×µµ readyCount ¸¦ ¾÷µ¥ÀÌÆ®ÇØÁÙ ÇÊ¿ä°¡ ¾øÀ½
+    public int readyCount = 0; // ì´ê±¸ ë°©ìž¥í•œí…Œ ì•Œë ¤ì¤˜ì•¼í• ë“¯?
+                               // RpcTarget.MasterClient ë¡œ í•˜ë©´ ë ë“¯? êµ³ì´ ë‹¤ë¥¸ì• ë“¤í•œí…Œë„ readyCount ë¥¼ ì—…ë°ì´íŠ¸í•´ì¤„ í•„ìš”ê°€ ì—†ìŒ
 
     //private async UniTaskVoid ShowStartButton1()
     //{
@@ -184,13 +186,13 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     //            return;
     //        }
 
-    //        Debug.Log("¹æ¿¡ ÀÖÀ½");
-    //        await UniTask.WaitUntil(() => readyCount == 3); // ¹æÀå º»ÀÎÀº »©ÁÜ
-    //                                                        // Start¹öÆ°À» È°¼ºÈ­ÇÏ´Â ÇÔ¼ö¸¦ ½ÇÇàÇÔ
-    //        Debug.Log("3ÀÌ µÇ¾úÀ½");
+    //        Debug.Log("ë°©ì— ìžˆìŒ");
+    //        await UniTask.WaitUntil(() => readyCount == 3); // ë°©ìž¥ ë³¸ì¸ì€ ë¹¼ì¤Œ
+    //                                                        // Startë²„íŠ¼ì„ í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜ë¥¼ ì‹¤í–‰í•¨
+    //        Debug.Log("3ì´ ë˜ì—ˆìŒ");
     //        if (PhotonNetwork.IsMasterClient)
     //        {
-    //            Debug.Log("¹æÀåÀÌ¶ó¼­ ACTIVATE RPC·Î »Ñ¸²");
+    //            Debug.Log("ë°©ìž¥ì´ë¼ì„œ ACTIVATE RPCë¡œ ë¿Œë¦¼");
     //            PhotonView.Get(gameObject).RPC("ActivateStartButton", RpcTarget.All);
     //        }
     //    }
@@ -205,8 +207,8 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
     //            return;
     //        }
 
-    //        await UniTask.WaitUntil(() => readyCount < 3); // ÀüÃ¼°¡ ·¹µð¸¦ ÇÏÁö ¾Ê¾Ò´Ù¸é
-    //                                                       // Start ¹öÆ°À» ºñÈ°¼ºÈ­ÇÏ´Â ÇÔ¼ö¸¦ ½ÇÇàÇÔ
+    //        await UniTask.WaitUntil(() => readyCount < 3); // ì „ì²´ê°€ ë ˆë””ë¥¼ í•˜ì§€ ì•Šì•˜ë‹¤ë©´
+    //                                                       // Start ë²„íŠ¼ì„ ë¹„í™œì„±í™”í•˜ëŠ” í•¨ìˆ˜ë¥¼ ì‹¤í–‰í•¨
     //        if (PhotonNetwork.IsMasterClient)
     //        {
     //            PhotonView.Get(gameObject).RPC("DeActivateStartButton", RpcTarget.All);
@@ -217,6 +219,7 @@ public class RoomManager : MonoBehaviourPunCallbacks, IPunObservable
 
     private void OnActiveStartButton()
     {
+        // TODO: í…ŒìŠ¤íŠ¸ìš©ìœ¼ë¡œ ë ˆë”” í•„ìš”í•œ ìˆ˜ ë°”ê¿ˆ -> ì»¤ë°‹ or ë¨¸ì§€í•  ë•Œ ê¼­ ì§€ìš°ê¸°!!!
         if (readyCount == 3 && PhotonNetwork.IsMasterClient)
         {
             PhotonView.Get(gameObject).RPC("ActivateStartButton", RpcTarget.All);
