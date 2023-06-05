@@ -137,6 +137,14 @@ public class PlayerController : MonoBehaviour
         if (_currentTile.transform.position == _destTilePosition)
         {
             //_turnManager.EndPlayerTurn();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                _turnManager.InvokePlayerTurnEndEvent();
+            }
+            else
+            {
+                turnManagerPV.RPC("InvokePlayerTurnEndEventRPC", RpcTarget.MasterClient);
+            }
             return;
         }
 
