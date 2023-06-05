@@ -1,3 +1,4 @@
+using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Photon.Pun;
 using System;
@@ -9,13 +10,32 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private TurnManager _turnManager;
+    [SerializeField] private CinemachineVirtualCamera virtualCam;
+
+    public void SetVirtualCamera(Transform playerTransform)
+    {
+        virtualCam.Follow = playerTransform;
+        virtualCam.LookAt = playerTransform;
+    }
+
+    public TurnManager ReturnTurnManager()
+    {
+        return _turnManager;
+    }
 
     private const int boardgameNumber = 0;
     private const int minigameNumber = 1;
     public int playerCount = 4;
     public int playerOrderNumber;
+    public PlayerModelData models;
+    public PositionData positions;
+    public PhotonView[] playerPv;
+
 
     public List<int> MinigameResult = new List<int>(5);
+
+
+    public bool isPlayerAllInstantiated;
 
 
     private static GameManager instance = null;
@@ -34,6 +54,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        playerPv = new PhotonView[playerCount + 1];
         if (instance == null)
         {
             instance = this;
@@ -43,13 +64,20 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SpawnPlayer().Forget();
+        }
     }
 
-    //void Start()
-    //{
-    //    _turnManager.OnTurnEnd -= LoadMinigameScene;
-    //    _turnManager.OnTurnEnd += LoadMinigameScene;
-    //}
+
+    void Start()
+    {
+        
+    }
+
 
     //private void LoadMinigameScene()
     //{
@@ -59,23 +87,44 @@ public class GameManager : MonoBehaviour
     //    LoadMiniGameScene().Forget();
     //}
 
-    //private async UniTaskVoid LoadMiniGameScene()
-    //{
-    //    await UniTask.Delay(TimeSpan.FromSeconds(1f)); // 1ÃÊ ±â´Ù·È´Ù°¡
-    //    SceneManager.LoadScene(minigameNumber, LoadSceneMode.Additive); // ¹Ì´Ï°ÔÀÓ¾ÀÀ» additive ¸ğµå·Î °ãÃÄ¼­ ·ÎµåÇÑ´Ù
-    //    // await UniTask.Delay(TimeSpan.FromSeconds(1f)); // 1ÃÊ ±â´Ù·È´Ù°¡
-    //    // SceneManager.UnloadScene(minigameNumber); // ¹Ì´Ï°ÔÀÓ¾ÀÀ» ´Ù½Ã Unload ÇÑ´Ù
-    //    // _turnManager.EndMinigame();  // ¹Ì´Ï°ÔÀÓ¾À unload ÈÄ ÅÏ¸Å´ÏÀú¿¡°Ô ¾Ë¸²
-    //}
 
-    //private void LoadBoardgameScene()
-    //{
-    //    // TODO: º¸µå°ÔÀÓÀ¸·Î ´Ù½Ã ³Ñ¾î¿À´Â ·ÎÁ÷ ¼öÁ¤µÆÀ» ¶§ _turnManager.EndMinigame() °ü·Ã ´Ù½Ã Å×½ºÆ®ÇØº¸±â
-    //    // ÀÛ¼ºÇÑ ½Ã±â¿¡´Â LoadMinigame -> 1ÃÊ ÈÄ unload ¹æ½ÄÀÌ¾ú¾î¼­ Àû¾îµÒ
-    //    _turnManager.EndMinigame();
-    //    SceneManager.UnloadScene(minigameNumber);
-    //}
 
+    private async UniTaskVoid LoadMiniGameScene()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(1f)); // 1ì´ˆ ê¸°ë‹¤ë ¸ë‹¤ê°€
+        SceneManager.LoadScene(minigameNumber, LoadSceneMode.Additive); // ë¯¸ë‹ˆê²Œì„ì”¬ì„ additive ëª¨ë“œë¡œ ê²¹ì³ì„œ ë¡œë“œí•œë‹¤
+        await UniTask.Delay(TimeSpan.FromSeconds(1f)); // 1ì´ˆ ê¸°ë‹¤ë ¸ë‹¤ê°€
+        SceneManager.UnloadScene(minigameNumber); // ë¯¸ë‹ˆê²Œì„ì”¬ì„ ë‹¤ì‹œ Unload í•œë‹¤
+       // _turnManager.EndMinigame();  // ë¯¸ë‹ˆê²Œì„ì”¬ unload í›„ í„´ë§¤ë‹ˆì €ì—ê²Œ ì•Œë¦¼
+    }
+
+    private void LoadBoardgameScene()
+    {
+        // TODO: ë³´ë“œê²Œì„ìœ¼ë¡œ ë‹¤ì‹œ ë„˜ì–´ì˜¤ëŠ” ë¡œì§ ìˆ˜ì •ëì„ ë•Œ _turnManager.EndMinigame() ê´€ë ¨ ë‹¤ì‹œ í…ŒìŠ¤íŠ¸í•´ë³´ê¸°
+        // ì‘ì„±í•œ ì‹œê¸°ì—ëŠ” LoadMinigame -> 1ì´ˆ í›„ unload ë°©ì‹ì´ì—ˆì–´ì„œ ì ì–´ë‘ 
+     //   _turnManager.EndMinigame();
+        SceneManager.UnloadScene(minigameNumber);
+    }
+
+    private async UniTaskVoid SpawnPlayer()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(2f));
+            
+        if (PhotonNetwork.IsMasterClient)
+        {
+            for (int actorNumber = 1; actorNumber < PhotonNetwork.CurrentRoom.PlayerCount + 1; actorNumber++)
+            {
+                GameObject player = PhotonNetwork.Instantiate(models.BoardGameModel[actorNumber].name, positions.BoardGameSpawnPosition[actorNumber].transform.position,
+                    Quaternion.identity);
+                PhotonView pv = player.GetPhotonView();
+                playerPv[actorNumber] = pv;
+                pv.TransferOwnership(actorNumber);
+            }
+        }
+        
+        isPlayerAllInstantiated = true;
+    }
+    
 
 
 }

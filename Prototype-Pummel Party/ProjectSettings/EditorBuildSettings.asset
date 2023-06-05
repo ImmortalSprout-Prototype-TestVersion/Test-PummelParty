@@ -21,9 +21,20 @@ EditorBuildSettings:
     path: Assets/Scenes/MinYeong/InRoom 3.unity
     guid: ed0e103b0b8dbe14291581a204b11d06
   - enabled: 1
-    path: Assets/Scenes/MinYeong/BoardGame 3.unity
-    guid: ef2dd63a91700f2438ec3b61e4df14ba
+
+    path: Assets/Scenes/ChangYeon/BoardGame 1.unity
+    guid: 3a270f06702c4a24e94bc5880e9a30da
   - enabled: 1
-    path: Assets/Scenes/MinYeong/Minigame 3.unity
-    guid: af6b42f9d50a38d4da2d77048010394f
+    path: Assets/Scenes/Minigame.unity
+    guid: 9637146e1c74aee4fa7175497dd339ed
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+
   m_configObjects: {}

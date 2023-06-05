@@ -50,8 +50,15 @@ MonoBehaviour:
   - IncreaseReadyCount
   - ChangeColor
   - KickOutPlayers
+
   - Record
   - SendResultToGameManager
+
+  - DisablePlayerMove
+  - EnablePlayerMove
+  - InvokePlayerTurnEndEvent
+  - InvokePlayerTurnEndEventRPC
+
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
