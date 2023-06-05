@@ -11,6 +11,7 @@ public class MinigameManager : MonoBehaviour
 
     [SerializeField] private PlayerModelData models;
     [SerializeField] private PositionData positions;
+    private GameObject[] players;
 
     private int _actorNumber;
 
@@ -19,40 +20,27 @@ public class MinigameManager : MonoBehaviour
 
     private void Awake()
     {
-        _actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
-        GameObject newPlayerPrefab = PhotonNetwork.Instantiate("Prefabs/Minigame/BoardgamePlayer", _playerSpawnPosition[_actorNumber - 1].position, Quaternion.identity);
-        
-        _virtualCamera.LookAt = newPlayerPrefab.transform;
-        _virtualCamera.Follow = newPlayerPrefab.transform;
+        transform.SetParent(GameManager.Instance.transform);
 
-        if(!PhotonNetwork.IsMasterClient)
+        players = new GameObject[PhotonNetwork.CurrentRoom.PlayerCount + 1];
+
+        if(PhotonNetwork.IsMasterClient)
         {
-            return;
+            for (int actorNumber = 1; actorNumber <= PhotonNetwork.CurrentRoom.PlayerCount; ++actorNumber)
+            {
+                GameObject player = PhotonNetwork.Instantiate(models.MiniGameModel[0].name, positions.RaceSpawnPosition[actorNumber - 1].transform.position, Quaternion.identity);
+                player.GetPhotonView().TransferOwnership(actorNumber);
+                players[actorNumber] = player;
+            }
         }
-
-        // 은수야 여기랑 아래에 c() 주석처리 해둔건 내가 하다가 커밋하는 거 까먹어서 해둔거니까 그냥 지우고 해보면 돼!!
-        //for(int actorNumber = 1; actorNumber <= PhotonNetwork.CurrentRoom.PlayerCount; ++actorNumber)
-        //{
-
-        //}
     }
 
-    //void c()
-    //{
-    //    if (PhotonNetwork.IsMasterClient)
-    //    {
-    //        for (int actorNumber = 1; actorNumber < PhotonNetwork.CurrentRoom.PlayerCount + 1; actorNumber++)
-    //        {
-    //            GameObject player = PhotonNetwork.Instantiate(models.BoardGameModel[actorNumber].name, positions.BoardGameSpawnPosition[actorNumber].transform.position,
-    //                Quaternion.identity);
-    //            PhotonView pv = player.GetPhotonView();
-    //            playerPv[actorNumber] = pv;
-    //            pv.TransferOwnership(actorNumber);
-    //        }
-    //    }
 
-    //    isPlayerAllInstantiated = true;
-    //}
+    public void SetVirtualCamera(Transform playerTransform)
+    {
+        _virtualCamera.Follow = playerTransform;
+        _virtualCamera.LookAt = playerTransform;
+    }
 
     [PunRPC]
     public void Record(float time, int actorNumber)
