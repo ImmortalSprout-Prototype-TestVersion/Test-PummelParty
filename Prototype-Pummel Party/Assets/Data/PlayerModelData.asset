@@ -18,3 +18,5 @@ MonoBehaviour:
   - {fileID: 3720337570842942497, guid: 7a0ab168f0b936641be89ec503d5050d, type: 3}
   - {fileID: 3720337570842942497, guid: 2ac1d924bb6308246bee32e46b77f3cd, type: 3}
   - {fileID: 3720337570842942497, guid: a073a6d03a060f1428b9703925190cf0, type: 3}
+  MiniGameModel:
+  - {fileID: 8291747490561431647, guid: 8402bda5e1a49ca48a729fde2a350c29, type: 3}

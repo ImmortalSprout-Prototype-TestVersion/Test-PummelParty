@@ -18,4 +18,8 @@ MonoBehaviour:
   - {fileID: 4229045535912910659, guid: 6ba1876989d61744fb7050e8fc98c3ce, type: 3}
   - {fileID: 2250169279700239343, guid: 258dd700fe5a75b47b0e2d3fa10ac3ed, type: 3}
   - {fileID: 834815258687580088, guid: 6c9cd15dd8ad95b4484ae389ceace2b9, type: 3}
-  RaceSpawnPosition: []
+  RaceSpawnPosition:
+  - {fileID: 3154477765888113956, guid: 9e1d969c15c730f48aca23051284d7a3, type: 3}
+  - {fileID: 8288163498786714682, guid: 302bc498b26d4cd4eac2509d2fd15eca, type: 3}
+  - {fileID: 464230227494897758, guid: fa60f1945aa97f54087989d467fc96dc, type: 3}
+  - {fileID: 3931847328448155000, guid: 259b5e511bfd9ba47838457e5f717976, type: 3}
