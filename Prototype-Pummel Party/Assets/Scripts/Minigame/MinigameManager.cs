@@ -16,7 +16,7 @@ public class MinigameManager : MonoBehaviour
     private List<(float, int)> _minigameRecord = new List<(float, int)>(PhotonNetwork.PlayerList.Length + 1);
     private int _goalInPlayerCount = 0;
 
-    private HashTable playerRanking = PhotonNetwork.LocalPlayer.CustomProperties;
+    private HashTable playerRanking;
 
     private void Awake()
     {
@@ -26,8 +26,18 @@ public class MinigameManager : MonoBehaviour
         _virtualCamera.LookAt = newPlayerPrefab.transform;
         _virtualCamera.Follow = newPlayerPrefab.transform;
 
-        PhotonNetwork.LocalPlayer.SetCustomProperties(new HashTable { { "Ranking", 0 } });
-        Debug.Log(playerRanking["Ranking"]);
+        //if (playerRanking == null)
+        //{
+        //    playerRanking = new HashTable() { { "Ranking", 0 } };
+        //}
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new HashTable() { { "Rankiing", 1 } });
+
+        // PhotonNetwork.LocalPlayer.SetCustomProperties(playerRanking);
+
+        playerRanking = PhotonNetwork.LocalPlayer.CustomProperties;
+
+        Debug.Log(playerRanking["Rankiing"]);
     }
 
     [PunRPC]
@@ -56,7 +66,11 @@ public class MinigameManager : MonoBehaviour
                 int ranking = i;
                 int actorNumber = _minigameRecord[i].Item2;
 
-                
+                if (PhotonNetwork.CurrentRoom.GetPlayer(actorNumber).CustomProperties.ContainsKey("Ranking"))
+                {
+                    playerRanking["Ranking"] = i;
+                }
+
                 // gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.MasterClient, actorNumber);
 
             }
