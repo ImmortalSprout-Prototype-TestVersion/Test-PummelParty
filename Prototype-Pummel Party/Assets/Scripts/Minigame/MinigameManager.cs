@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Cinemachine;
+using HashTable = ExitGames.Client.Photon.Hashtable; 
+
 
 public class MinigameManager : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class MinigameManager : MonoBehaviour
     private List<(float, int)> _minigameRecord = new List<(float, int)>(PhotonNetwork.PlayerList.Length + 1);
     private int _goalInPlayerCount = 0;
 
+    private HashTable playerRanking = PhotonNetwork.LocalPlayer.CustomProperties;
+
     private void Awake()
     {
         _actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
@@ -21,6 +25,9 @@ public class MinigameManager : MonoBehaviour
         
         _virtualCamera.LookAt = newPlayerPrefab.transform;
         _virtualCamera.Follow = newPlayerPrefab.transform;
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(new HashTable { { "Ranking", 0 } });
+        Debug.Log(playerRanking["Ranking"]);
     }
 
     [PunRPC]
@@ -44,10 +51,14 @@ public class MinigameManager : MonoBehaviour
         {
             _minigameRecord.Sort();
 
-            for(int i = 0; i < _minigameRecord.Count; i++)
+            for(int i = 1; i < _minigameRecord.Count + 1; ++i)
             {
+                int ranking = i;
                 int actorNumber = _minigameRecord[i].Item2;
-                gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.MasterClient, actorNumber);
+
+                
+                // gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.MasterClient, actorNumber);
+
             }
 
             // TODO: 보드게임으로 씬전환 연결 후 테스트해야함
