@@ -7,10 +7,9 @@ public class BoardGameEvent : MonoBehaviour
 {
     public UnityEvent OnStartTurn;
 
-    //public UnityEvent OnStartTurn;
-
     public UnityEvent OnEndTurn;
 
-    //public UnityEvent OnEndTurn;
     public UnityEvent OnAllEndTurn;
+
+    public UnityEvent OnBackToBoardGame;
 }
