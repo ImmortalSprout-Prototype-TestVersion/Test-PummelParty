@@ -47,13 +47,12 @@ public class PlayerController : MonoBehaviour
     {
         _dice = new Dice();
         playerPV = PhotonView.Get(gameObject);
+        _turnManager = TurnManager.Instance;
+        turnManagerPV = PhotonView.Get(_turnManager);
     }
 
     private void Start()
     {
-        _turnManager = TurnManager.Instance;
-        turnManagerPV = PhotonView.Get(_turnManager);
-        
         WaitUntilAllPlayersInstantiated().Forget();
     }
 
@@ -67,17 +66,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-    private void OnEnable()
-    {
-        //_turnManager.OnTurnStarted -= ChangeDiceAvailable;
-        //_turnManager.OnTurnStarted += ChangeDiceAvailable;
-    }
-
-    private void OnDisable()
-    {
-        //_turnManager.OnTurnStarted -= ChangeDiceAvailable;
-    }
 
     private void Update()
     {

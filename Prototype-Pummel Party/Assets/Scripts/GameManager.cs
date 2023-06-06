@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] CinemachineVirtualCamera virtualCamera;
     [SerializeField] TurnManager turnManager;
-
+    [SerializeField] BoardGame boardGameData;
 
 
     public void SetVirtualCamera(Transform playerTransform)
@@ -63,29 +63,27 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
+           //DontDestroyOnLoad(this.gameObject);
         }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+     //   else
+      //  {
+      //      Destroy(this.gameObject);
+     //   }
         virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
 
-        if (isfirstTurn)
+        if (boardGameData.asdf)
         {
-            if (!PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
-                return;
+                SpawnPlayerFirstTime().Forget();
             }
-            SpawnPlayerFirstTime().Forget();
         }
         else
         {
-            if (!PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
-                return;
+                SpawnPlayerAsync().Forget();
             }
-            SpawnPlayerAsync().Forget();
         }
     }
 
@@ -124,7 +122,7 @@ public class GameManager : MonoBehaviour
         isPlayerAllInstantiated = true;
     }
 
-
+   
 
     public void SpawnPlayer()
     {

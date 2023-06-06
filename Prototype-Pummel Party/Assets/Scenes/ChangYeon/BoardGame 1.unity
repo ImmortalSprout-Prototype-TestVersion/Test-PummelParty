@@ -2118,6 +2118,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1818665547}
     - target: {fileID: 1598285166262069945, guid: d141be6591959da4a877ee9063b8bef6, type: 3}
+      propertyPath: boardGameData
+      value: 
+      objectReference: {fileID: 11400000, guid: d06a46cacd2b4924db4e44e329062b3c, type: 2}
+    - target: {fileID: 1598285166262069945, guid: d141be6591959da4a877ee9063b8bef6, type: 3}
       propertyPath: virtualCamera
       value: 
       objectReference: {fileID: 0}
