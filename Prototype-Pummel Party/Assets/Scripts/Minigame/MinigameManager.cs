@@ -72,6 +72,7 @@ public class MinigameManager : MonoBehaviour
             GameManager.Instance.isfirstTurn = false;
             // TODO: 보드게임으로 씬전환 연결 후 테스트해야함
             PhotonNetwork.LoadLevel(2);
+            PhotonNetwork.Destroy(this.gameObject);
         }
     }
 
