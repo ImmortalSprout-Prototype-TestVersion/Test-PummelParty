@@ -5,9 +5,6 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: 91013ebaa64c44541887e097389ea750
@@ -20,22 +17,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MinYeong/Minigame 3.unity
     guid: af6b42f9d50a38d4da2d77048010394f
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: Assets/Scenes/MinYeong/Lobby 3.unity
-    guid: 6e049897fddee7e439ca4945df1d410a
-  - enabled: 0
-    path: Assets/Scenes/MinYeong/InRoom 3.unity
-    guid: ed0e103b0b8dbe14291581a204b11d06
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   m_configObjects: {}
