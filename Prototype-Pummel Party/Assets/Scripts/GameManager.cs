@@ -79,6 +79,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
             SpawnPlayerAsync().Forget();
         }
     }

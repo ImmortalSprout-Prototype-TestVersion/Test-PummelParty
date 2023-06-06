@@ -69,6 +69,7 @@ public class MinigameManager : MonoBehaviour
                 gameObject.GetPhotonView().RPC("SendResultToGameManager", RpcTarget.MasterClient, actorNumber);
             }
 
+            GameManager.Instance.isfirstTurn = false;
             // TODO: 보드게임으로 씬전환 연결 후 테스트해야함
             PhotonNetwork.LoadLevel(2);
         }
@@ -79,5 +80,7 @@ public class MinigameManager : MonoBehaviour
     {
         if(PhotonNetwork.IsMasterClient)
            GameManager.Instance.MinigameResult.Add(actorNumber);
+
+
     }
 }
