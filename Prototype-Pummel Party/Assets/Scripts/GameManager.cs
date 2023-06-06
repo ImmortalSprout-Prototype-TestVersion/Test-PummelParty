@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     private Hashtable playerPreviousPosition;
 
     public bool isPlayerAllInstantiated;
+    public bool isfirstTurn = true;
 
     public List<int> MinigameResult = new List<int>(5);
 
@@ -68,9 +69,17 @@ public class GameManager : MonoBehaviour
         }
 
 
-        if (PhotonNetwork.IsMasterClient)
+        if (isfirstTurn)
         {
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                return;
+            }
             SpawnPlayerFirstTime().Forget();
+        }
+        else
+        {
+            SpawnPlayerAsync().Forget();
         }
     }
 
