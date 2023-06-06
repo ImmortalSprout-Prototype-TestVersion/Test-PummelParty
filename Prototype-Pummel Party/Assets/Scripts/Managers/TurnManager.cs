@@ -5,6 +5,7 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -21,8 +22,28 @@ public class TurnManager : MonoBehaviour
     public PlayerController currentController; // 테스트용 에디터에서 볼려구
     private Turn turn;
 
+    private static TurnManager instance = null;
+    public static TurnManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                return null;
+            }
+
+            return instance;
+        }
+    }
+
+
+
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -30,6 +51,8 @@ public class TurnManager : MonoBehaviour
             turn.Init();
         }
     }
+
+    
 
     private void Start()
     {

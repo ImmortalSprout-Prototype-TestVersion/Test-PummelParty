@@ -69,8 +69,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        turnManager = GetComponentsInChildren<TurnManager>()[0];
-        virtualCamera = GetComponentsInChildren<CinemachineVirtualCamera>()[0];
+        turnManager = TurnManager.Instance;
+        virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
 
         if (isfirstTurn)
         {
