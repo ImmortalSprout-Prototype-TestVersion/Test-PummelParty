@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 061b0349203f87a4aa1bdc0ebdb73ea5, type: 3}
   m_Name: BoardGameData
   m_EditorClassIdentifier: 
-  turnManager: {fileID: 0}
-  virtualCamera: {fileID: 0}
+  turnManager: {fileID: 4102800406193352752, guid: f61e29e11cfaa9c44b2ae82e8646d60c, type: 3}
+  virtualCamera: {fileID: 8949231022618597207, guid: 0f7a6c81b967954409035f94acc8c817, type: 3}
