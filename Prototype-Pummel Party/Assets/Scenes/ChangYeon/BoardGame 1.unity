@@ -794,7 +794,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8949231022618597200, guid: 0f7a6c81b967954409035f94acc8c817, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8949231022618597200, guid: 0f7a6c81b967954409035f94acc8c817, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1502,7 +1502,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 2090431616}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4102800406193352752, guid: f61e29e11cfaa9c44b2ae82e8646d60c, type: 3}
       propertyPath: BoardGameframeWork
@@ -1514,7 +1514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4102800406193352759, guid: f61e29e11cfaa9c44b2ae82e8646d60c, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4102800406193352759, guid: f61e29e11cfaa9c44b2ae82e8646d60c, type: 3}
       propertyPath: m_LocalPosition.x
