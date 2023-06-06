@@ -11,18 +11,18 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private TurnManager _turnManager;
-    [SerializeField] private CinemachineVirtualCamera virtualCam;
+    [SerializeField] private BoardGameData gameData;
+
 
     public void SetVirtualCamera(Transform playerTransform)
     {
-        virtualCam.Follow = playerTransform;
-        virtualCam.LookAt = playerTransform;
+        gameData.virtualCamera.Follow = playerTransform;
+        gameData.virtualCamera.LookAt = playerTransform;
     }
 
     public TurnManager ReturnTurnManager()
     {
-        return _turnManager;
+        return gameData.turnManager;
     }
 
     private const int boardgameNumber = 0;
@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-
+        
 
         if (isfirstTurn)
         {
