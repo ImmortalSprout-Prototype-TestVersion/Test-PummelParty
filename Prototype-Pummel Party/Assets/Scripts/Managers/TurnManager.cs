@@ -23,6 +23,7 @@ public class TurnManager : MonoBehaviour
 
     private void Awake()
     {
+
         if (PhotonNetwork.IsMasterClient)
         {
             turn = new Turn();

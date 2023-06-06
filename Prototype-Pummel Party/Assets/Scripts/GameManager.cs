@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+     
         if (playerPreviousPosition == null)
         {
             playerPreviousPosition = new Hashtable()
