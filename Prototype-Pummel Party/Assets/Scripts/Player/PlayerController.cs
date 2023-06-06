@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        _turnManager = GameManager.Instance.ReturnTurnManager();
+        _turnManager = TurnManager.Instance;
         turnManagerPV = PhotonView.Get(_turnManager);
         
         WaitUntilAllPlayersInstantiated().Forget();

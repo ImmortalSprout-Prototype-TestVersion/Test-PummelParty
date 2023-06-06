@@ -69,7 +69,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        turnManager = TurnManager.Instance;
         virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
 
         if (isfirstTurn)
@@ -93,7 +92,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-     
+        turnManager = TurnManager.Instance;
+
         if (playerPreviousPosition == null)
         {
             playerPreviousPosition = new Hashtable()
