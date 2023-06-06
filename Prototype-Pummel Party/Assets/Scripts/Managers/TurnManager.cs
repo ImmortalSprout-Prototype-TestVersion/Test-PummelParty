@@ -105,7 +105,7 @@ public class TurnManager : MonoBehaviour
                 Player currentPlayer = PhotonNetwork.CurrentRoom.GetPlayer(actorNumber);
                 currentPlayer.CustomProperties["MyPreviousPosition"] = GameManager.Instance.playerPv[actorNumber].gameObject.transform.position;
             }
-            PhotonNetwork.LoadLevel("Minigame");
+            PhotonNetwork.LoadLevel(3);
         }
     }
     
