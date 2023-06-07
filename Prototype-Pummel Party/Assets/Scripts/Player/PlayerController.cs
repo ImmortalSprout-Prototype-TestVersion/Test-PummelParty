@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     public bool _canRoll = false;
     private bool _canMoveOnDirectionTile = false; // 플레이어가 회전타일에서 움직일 수 있는지 여부
 
+    private Rigidbody _rigidbody;
+
     private PhotonView playerPV;
     private PhotonView turnManagerPV;
 
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour
         playerPV = PhotonView.Get(gameObject);
         _turnManager = TurnManager.Instance;
         turnManagerPV = PhotonView.Get(_turnManager);
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -116,6 +119,7 @@ public class PlayerController : MonoBehaviour
         Move().Forget(); // _canMove가 true로 되면 Move()함수를 호출한다
     }
 
+    public float remainDistance;
     private async UniTaskVoid Move()
     {
         // 주사위 카운트가 남아있는 동안 한 칸 씩 이동
@@ -131,7 +135,7 @@ public class PlayerController : MonoBehaviour
         while (_moveCount >= 1)
         {
             float elapsedTime = 0f;
-            start = transform.position;
+            start = _rigidbody.position;
             end = _destTilePosition;
 
             Debug.Log($"Left MoveCount : {_moveCount}");
@@ -139,10 +143,21 @@ public class PlayerController : MonoBehaviour
 
             await LookNextDestTile((end - start).normalized);
 
-            while (elapsedTime - 0.1f < 1f)
+            //while (elapsedTime - 0.1f < 1f)
+            //{
+            //    elapsedTime += Time.deltaTime;
+            //    transform.position = Vector3.Lerp(start, end, elapsedTime / _moveTime);
+            //    await UniTask.Yield();
+            //}
+
+            remainDistance = Vector3.Distance(start, end);
+
+            while (remainDistance >= 0.01)
             {
-                elapsedTime += Time.deltaTime;
-                transform.position = Vector3.Lerp(start, end, elapsedTime / _moveTime);
+                Vector3 newPosition = Vector3.MoveTowards(_rigidbody.position, end, 1 / 0.5f * Time.deltaTime);
+                _rigidbody.MovePosition(newPosition);
+
+                remainDistance = Vector3.Distance(_rigidbody.position, end);
                 await UniTask.Yield();
             }
 

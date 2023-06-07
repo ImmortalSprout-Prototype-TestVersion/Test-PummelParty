@@ -514,6 +514,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6300810788339197055, guid: a073a6d03a060f1428b9703925190cf0, type: 3}
+      propertyPath: sceneViewId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 724361538042334580, guid: a073a6d03a060f1428b9703925190cf0, type: 3}
       propertyPath: _turnManager
       value: 
@@ -1435,6 +1439,10 @@ PrefabInstance:
     - target: {fileID: 4102800406193352759, guid: f61e29e11cfaa9c44b2ae82e8646d60c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5184888920533563664, guid: f61e29e11cfaa9c44b2ae82e8646d60c, type: 3}
+      propertyPath: sceneViewId
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f61e29e11cfaa9c44b2ae82e8646d60c, type: 3}
